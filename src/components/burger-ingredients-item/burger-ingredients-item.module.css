@@ -1,0 +1,13 @@
+
+.item > img {
+    width: 100%;
+}
+.item p {
+    text-align: center;
+}
+.item p svg {
+    vertical-align: bottom;
+}
+.name {
+    height: 48px;
+}

@@ -1,0 +1,19 @@
+.section {
+    width: 50%;
+    max-width: 600px;
+}
+.ingredients {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+.ingredients > div {
+    width: calc(50% - 12px);
+}
+.scrollable {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    height: calc(100vh - var(--header-height) - 156px);
+}
