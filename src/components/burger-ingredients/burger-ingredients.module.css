@@ -15,5 +15,5 @@
 .scrollable {
     overflow-y: overlay;
     overflow-x: hidden;
-    height: calc(100vh - var(--header-height) - 156px);
+    max-height: calc(100vh - var(--header-height) - 156px);
 }
