@@ -1,0 +1,17 @@
+.nav_link,
+.nav_link:visited,
+.nav_link:hover {
+    color: var(--inactive);
+    text-decoration: none;
+    display: inline-block;
+}
+.nav_link svg {
+    vertical-align: bottom;
+    fill: var(--inactive);
+}
+.nav_link:hover {
+    color: var(--text);
+}
+.nav_link:hover svg {
+    fill: var(--text);
+}
