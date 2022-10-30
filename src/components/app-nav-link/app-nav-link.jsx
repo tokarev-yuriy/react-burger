@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './app-nav-link.module.css';
-import {} from '@ya.praktikum/react-developer-burger-ui-components';
+import '@ya.praktikum/react-developer-burger-ui-components';
 
 class AppNavLink extends React.Component {
     render() {

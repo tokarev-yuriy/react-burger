@@ -5,7 +5,7 @@ import AppNavLink from '../app-nav-link/app-nav-link';
 class AppHeader extends React.Component {
     render() {
         return (
-            <header className={[styles.header, 'm-10'].join(' ')}>
+            <header className={[styles.header, 'ml-10 mr-10 mb-10'].join(' ')}>
                 <div className={[styles.header_block, 'pt-4', 'pb-4'].join(' ')} >
                     <nav>
                         <AppNavLink text='Конструктор'>

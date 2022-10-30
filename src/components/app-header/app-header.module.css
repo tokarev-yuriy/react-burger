@@ -3,7 +3,7 @@
     position: relative;
 }
 .header_block {
-    max-width: 1280px;
+    max-width: calc(var(--max-width) + var(--offset-base-size) * 8);
     display: flex;
     margin: auto;
     justify-content: space-between;

@@ -3,9 +3,46 @@
   --bg-modal: #1C1C21;
   --text: #F2F2F3;
   --inactive: #8585AD;
+  --scroll-bg: #2F2F37;
+  --scroll-color: #8585AD;
+  --header-height: 168px;
+  --max-width: 1280px;
 }
 
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 body {
   background-color: var(--bg);
   color: var(--text);
+  min-height: 100%;
+  height: 100%;
+}
+
+.main {
+  display: flex;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--scroll-bg);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-color);
 }
