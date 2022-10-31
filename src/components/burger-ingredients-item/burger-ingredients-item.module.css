@@ -1,4 +1,7 @@
 
+.item {
+    position: relative;
+}
 .item > img {
     width: 100%;
 }

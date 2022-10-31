@@ -58,7 +58,7 @@ class BurgerIngredients extends React.Component {
                                 {this.props.items.map((ingredient) => {
                                     if (ingredient.type!=type.code) return;
                                     return (
-                                        <BurgerIngredientsItem item={ingredient} key={ingredient._id} />
+                                        <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={1} />
                                     );
                                 })}
                             </div>
