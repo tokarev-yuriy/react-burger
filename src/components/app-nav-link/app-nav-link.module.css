@@ -1,9 +1,12 @@
-.nav_link,
-.nav_link:visited,
-.nav_link:hover {
+.nav_link {
+    composes: pl-5 pr-5 pt-4 pb-4 from global;
     color: var(--inactive);
     text-decoration: none;
     display: inline-block;
+}
+.nav_link:visited,
+.nav_link:hover {
+    text-decoration: none;
 }
 .nav_link svg {
     vertical-align: bottom;

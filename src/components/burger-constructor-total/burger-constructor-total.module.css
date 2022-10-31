@@ -1,4 +1,5 @@
 .total {
+    composes: mb-6 from global;
     display: flex;
     justify-content: end;
     align-items: center;

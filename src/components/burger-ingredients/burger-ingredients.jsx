@@ -65,7 +65,7 @@ class BurgerIngredients extends React.Component {
                     {types.map((type)=>(
                         <React.Fragment key={type.code}>
                             <h2 class="text text_type_main-medium" id={'ingredients-tab-' + type.code}>{type.title}</h2>
-                            <div className={[styles.ingredients, 'pl-4 pt-6 pr-4 pb-10'].join(' ')}>
+                            <div className={styles.ingredients}>
                                 {this.state.items.map((ingredient) => {
                                     if (ingredient.type!=type.code) return;
                                     return (

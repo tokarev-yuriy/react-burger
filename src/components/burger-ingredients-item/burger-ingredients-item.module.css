@@ -10,4 +10,5 @@
 }
 .name {
     height: 48px;
+    composes: text text_type_main-default from global;
 }

@@ -5,7 +5,7 @@ import {CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-comp
 class BurgerConstructorTotal extends React.Component {
     render() {
         return (
-            <div className={[styles.total, 'mb-6'].join(' ')}>
+            <div className={styles.total}>
                 <span className='mr-10 text text_type_digits-medium'>
                     {this.props.total} <CurrencyIcon />
                 </span>

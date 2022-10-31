@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
-import {ConstructorElement, DragIcon, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import getIngredientsService from '../../api/ingredients';
 import BurgerConstructorTotal from '../burger-constructor-total/burger-constructor-total';
 
