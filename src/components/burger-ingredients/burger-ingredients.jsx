@@ -2,23 +2,13 @@ import React from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
+import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/data';
 
 class BurgerIngredients extends React.Component {
     state = {
-        tab: 'bun',
-        items: []
+        tab: 'bun'
     };
-
-    /**
-     * Подгружаем ингридиенты
-     */
-    componentDidMount() {
-        let items = this.props.items;
-        this.setState({
-            ...this.state,
-            items: items
-        });
-    }
 
     /**
      * меняем активный tab
@@ -63,9 +53,9 @@ class BurgerIngredients extends React.Component {
                 <div className={styles.scrollable}>
                     {types.map((type)=>(
                         <React.Fragment key={type.code}>
-                            <h2 class="text text_type_main-medium" id={'ingredients-tab-' + type.code}>{type.title}</h2>
+                            <h2 className="text text_type_main-medium" id={'ingredients-tab-' + type.code}>{type.title}</h2>
                             <div className={styles.ingredients}>
-                                {this.state.items.map((ingredient) => {
+                                {this.props.items.map((ingredient) => {
                                     if (ingredient.type!=type.code) return;
                                     return (
                                         <BurgerIngredientsItem item={ingredient} key={ingredient._id} />
@@ -79,5 +69,9 @@ class BurgerIngredients extends React.Component {
         );
     }
 }
+
+BurgerIngredients.propTypes = {
+    items: PropTypes.arrayOf(ingredientPropTypes),
+}; 
 
 export default BurgerIngredients;
