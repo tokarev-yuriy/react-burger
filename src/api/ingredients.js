@@ -1,4 +1,4 @@
-import testData from "../utils/data.js";
+import {testData} from "../utils/data.js";
 
 /**
  * Get ingredients data
