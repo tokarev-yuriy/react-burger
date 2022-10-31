@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import getIngredientsService from '../../api/ingredients';
 import BurgerConstructorTotal from '../burger-constructor-total/burger-constructor-total';
 
 class BurgerConstructor extends React.Component {
@@ -14,13 +13,12 @@ class BurgerConstructor extends React.Component {
     /**
      * Подгружаем ингридиенты
      */
-     componentDidMount() {
-        let items = getIngredientsService();
+    componentDidMount() {
         this.setState({
             ...this.state,
-            topItem: items[0],
-            bottomItem: items[items.length - 1],
-            mainItems: items.slice(1, items.length-1)
+            topItem: this.props.topItem,
+            bottomItem: this.props.bottomItem,
+            mainItems: this.props.mainItems
         });
     }
 

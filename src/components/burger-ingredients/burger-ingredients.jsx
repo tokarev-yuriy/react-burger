@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import getIngredientsService from '../../api/ingredients';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 
 class BurgerIngredients extends React.Component {
@@ -14,7 +13,7 @@ class BurgerIngredients extends React.Component {
      * Подгружаем ингридиенты
      */
     componentDidMount() {
-        let items = getIngredientsService();
+        let items = this.props.items;
         this.setState({
             ...this.state,
             items: items
