@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css';
 import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerConstructorTotal from '../burger-constructor-total/burger-constructor-total';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/data';
+import { ingredientPropTypes } from '../../utils/prop-type';
 
 class BurgerConstructor extends React.Component {
     

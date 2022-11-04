@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './burger-ingredients-item.module.css';
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/data';
+import { ingredientPropTypes } from '../../utils/prop-type';
 
 class BurgerIngredientsItem extends React.Component {
     render() {

@@ -3,7 +3,7 @@ import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/data';
+import { ingredientPropTypes } from '../../utils/prop-type';
 
 class BurgerIngredients extends React.Component {
     state = {
