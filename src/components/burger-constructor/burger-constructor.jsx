@@ -6,21 +6,14 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
 
 class BurgerConstructor extends React.Component {
-    
-    /**
-     * 
-     * @returns Итоговая сумма
-     */
-    getTotal() {
+
+    render() {
         let summ = 0;
         summ += this.props.bun.price;
         this.props.mainItems.map((item) => {
             summ += item.price;
         })
-        return summ;
-    }
 
-    render() {
         return (
             <section className={styles.section}>
                 <div className={styles.bun_top}>
@@ -57,7 +50,7 @@ class BurgerConstructor extends React.Component {
                         isLocked
                     />
                 </div>
-                <BurgerConstructorTotal total={this.getTotal()} />
+                <BurgerConstructorTotal total={summ} />
             </section>
         );
     }
