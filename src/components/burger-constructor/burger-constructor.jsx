@@ -64,9 +64,8 @@ class BurgerConstructor extends React.Component {
 }
 
 BurgerConstructor.propTypes = {
-    mainItems: PropTypes.arrayOf(ingredientPropTypes),
-    bottomItem: ingredientPropTypes,
-    topItem: ingredientPropTypes,
+    mainItems: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+    bun: ingredientPropTypes.isRequired
 }; 
 
 export default BurgerConstructor;
