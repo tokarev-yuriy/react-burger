@@ -7,7 +7,7 @@ import getIngredientsService from '../../api/ingredients';
 
 function App() {
 
-  let items = getIngredientsService();
+  const items = getIngredientsService();
 
   return (
     <div className={styles.app}>

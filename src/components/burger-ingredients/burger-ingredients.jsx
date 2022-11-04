@@ -15,7 +15,7 @@ class BurgerIngredients extends React.Component {
      * @param string val 
      */
     setTab = (val) => {
-        let tab = document.getElementById('ingredients-tab-'  + val);
+        const tab = document.getElementById('ingredients-tab-'  + val);
         tab.scrollIntoView();
         this.setState({
             ...this.state,
