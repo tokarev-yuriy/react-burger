@@ -19,9 +19,9 @@ class AppHeader extends React.Component {
                             <ProfileIcon />
                     </AppNavLink>
                 </div>
-                <div className={styles.header_logo} >
+                <a className={styles.header_logo} >
                     <Logo />
-                </div>
+                </a>
             </header>
         );
     }

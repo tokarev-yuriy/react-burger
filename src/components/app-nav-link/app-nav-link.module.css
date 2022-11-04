@@ -21,3 +21,6 @@
 .nav_link_active svg {
     fill: var(--text);
 }
+.nav_link_text {
+    composes: pl-2 text text_type_main-default from global;
+}

@@ -6,7 +6,7 @@ class AppNavLink extends React.Component {
         return (
             <a className={this.props.active ? styles.nav_link_active : styles.nav_link}>
                 {this.props.children}
-                <span className="pl-2 text text_type_main-default">{this.props.text}</span>
+                <span className={styles.nav_link_text}>{this.props.text}</span>
             </a>
         );
     }
