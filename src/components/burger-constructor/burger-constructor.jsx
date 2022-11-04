@@ -13,11 +13,10 @@ class BurgerConstructor extends React.Component {
      */
     getTotal() {
         let summ = 0;
-        summ += this.props.topItem.price;
+        summ += this.props.bun.price;
         this.props.mainItems.map((item) => {
             summ += item.price;
         })
-        summ += this.props.bottomItem.price;
         return summ;
     }
 
@@ -27,9 +26,9 @@ class BurgerConstructor extends React.Component {
                 <div className="pl-8 pb-4 pr-4">
                     <ConstructorElement
                         type="top"
-                        text={this.props.bottomItem.name}
-                        thumbnail={this.props.bottomItem.image_mobile}
-                        price={this.props.bottomItem.price}
+                        text={this.props.bun.name}
+                        thumbnail={this.props.bun.image_mobile}
+                        price={this.props.bun.price}
                         isLocked
                     />
                 </div>
@@ -52,9 +51,9 @@ class BurgerConstructor extends React.Component {
                 <div className="pl-8 pr-4 mb-10">
                     <ConstructorElement
                         type="bottom"
-                        text={this.props.topItem.name}
-                        thumbnail={this.props.topItem.image_mobile}
-                        price={this.props.topItem.price}
+                        text={this.props.bun.name}
+                        thumbnail={this.props.bun.image_mobile}
+                        price={this.props.bun.price}
                         isLocked
                     />
                 </div>

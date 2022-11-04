@@ -16,8 +16,7 @@ function App() {
       <main className="main">
         <BurgerIngredients items={items} />
         <BurgerConstructor 
-          topItem={items[0]} 
-          bottomItem={items[items.length - 1]}
+          bun={items[0]} 
           mainItems={items.slice(1, items.length-1)}
         />
       </main>
