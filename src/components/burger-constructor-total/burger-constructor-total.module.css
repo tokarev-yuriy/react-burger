@@ -1,7 +1,7 @@
 .total {
     composes: mb-6 from global;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
 }
 .total svg {
