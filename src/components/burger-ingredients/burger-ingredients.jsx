@@ -24,20 +24,24 @@ class BurgerIngredients extends React.Component {
     }
 
     render() {
-        let types = [
+        const types = [
             {
                 'code': 'bun',
                 'title': 'Булки',
+                'items': this.props.items.filter((data) => data.type === 'bun'),
             },
             {
                 'code': 'sauce',
                 'title': 'Соусы',
+                'items': this.props.items.filter((data) => data.type === 'sauce'),
             },
             {
                 'code': 'main',
                 'title': 'Начинки',
+                'items': this.props.items.filter((data) => data.type === 'main'),
             },
         ];
+
         return (
             <section className={styles.section}>
                 <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
@@ -55,12 +59,9 @@ class BurgerIngredients extends React.Component {
                         <React.Fragment key={type.code}>
                             <h2 className="text text_type_main-medium" id={'ingredients-tab-' + type.code}>{type.title}</h2>
                             <div className={styles.ingredients}>
-                                {this.props.items.map((ingredient) => {
-                                    if (ingredient.type!=type.code) return;
-                                    return (
-                                        <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={1} />
-                                    );
-                                })}
+                                {type.items.map((ingredient) => (
+                                    <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={1} />
+                                ))}
                             </div>
                         </React.Fragment>
                     ))}
