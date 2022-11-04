@@ -3,6 +3,7 @@
     color: var(--inactive);
     text-decoration: none;
     display: inline-block;
+    cursor: pointer;
 }
 .nav_link:visited,
 .nav_link:hover {
@@ -12,9 +13,11 @@
     vertical-align: bottom;
     fill: var(--inactive);
 }
-.nav_link:hover {
+.nav_link_active {
+    composes: nav_link;
     color: var(--text);
+    cursor: default;
 }
-.nav_link:hover svg {
+.nav_link_active svg {
     fill: var(--text);
 }
