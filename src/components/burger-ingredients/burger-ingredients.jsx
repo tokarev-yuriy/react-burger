@@ -44,9 +44,9 @@ class BurgerIngredients extends React.Component {
 
         return (
             <section className={styles.section}>
-                <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
+                <h1 className={styles.section_title}>Соберите бургер</h1>
                 
-                <div style={{ display: 'flex' }} className="mb-10">
+                <div className={styles.section_tabs}>
                     {types.map((type)=>(
                         <Tab value={type.code} active={this.state.tab === type.code} onClick={this.setTab} key={type.code}>
                             {type.title}
@@ -57,7 +57,7 @@ class BurgerIngredients extends React.Component {
                 <div className={styles.scrollable}>
                     {types.map((type)=>(
                         <React.Fragment key={type.code}>
-                            <h2 className="text text_type_main-medium" id={'ingredients-tab-' + type.code}>{type.title}</h2>
+                            <h2 className={styles.section_items_title} id={'ingredients-tab-' + type.code}>{type.title}</h2>
                             <div className={styles.ingredients}>
                                 {type.items.map((ingredient) => (
                                     <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={1} />

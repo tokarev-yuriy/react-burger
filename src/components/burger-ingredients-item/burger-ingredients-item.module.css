@@ -2,16 +2,21 @@
 .item {
     position: relative;
 }
-.item > img {
-    width: 100%;
-}
 .item p {
     text-align: center;
 }
 .item p svg {
     vertical-align: bottom;
 }
-.name {
+.item_name {
     height: 48px;
     composes: text text_type_main-default from global;
+}
+
+.item_price {
+    composes: mt-1 mb-1 text text_type_digits-default from global;
+}
+.item_img {
+    composes: ml-4 mr-4 from global;
+    width: 100%;
 }

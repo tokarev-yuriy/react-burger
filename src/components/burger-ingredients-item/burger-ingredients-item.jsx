@@ -9,12 +9,12 @@ class BurgerIngredientsItem extends React.Component {
         return (
             <div key={this.props.item._id} className={styles.item}>
                 <Counter count={this.props.count} />
-                <img src={this.props.item.image} alt={this.props.item.name} className="ml-4 mr-4" />
-                <p className="mt-1 mb-1 text text_type_digits-default">
+                <img src={this.props.item.image} alt={this.props.item.name} className={styles.item_img} />
+                <p className={styles.item_price}>
                     {this.props.item.price}
                     <CurrencyIcon />
                 </p>
-                <p className={styles.name}>{this.props.item.name}</p>
+                <p className={styles.item_name}>{this.props.item.name}</p>
             </div>
         );
     }

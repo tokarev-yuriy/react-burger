@@ -1,3 +1,13 @@
+.section {
+    composes: pt-15 ml-10 pl-4 pr-4 from global;
+}
+.bun_top {
+    composes: pl-8 pb-4 pr-4 from global;
+}
+.bun_bottom {
+    composes: pl-8 pr-4 mb-10 from global;
+}
+
 .main_items {
     overflow-y: overlay;
     overflow-x: hidden;
@@ -9,6 +19,13 @@
     scroll-snap-align: start;
     display: flex;
     align-items: center;
+}
+
+.main_items_item {
+    composes: pb-4 pr-4 from global;
+}
+.main_items_item_icon {
+    composes: mr-2 from global;
 }
 
 .total {

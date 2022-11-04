@@ -22,8 +22,8 @@ class BurgerConstructor extends React.Component {
 
     render() {
         return (
-            <section className="pt-15 ml-10 pl-4 pr-4">
-                <div className="pl-8 pb-4 pr-4">
+            <section className={styles.section}>
+                <div className={styles.bun_top}>
                     <ConstructorElement
                         type="top"
                         text={this.props.bun.name}
@@ -35,8 +35,8 @@ class BurgerConstructor extends React.Component {
                 <div className={styles.main_items}>
                     {this.props.mainItems.map((item, index) => {
                         return (
-                            <div className="pb-4 pr-4" key={index}>
-                                <span className="mr-2">
+                            <div className={styles.main_items_item} key={index}>
+                                <span className={styles.main_items_item_icon}>
                                     <DragIcon />
                                 </span>
                                 <ConstructorElement
@@ -48,7 +48,7 @@ class BurgerConstructor extends React.Component {
                         );
                     })}
                 </div>
-                <div className="pl-8 pr-4 mb-10">
+                <div className={styles.bun_bottom}>
                     <ConstructorElement
                         type="bottom"
                         text={this.props.bun.name}

@@ -7,7 +7,7 @@ class BurgerConstructorTotal extends React.Component {
     render() {
         return (
             <div className={styles.total}>
-                <span className='mr-10 text text_type_digits-medium'>
+                <span className={styles.price}>
                     {this.props.total} <CurrencyIcon />
                 </span>
                 <Button size="large" htmlType="button">
