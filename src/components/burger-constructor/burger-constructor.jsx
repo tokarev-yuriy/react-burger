@@ -4,8 +4,23 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
+import { useCallback } from 'react';
+import { placeOrder } from '../../api/order';
+import { useState } from 'react';
+import { Modal } from '../modal/modal';
+import { OrderDetails } from '../order-details/order-details';
 
 function BurgerConstructor(props) {
+
+    const [orderModalVisible, setOrderModalVisible] = useState(false);
+    const [orderId, setOrderId] = useState('');
+
+    const showOrder = (e) => {
+        setOrderModalVisible(true);
+    }
+    const hideOrder = (e) => {
+        setOrderModalVisible(false);
+    }
 
     const burgerTotal = useMemo(() => {
         let total = 0;
@@ -14,6 +29,15 @@ function BurgerConstructor(props) {
             total += item.price;
         });
         return total;
+    }, [props.bun, props.mainItems]);
+
+    const onPlaceOrder = useCallback(() => {
+        
+        let result = placeOrder();
+        if (result) {
+            setOrderId(result.id);
+            showOrder();
+        }
     }, [props.bun, props.mainItems]);
     
 
@@ -53,7 +77,13 @@ function BurgerConstructor(props) {
                     isLocked
                 />
             </div>
-            <BurgerConstructorTotal total={burgerTotal} />
+            <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} />
+            
+            {orderModalVisible && (
+                <Modal title="" onClose={hideOrder}>
+                    <OrderDetails id={orderId} />
+                </Modal>
+            )}
         </section>
     );
 }
