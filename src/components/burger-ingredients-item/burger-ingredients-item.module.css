@@ -17,6 +17,10 @@
     composes: mt-1 mb-1 text text_type_digits-default from global;
 }
 .item_img {
-    composes: ml-4 mr-4 from global;
+    composes: pl-4 pr-4 from global;
+    width: 100%;
+    box-sizing: border-box;
+}
+.item_img img {
     width: 100%;
 }

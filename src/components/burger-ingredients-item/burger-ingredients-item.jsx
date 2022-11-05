@@ -8,7 +8,9 @@ function BurgerIngredientsItem(props) {
     return (
         <div key={props.item._id} className={styles.item}>
             <Counter count={props.count} />
-            <img src={props.item.image} alt={props.item.name} className={styles.item_img} />
+            <div className={styles.item_img}>
+                <img src={props.item.image} alt={props.item.name} />
+            </div>
             <p className={styles.item_price}>
                 {props.item.price}
                 <CurrencyIcon />
