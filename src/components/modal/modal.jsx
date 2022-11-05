@@ -10,12 +10,18 @@ function Modal(props) {
 
     const {onClose, title, children} = props;
 
+    const onClick = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        onClose();
+    }
+
     return ReactDOM.createPortal(
         <div className={styles.modal_wrapper}>
             <div className={styles.modal}>
                 <h2 className={styles.modal_title}>{title}</h2>
                 <div className={styles.modal_close}>
-                    <CloseIcon onClick={onClose} className />
+                    <CloseIcon onClick={onClick} className />
                 </div>
                 <div className={styles.modal_content}>
                     {children}

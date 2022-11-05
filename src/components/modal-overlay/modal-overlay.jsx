@@ -6,8 +6,14 @@ function ModalOverlay (props) {
     
     const {onClose} = props;
 
+    const onClick = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        onClose();
+    }
+
     return (
-        <div className={styles.overlay} onClick={onClose}></div>
+        <div className={styles.overlay} onClick={onClick}></div>
     );
 };
 
