@@ -6,6 +6,7 @@ import styles from './app.module.css';
 import { getIngredientsService } from '../../api/ingredients';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { ErrorBoundary } from '../error-boundary/error-boundary';
 
 function App() {
 
@@ -29,18 +30,20 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
-        {error ? (
-          <p>{error}</p>
-        ) : (
-          items && 
-          <>
-            <BurgerIngredients items={items} />
-            <BurgerConstructor 
-              bun={items[0]} 
-              mainItems={items.slice(1, items.length-1)}
-            />
-          </>
-        )}
+        <ErrorBoundary>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            items && 
+            <>
+              <BurgerIngredients items={items} />
+              <BurgerConstructor 
+                bun={items[0]} 
+                mainItems={items.slice(1, items.length-1)}
+              />
+            </>
+          )}
+        </ErrorBoundary>
       </main>
     </div>
   );
