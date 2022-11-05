@@ -1,11 +1,16 @@
-import {testData} from "../utils/data.js";
+import { endpoints } from './endpoints';
 
 /**
  * Get ingredients data
  * @returns array 
  */
-function getIngredientsService() {
-    return testData;
+async function getIngredientsService() {
+    let resp = await fetch(endpoints.ingredients);
+    resp = await resp.json();
+    if (resp.success) {
+        return resp.data;
+    }
+    throw new Error('Api error');
 }
 
-export default getIngredientsService;
+export { getIngredientsService };
