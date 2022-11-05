@@ -1,7 +1,7 @@
 import React from 'react';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { AppHeader } from '../app-header/app-header';
+import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
+import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import styles from './app.module.css';
 import getIngredientsService from '../../api/ingredients';
 
@@ -23,4 +23,4 @@ function App() {
   );
 }
 
-export default App;
+export { App };
