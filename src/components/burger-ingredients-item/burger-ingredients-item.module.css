@@ -1,6 +1,7 @@
 
 .item {
     position: relative;
+    cursor: pointer;
 }
 .item p {
     text-align: center;

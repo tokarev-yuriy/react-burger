@@ -1,0 +1,37 @@
+
+.item {
+    position: relative;
+    width: 520px;
+    margin: 0 auto;
+}
+.item_name {
+    text-align: center;
+    composes: text text_type_main-medium from global;
+}
+
+.item_details {
+    composes: mt-8 from global;
+    display: flex;
+    justify-content: space-between;
+}
+.item_details_block {
+    composes: text text_type_main-default text_color_inactive from global;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    height: 60px;
+    width: 115px;
+    white-space: nowrap;
+}
+.item_details_block_value {
+    composes: text text_type_digits-default from global;
+}
+.item_img {
+    composes: pl-4 pr-4 mb-4 from global;
+    width: 100%;
+    box-sizing: border-box;
+}
+.item_img img {
+    width: 100%;
+}
