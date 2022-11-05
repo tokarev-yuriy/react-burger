@@ -1,0 +1,28 @@
+.modal {
+    composes: pt-10 pb-15 pl-10 pr-10 from global;
+
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+
+    width: 720px;
+    background: var(--bg-modal);
+    border-radius: 40px;
+    z-index: 2;
+}
+.modal_close {
+    composes: mt-15 mr-10 from global;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+.modal_title {
+    composes: pr-10 text text_type_main-large from global;
+    line-height: 64px;
+}
