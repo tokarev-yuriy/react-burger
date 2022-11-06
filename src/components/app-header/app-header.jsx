@@ -19,7 +19,7 @@ function AppHeader(props) {
                         <ProfileIcon />
                 </AppNavLink>
             </div>
-            <a className={styles.header_logo} >
+            <a href="/" className={styles.header_logo} >
                 <Logo />
             </a>
         </header>
