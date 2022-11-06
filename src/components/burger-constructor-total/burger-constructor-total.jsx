@@ -8,9 +8,7 @@ function BurgerConstructorTotal(props) {
 
     const {onPlaceOrder, total} = props;
     
-    const onClick = (event) => {
-        event.stopPropagation();
-        event.preventDefault();
+    const onClick = () => {
         onPlaceOrder();
     }
 
