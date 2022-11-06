@@ -46,7 +46,7 @@ function BurgerConstructor(props) {
             <div className={styles.bun_top}>
                 <ConstructorElement
                     type="top"
-                    text={props.bun.name}
+                    text={`${props.bun.name} (верх)`}
                     thumbnail={props.bun.image_mobile}
                     price={props.bun.price}
                     isLocked
@@ -71,7 +71,7 @@ function BurgerConstructor(props) {
             <div className={styles.bun_bottom}>
                 <ConstructorElement
                     type="bottom"
-                    text={props.bun.name}
+                    text={`${props.bun.name} (низ)`}
                     thumbnail={props.bun.image_mobile}
                     price={props.bun.price}
                     isLocked
