@@ -33,7 +33,7 @@ function BurgerConstructor(props) {
 
     const onPlaceOrder = useCallback(() => {
         
-        let result = placeOrder();
+        const result = placeOrder();
         if (result) {
             setOrderId(result.id);
             showOrder();

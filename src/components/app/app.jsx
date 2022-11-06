@@ -16,7 +16,7 @@ function App() {
   useEffect(()=>{
     const loadData = async () => {
       try {
-        let data = await getIngredientsService();
+        const data = await getIngredientsService();
         setItems(data);
       } catch(error) {
         setError('Не удалось загрузить данные =(');
