@@ -12,16 +12,12 @@ function Modal(props) {
     const {onClose, title, children} = props;
 
     const catchEscKey = (event) => {
-        if (event.key == "Escape") {
-            event.stopPropagation();
-            event.preventDefault();
+        if (event.key === "Escape") {
             onClose();
         }
     }
 
-    const onClick = (event) => {
-        event.stopPropagation();
-        event.preventDefault();
+    const onClick = () => {
         onClose();
     }
 
@@ -44,7 +40,8 @@ function Modal(props) {
                 </div>
             </div>
             <ModalOverlay onClose={onClose} />
-        </div>,
+        </div>
+        ,
         modalRoot
     );
 };

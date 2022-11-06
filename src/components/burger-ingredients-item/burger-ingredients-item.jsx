@@ -20,16 +20,16 @@ function BurgerIngredientsItem(props) {
     }
 
     return (
-        <div key={props.item._id} className={styles.item} onClick={showDetails}>
+        <div key={props.item._id} className={styles.item}>
             <Counter count={props.count} />
-            <div className={styles.item_img}>
+            <div className={styles.item_img} onClick={showDetails}>
                 <img src={props.item.image} alt={props.item.name} />
             </div>
-            <p className={styles.item_price}>
+            <p className={styles.item_price} onClick={showDetails}>
                 {props.item.price}
                 <CurrencyIcon />
             </p>
-            <p className={styles.item_name}>{props.item.name}</p>
+            <p className={styles.item_name}  onClick={showDetails}>{props.item.name}</p>
 
             {modalVisible && (
                 <Modal title="Детали ингредиента" onClose={hideDetails}>
