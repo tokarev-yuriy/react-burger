@@ -11,22 +11,22 @@ function Modal(props) {
 
     const {onClose, title, children} = props;
 
-    const catchEscKey = (event) => {
-        if (event.key === "Escape") {
-            onClose();
-        }
-    }
-
     const onClick = () => {
         onClose();
     }
 
     useEffect(() => {
+        const catchEscKey = (event) => {
+            if (event.key === "Escape") {
+                onClose();
+            }
+        }
+
         document.addEventListener('keydown', catchEscKey);
         return () => {
             document.removeEventListener('keydown', catchEscKey);
         }
-    }, [])
+    }, [onClose])
 
     return ReactDOM.createPortal(
         <div className={styles.modal_wrapper}>

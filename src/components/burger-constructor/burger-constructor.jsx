@@ -38,7 +38,7 @@ function BurgerConstructor(props) {
             setOrderId(result.id);
             showOrder();
         }
-    });
+    }, []);
     
 
     return (
