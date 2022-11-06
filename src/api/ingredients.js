@@ -1,14 +1,15 @@
 import { endpoints } from './endpoints';
+import { checkJsonResponse } from './helpers';
 
 /**
  * Get ingredients data
  * @returns array 
  */
 async function getIngredientsService() {
-    let resp = await fetch(endpoints.ingredients);
-    resp = await resp.json();
-    if (resp.success) {
-        return resp.data;
+    const resp = await fetch(endpoints.ingredients);
+    const json = await checkJsonResponse(resp);
+    if (json.success) {
+        return json.data;
     }
     throw new Error('Api error');
 }
