@@ -24,7 +24,10 @@ function App() {
     }
 
     loadData();
-  }, [])
+  }, []);
+
+  const bun = items ? items.find(ingredient => ingredient.type === 'bun') : {};
+  const ingredients = items ? items.filter(ingredient => ingredient.type !== 'bun') : {};
 
   return (
     <div className={styles.app}>
@@ -38,8 +41,8 @@ function App() {
             <>
               <BurgerIngredients items={items} />
               <BurgerConstructor 
-                bun={items[0]} 
-                mainItems={items.slice(1, items.length-1)}
+                bun={bun} 
+                mainItems={ingredients}
               />
             </>
           )}
