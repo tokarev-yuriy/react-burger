@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
@@ -22,7 +22,7 @@ function BurgerIngredients(props) {
         }
     }, []);
 
-    const types = [
+    const types = useMemo(() => ([
         {
             'code': 'bun',
             'title': 'Булки',
@@ -38,7 +38,7 @@ function BurgerIngredients(props) {
             'title': 'Начинки',
             'items': props.items.filter((data) => data.type === 'main'),
         },
-    ];
+    ]), [props.items]);
 
     return (
         <section className={styles.section}>
