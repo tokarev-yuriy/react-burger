@@ -1,5 +1,7 @@
+import { BURGER_API_URL } from '../constants';
+
 const endpoints = {
-    ingredients: "https://norma.nomoreparties.space/api/ingredients"
+    ingredients: `${BURGER_API_URL}/ingredients`,
 }
 
 export { endpoints };
