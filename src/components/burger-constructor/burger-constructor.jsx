@@ -25,7 +25,7 @@ function BurgerConstructor(props) {
     const burgerTotal = useMemo(() => {
         let total = 0;
         total += props.bun.price;
-        props.mainItems.map((item) => {
+        props.mainItems.forEach((item) => {
             total += item.price;
         });
         return total;
