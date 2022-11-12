@@ -7,6 +7,7 @@ import { getIngredientsService } from '../../api/ingredients';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { ErrorBoundary } from '../error-boundary/error-boundary';
+import { ConstructorContext } from '../../services/constructorContext';
 
 function App() {
 
@@ -40,10 +41,9 @@ function App() {
             items && 
             <>
               <BurgerIngredients items={items} />
-              <BurgerConstructor 
-                bun={bun} 
-                mainItems={ingredients}
-              />
+              <ConstructorContext.Provider value={{bun: bun, ingredients: ingredients}} >
+                <BurgerConstructor />
+              </ConstructorContext.Provider>
             </>
           )}
         </ErrorBoundary>

@@ -1,19 +1,20 @@
-import { useMemo } from 'react';
+import { useMemo, useContext } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-type';
 import { useCallback } from 'react';
 import { placeOrder } from '../../api/order';
 import { useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
+import { ConstructorContext } from '../../services/constructorContext';
 
 function BurgerConstructor(props) {
 
     const [orderModalVisible, setOrderModalVisible] = useState(false);
     const [orderId, setOrderId] = useState('');
+
+    const burger = useContext(ConstructorContext);
 
     const showOrder = (e) => {
         setOrderModalVisible(true);
@@ -24,12 +25,12 @@ function BurgerConstructor(props) {
 
     const burgerTotal = useMemo(() => {
         let total = 0;
-        total += props.bun.price;
-        props.mainItems.forEach((item) => {
+        total += burger.bun.price;
+        burger.ingredients.forEach((item) => {
             total += item.price;
         });
         return total;
-    }, [props.bun, props.mainItems]);
+    }, [burger]);
 
     const onPlaceOrder = useCallback(() => {
         
@@ -46,14 +47,14 @@ function BurgerConstructor(props) {
             <div className={styles.bun_top}>
                 <ConstructorElement
                     type="top"
-                    text={`${props.bun.name} (верх)`}
-                    thumbnail={props.bun.image_mobile}
-                    price={props.bun.price}
+                    text={`${burger.bun.name} (верх)`}
+                    thumbnail={burger.bun.image_mobile}
+                    price={burger.bun.price}
                     isLocked
                 />
             </div>
             <div className={styles.main_items}>
-                {props.mainItems.map((item, index) => {
+                {burger.ingredients.map((item, index) => {
                     return (
                         <div className={styles.main_items_item} key={index}>
                             <span className={styles.main_items_item_icon}>
@@ -71,9 +72,9 @@ function BurgerConstructor(props) {
             <div className={styles.bun_bottom}>
                 <ConstructorElement
                     type="bottom"
-                    text={`${props.bun.name} (низ)`}
-                    thumbnail={props.bun.image_mobile}
-                    price={props.bun.price}
+                    text={`${burger.bun.name} (низ)`}
+                    thumbnail={burger.bun.image_mobile}
+                    price={burger.bun.price}
                     isLocked
                 />
             </div>
@@ -87,10 +88,5 @@ function BurgerConstructor(props) {
         </section>
     );
 }
-
-BurgerConstructor.propTypes = {
-    mainItems: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-    bun: ingredientPropTypes.isRequired
-}; 
 
 export { BurgerConstructor };
