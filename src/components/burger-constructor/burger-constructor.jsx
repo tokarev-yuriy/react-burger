@@ -14,7 +14,7 @@ function BurgerConstructor(props) {
     const [orderModalVisible, setOrderModalVisible] = useState(false);
     const [orderId, setOrderId] = useState('');
 
-    const burger = useContext(ConstructorContext);
+    const {state: constructorState, dispatcher: constructorDispatcher} = useContext(ConstructorContext);
 
     const showOrder = (e) => {
         setOrderModalVisible(true);
@@ -25,12 +25,14 @@ function BurgerConstructor(props) {
 
     const burgerTotal = useMemo(() => {
         let total = 0;
-        total += burger.bun.price;
-        burger.ingredients.forEach((item) => {
+        if (constructorState.bun) {
+            total += 2 * constructorState.bun.price;
+        }
+        constructorState.ingredients.forEach((item) => {
             total += item.price;
         });
         return total;
-    }, [burger]);
+    }, [constructorState]);
 
     const onPlaceOrder = useCallback(() => {
         
@@ -45,16 +47,19 @@ function BurgerConstructor(props) {
     return (
         <section className={styles.section}>
             <div className={styles.bun_top}>
-                <ConstructorElement
-                    type="top"
-                    text={`${burger.bun.name} (верх)`}
-                    thumbnail={burger.bun.image_mobile}
-                    price={burger.bun.price}
-                    isLocked
-                />
+                {constructorState.bun && 
+                    (<ConstructorElement
+                        type="top"
+                        text={`${constructorState.bun.name} (верх)`}
+                        thumbnail={constructorState.bun.image_mobile}
+                        price={constructorState.bun.price}
+                        handleClose={constructorDispatcher({type: 'remove', playbook:  constructorState.bun._id})}
+                        isLocked
+                    />)
+                }
             </div>
             <div className={styles.main_items}>
-                {burger.ingredients.map((item, index) => {
+                {constructorState.ingredients.map((item, index) => {
                     return (
                         <div className={styles.main_items_item} key={index}>
                             <span className={styles.main_items_item_icon}>
@@ -64,19 +69,23 @@ function BurgerConstructor(props) {
                                 text={item.name}
                                 thumbnail={item.image_mobile}
                                 price={item.price}
+                                handleClose={constructorDispatcher({type: 'remove', playbook: item._id})}
                             />
                         </div>
                     );
                 })}
             </div>
             <div className={styles.bun_bottom}>
-                <ConstructorElement
-                    type="bottom"
-                    text={`${burger.bun.name} (низ)`}
-                    thumbnail={burger.bun.image_mobile}
-                    price={burger.bun.price}
-                    isLocked
-                />
+                {constructorState.bun && 
+                    (<ConstructorElement
+                        type="bottom"
+                        text={`${constructorState.bun.name} (низ)`}
+                        thumbnail={constructorState.bun.image_mobile}
+                        price={constructorState.bun.price}
+                        handleClose={constructorDispatcher({type: 'remove', playbook: constructorState.bun._id})}
+                        isLocked
+                    />)
+                }
             </div>
             <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} />
             
