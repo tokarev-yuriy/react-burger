@@ -1,0 +1,29 @@
+
+.item {
+    position: relative;
+}
+.item p {
+    text-align: center;
+}
+.item p svg {
+    vertical-align: bottom;
+}
+.item_name {
+    height: 48px;
+    composes: text text_type_main-default from global;
+    cursor: pointer;
+}
+
+.item_price {
+    composes: mt-1 mb-1 text text_type_digits-default from global;
+    cursor: pointer;
+}
+.item_img {
+    composes: pl-4 pr-4 from global;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.item_img img {
+    width: 100%;
+}

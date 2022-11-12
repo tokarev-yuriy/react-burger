@@ -1,0 +1,33 @@
+.section {
+    width: 50%;
+    max-width: 600px;
+}
+.section_title {
+    composes: text text_type_main-large mb-5 from global;
+}
+.section_title {
+    composes: text text_type_main-large mb-5 from global;
+}
+.section_tabs {
+    composes: mb-10 from global;
+    display: flex;
+}
+.section_items_title {
+    composes: text text_type_main-medium from global;
+}
+.ingredients {
+    composes: pl-4 pt-6 pr-4 pb-10 from global;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+.ingredients > div {
+    width: calc(50% - 12px);
+}
+.scrollable {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    max-height: calc(100vh - var(--header-height) - 156px);
+}

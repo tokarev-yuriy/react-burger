@@ -1,0 +1,14 @@
+.total {
+    composes: mb-6 from global;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.total svg {
+    width: 40px;
+    height: 40px;
+    vertical-align: bottom;
+}
+.price {
+    composes: mr-10 text text_type_digits-medium from global;
+}

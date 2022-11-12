@@ -1,0 +1,31 @@
+
+.order {
+    composes: pt-20 from global;
+    position: relative;
+    width: 520px;
+    margin: 0 auto;
+}
+.order_number {
+    text-align: center;
+    composes: text text_type_digits-large from global;
+}
+
+.order_label {
+    text-align: center;
+    composes: text text_type_main-medium mt-8 from global;
+}
+
+.order_icon {
+    composes: mt-15 mb-15 from global;
+    width: 120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.order_info {
+    text-align: center;
+    composes: text text_type_main-default mb-2 from global;
+}
+.order_comment {
+    composes: order_info;
+    composes: text_color_inactive mb-15 from global;
+}

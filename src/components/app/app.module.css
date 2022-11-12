@@ -1,0 +1,9 @@
+
+.app {
+    composes: pt-10 from global;
+}
+.main {
+    display: flex;
+    max-width: var(--max-width);
+    margin: 0 auto;
+}

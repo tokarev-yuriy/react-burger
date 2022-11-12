@@ -1,0 +1,19 @@
+.header {
+    composes: ml-10 mr-10 mb-10 from global;
+    background: var(--bg-modal);
+    position: relative;
+}
+.header_block {
+    composes: pt-4 pb-4 from global;
+    max-width: calc(var(--max-width) + var(--offset-base-size) * 8);
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+}
+.header_logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
