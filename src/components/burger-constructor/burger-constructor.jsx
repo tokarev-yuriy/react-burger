@@ -13,6 +13,7 @@ function BurgerConstructor() {
 
     const [orderModalVisible, setOrderModalVisible] = useState(false);
     const [orderId, setOrderId] = useState('');
+    const [error, setError] = useState('');
 
     const state = useContext(ConstructorContext);
     const dispatch = useContext(ConstructorDispatcherContext);
@@ -36,13 +37,25 @@ function BurgerConstructor() {
         return total;
     }, [state]);
 
-    const onPlaceOrder = useCallback(() => {
-        const result = placeOrder();
-        if (result) {
-            setOrderId(result.id);
-            showOrder();
+    const onPlaceOrder = useCallback(async () => {
+        setError('');
+        try {
+            let ingredients = [state.bun._id];
+            for(let ingredient of state.ingredients) {
+                ingredients.push(ingredient._id);
+            }
+            ingredients.push(state.bun._id);
+            const result = await placeOrder(ingredients);
+            if (result && result.orderId) {
+                setOrderId(result.orderId);
+                showOrder();
+            } else {
+                throw new Error('No result or order id');
+            }
+        } catch(error) {
+            setError('Oops, an error occurred, please try again later');
         }
-    }, [showOrder, ]);
+    }, [showOrder, setOrderId, setError, state]);
     
     const onRemoveItem = useCallback((id) => {
         dispatch({type: 'remove', playbook: id});
@@ -89,6 +102,9 @@ function BurgerConstructor() {
                     />)
                 }
             </div>
+            {error ? (
+                <p>{error}</p>
+             ) : ''}
             <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} />
             
             {orderModalVisible && (
