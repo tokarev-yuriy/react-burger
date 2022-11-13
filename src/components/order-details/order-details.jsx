@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import { PropTypes } from 'prop-types';
-import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import checkIcon from '../../images/check.svg';
 
 function OrderDetails(props) {

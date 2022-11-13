@@ -7,61 +7,64 @@ import { placeOrder } from '../../api/order';
 import { useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { ConstructorContext } from '../../services/constructorContext';
+import { ConstructorContext, ConstructorDispatcherContext } from '../../services/constructorContext';
 
-function BurgerConstructor(props) {
+function BurgerConstructor() {
 
     const [orderModalVisible, setOrderModalVisible] = useState(false);
     const [orderId, setOrderId] = useState('');
 
-    const {state: constructorState, dispatcher: constructorDispatcher} = useContext(ConstructorContext);
+    const state = useContext(ConstructorContext);
+    const dispatch = useContext(ConstructorDispatcherContext);
 
-    const showOrder = (e) => {
+    const showOrder = useCallback((e) => {
         setOrderModalVisible(true);
-    }
-    const hideOrder = (e) => {
+    }, []);
+
+    const hideOrder = useCallback((e) => {
         setOrderModalVisible(false);
-    }
+    }, []);
 
     const burgerTotal = useMemo(() => {
         let total = 0;
-        if (constructorState.bun) {
-            total += 2 * constructorState.bun.price;
+        if (state.bun) {
+            total += 2 * state.bun.price;
         }
-        constructorState.ingredients.forEach((item) => {
+        state.ingredients.forEach((item) => {
             total += item.price;
         });
         return total;
-    }, [constructorState]);
+    }, [state]);
 
     const onPlaceOrder = useCallback(() => {
-        
         const result = placeOrder();
         if (result) {
             setOrderId(result.id);
             showOrder();
         }
-    }, []);
+    }, [showOrder, ]);
     
+    const onRemoveItem = useCallback((id) => {
+        dispatch({type: 'remove', playbook: id});
+    }, [dispatch]);
 
     return (
         <section className={styles.section}>
             <div className={styles.bun_top}>
-                {constructorState.bun && 
+                {state.bun && 
                     (<ConstructorElement
                         type="top"
-                        text={`${constructorState.bun.name} (верх)`}
-                        thumbnail={constructorState.bun.image_mobile}
-                        price={constructorState.bun.price}
-                        handleClose={constructorDispatcher({type: 'remove', playbook:  constructorState.bun._id})}
+                        text={`${state.bun.name} (верх)`}
+                        thumbnail={state.bun.image_mobile}
+                        price={state.bun.price}
                         isLocked
                     />)
                 }
             </div>
             <div className={styles.main_items}>
-                {constructorState.ingredients.map((item, index) => {
+                {state.ingredients.map(item => {
                     return (
-                        <div className={styles.main_items_item} key={index}>
+                        <div className={styles.main_items_item} key={item._id}>
                             <span className={styles.main_items_item_icon}>
                                 <DragIcon />
                             </span>
@@ -69,20 +72,19 @@ function BurgerConstructor(props) {
                                 text={item.name}
                                 thumbnail={item.image_mobile}
                                 price={item.price}
-                                handleClose={constructorDispatcher({type: 'remove', playbook: item._id})}
+                                handleClose={() => {onRemoveItem(item._id)}}
                             />
                         </div>
                     );
                 })}
             </div>
             <div className={styles.bun_bottom}>
-                {constructorState.bun && 
+                {state.bun && 
                     (<ConstructorElement
                         type="bottom"
-                        text={`${constructorState.bun.name} (низ)`}
-                        thumbnail={constructorState.bun.image_mobile}
-                        price={constructorState.bun.price}
-                        handleClose={constructorDispatcher({type: 'remove', playbook: constructorState.bun._id})}
+                        text={`${state.bun.name} (низ)`}
+                        thumbnail={state.bun.image_mobile}
+                        price={state.bun.price}
                         isLocked
                     />)
                 }

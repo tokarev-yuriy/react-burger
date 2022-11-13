@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
@@ -6,18 +6,22 @@ import { ingredientPropTypes } from '../../utils/prop-type';
 import { useState } from 'react';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
 import { Modal } from '../modal/modal';
+import { ConstructorDispatcherContext } from '../../services/constructorContext';
+import { useCallback } from 'react';
 
 function BurgerIngredientsItem(props) {
 
     const [modalVisible, setModalVisible] = useState(false);
+    const constructorDispatcher = useContext(ConstructorDispatcherContext);
 
-    const showDetails = (e) => {
+    const showDetails = useCallback((e) => {
         setModalVisible(true);
-    }
+        constructorDispatcher({type: 'add', playbook: props.item});
+    }, [constructorDispatcher, props.item]);
 
-    const hideDetails = (e) => {
+    const hideDetails = useCallback((e) => {
         setModalVisible(false);
-    }
+    }, []);
 
     return (
         <div key={props.item._id} className={styles.item}>
