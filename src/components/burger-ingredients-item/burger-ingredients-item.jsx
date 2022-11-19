@@ -6,17 +6,13 @@ import { ingredientPropTypes } from '../../utils/prop-type';
 import { useState } from 'react';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
 import { Modal } from '../modal/modal';
-import { ConstructorDispatcherContext } from '../../services/constructorContext';
-import { ACTION_CONSTRUCTOR_ADD } from '../../constants';
 
 function BurgerIngredientsItem(props) {
 
     const [modalVisible, setModalVisible] = useState(false);
-    const constructorDispatcher = useContext(ConstructorDispatcherContext);
 
     const showDetails = () => {
         setModalVisible(true);
-        constructorDispatcher({type: ACTION_CONSTRUCTOR_ADD, playbook: props.item});
     };
 
     const hideDetails = () => {

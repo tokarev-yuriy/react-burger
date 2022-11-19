@@ -7,8 +7,8 @@ import { placeOrder } from '../../api/order';
 import { useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { ConstructorContext, ConstructorDispatcherContext } from '../../services/constructorContext';
-import { ACTION_CONSTRUCTOR_REMOVE } from '../../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { ACTION_CONSTRUCTOR_REMOVE } from '../../services/actions/constructor';
 
 function BurgerConstructor() {
 
@@ -16,8 +16,8 @@ function BurgerConstructor() {
     const [orderId, setOrderId] = useState('');
     const [error, setError] = useState('');
 
-    const state = useContext(ConstructorContext);
-    const dispatch = useContext(ConstructorDispatcherContext);
+    const dispatch = useDispatch();
+    const state = useSelector(store => store.cart);
 
     const showOrder = useCallback((e) => {
         setOrderModalVisible(true);

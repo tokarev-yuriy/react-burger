@@ -1,4 +1,4 @@
-import { ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE } from '../actions/index.js';
+import { ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE } from '../actions/constructor';
 
 const constructorInitialState = {
     bun: null,
