@@ -3,6 +3,7 @@ import {
   ACTION_CONSTRUCTOR_REQUEST, ACTION_CONSTRUCTOR_REQUEST_FAIL, 
   ACTION_CONSTRUCTOR_REQUEST_SUCCESS, ACTION_CONSTRUCTOR_ORDER_HIDE
  } from '../actions/constructor';
+ import { guuid } from '../../utils/guuid';
 
 const constructorInitialState = {
     bun: null,
@@ -24,14 +25,11 @@ const constructorInitialState = {
         if (action.item.type === 'bun') {
           return {...state, bun: action.item};
         }
-        return {...state, ingredients: [...state.ingredients, action.item]}
+        return {...state, ingredients: [...state.ingredients, {...action.item, id: guuid()}]}
       case ACTION_CONSTRUCTOR_CLEAR:
         return {bun: null, ingredients: []};
       case ACTION_CONSTRUCTOR_REMOVE:
-        if (state.bun && state.bun._id === action.playbook) {
-          return {...state, bun: null};
-        }
-        return {...state, ingredients: state.ingredients.filter(item => item._id !== action.playbook)};
+        return {...state, ingredients: state.ingredients.filter(item => item.id !== action.id)};
       case ACTION_CONSTRUCTOR_REQUEST:
         return {...state, orderRequest: true}
       case ACTION_CONSTRUCTOR_REQUEST_FAIL:

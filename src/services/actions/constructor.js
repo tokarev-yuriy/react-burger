@@ -14,11 +14,11 @@ export function placeOrderAction() {
     return function(dispatch, getState) {
       const state = getState();
       dispatch({type: ACTION_CONSTRUCTOR_REQUEST});
-      if (!state.catalog.bun) {
+      if (!state.cart.bun) {
         dispatch({type: ACTION_CONSTRUCTOR_REQUEST_FAIL});
         return;
       }
-      let ingredients = [state.catalog.bun._id, ...state.catalog.ingredients.map(item => item._id), state.catalog.bun._id];
+      let ingredients = [state.cart.bun._id, ...state.cart.ingredients.map(item => item._id), state.cart.bun._id];
       placeOrder(ingredients)
       .then(order => {
         dispatch({type: ACTION_CONSTRUCTOR_REQUEST_SUCCESS, order: order})

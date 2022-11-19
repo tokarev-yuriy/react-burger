@@ -44,7 +44,7 @@ function BurgerConstructor() {
     }, [dispatch]);
     
     const onRemoveItem = useCallback((id) => {
-        dispatch({type: ACTION_CONSTRUCTOR_REMOVE, playbook: id});
+        dispatch({type: ACTION_CONSTRUCTOR_REMOVE, id: id});
     }, [dispatch]);
 
     return (
@@ -71,7 +71,7 @@ function BurgerConstructor() {
             <div className={styles.main_items}>
                 {state.ingredients.map(item => {
                     return (
-                        <div className={styles.main_items_item} key={item._id}>
+                        <div className={styles.main_items_item} key={item.id}>
                             <span className={styles.main_items_item_icon}>
                                 <DragIcon />
                             </span>
@@ -79,7 +79,7 @@ function BurgerConstructor() {
                                 text={item.name}
                                 thumbnail={item.image_mobile}
                                 price={item.price}
-                                handleClose={() => {onRemoveItem(item._id)}}
+                                handleClose={() => {onRemoveItem(item.id)}}
                             />
                         </div>
                     );
