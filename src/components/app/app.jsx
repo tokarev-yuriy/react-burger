@@ -7,6 +7,8 @@ import { getIngredientsService } from '../../api/ingredients';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { ErrorBoundary } from '../error-boundary/error-boundary';
+import { ConstructorContext, ConstructorDispatcherContext, constructorReducer } from '../../services/constructorContext';
+import { useReducer } from 'react';
 
 function App() {
 
@@ -26,8 +28,10 @@ function App() {
     loadData();
   }, []);
 
-  const bun = items ? items.find(ingredient => ingredient.type === 'bun') : {};
-  const ingredients = items ? items.filter(ingredient => ingredient.type !== 'bun') : {};
+  const [state, dispatch] = useReducer(constructorReducer, {
+    bun: null,
+    ingredients: []
+  });
 
   return (
     <div className={styles.app}>
@@ -39,11 +43,12 @@ function App() {
           ) : (
             items && 
             <>
-              <BurgerIngredients items={items} />
-              <BurgerConstructor 
-                bun={bun} 
-                mainItems={ingredients}
-              />
+              <ConstructorContext.Provider value={state} >
+              <ConstructorDispatcherContext.Provider value={dispatch} >
+                <BurgerIngredients items={items} />
+                <BurgerConstructor />
+              </ConstructorDispatcherContext.Provider>
+              </ConstructorContext.Provider>
             </>
           )}
         </ErrorBoundary>
