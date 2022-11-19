@@ -7,21 +7,20 @@ import { useState } from 'react';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
 import { Modal } from '../modal/modal';
 import { ConstructorDispatcherContext } from '../../services/constructorContext';
-import { useCallback } from 'react';
 
 function BurgerIngredientsItem(props) {
 
     const [modalVisible, setModalVisible] = useState(false);
     const constructorDispatcher = useContext(ConstructorDispatcherContext);
 
-    const showDetails = useCallback((e) => {
+    const showDetails = () => {
         setModalVisible(true);
         constructorDispatcher({type: 'add', playbook: props.item});
-    }, [constructorDispatcher, props.item]);
+    };
 
-    const hideDetails = useCallback((e) => {
+    const hideDetails = () => {
         setModalVisible(false);
-    }, []);
+    };
 
     return (
         <div key={props.item._id} className={styles.item}>
