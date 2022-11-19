@@ -18,13 +18,13 @@ const constructorInitialState = {
  export const constructorReducer = (state = constructorInitialState, action) => {
     switch(action.type) {
       case ACTION_CONSTRUCTOR_ADD:
-        if (!action.playbook) {
+        if (!action.item) {
           throw new Error('No ingredient');
         }
-        if (action.playbook.type === 'bun') {
-          return {...state, bun: action.playbook};
+        if (action.item.type === 'bun') {
+          return {...state, bun: action.item};
         }
-        return {...state, ingredients: [...state.ingredients, action.playbook]}
+        return {...state, ingredients: [...state.ingredients, action.item]}
       case ACTION_CONSTRUCTOR_CLEAR:
         return {bun: null, ingredients: []};
       case ACTION_CONSTRUCTOR_REMOVE:

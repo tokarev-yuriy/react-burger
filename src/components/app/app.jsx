@@ -3,12 +3,12 @@ import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import styles from './app.module.css';
-import { getIngredientsService } from '../../api/ingredients';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { ErrorBoundary } from '../error-boundary/error-boundary';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
 
@@ -36,8 +36,10 @@ function App() {
             ):(
               items && 
               <>
+                <DndProvider backend={HTML5Backend}>
                   <BurgerIngredients items={items} />
                   <BurgerConstructor />
+                </DndProvider>
               </>
             )}
         </ErrorBoundary>

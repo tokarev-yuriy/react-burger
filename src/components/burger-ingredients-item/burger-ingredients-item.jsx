@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
 import { useDispatch } from 'react-redux';
 import { ACTION_CATALOG_DETAIL_SHOW } from '../../services/actions/catalog';
+import { useDrag } from 'react-dnd';
 
 function BurgerIngredientsItem(props) {
 
@@ -14,8 +15,16 @@ function BurgerIngredientsItem(props) {
         dispatch({type: ACTION_CATALOG_DETAIL_SHOW, id: props.item._id});
     };
 
+    const [{ isDrag }, drag] = useDrag({
+        type: "ingredient",
+        item: { id: props.item._id },
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
+
     return (
-        <div key={props.item._id} className={styles.item}>
+        <div key={props.item._id} className={styles.item} draggable ref={drag}>
             <Counter count={props.count} />
             <div className={styles.item_img} onClick={showDetails}>
                 <img src={props.item.image} alt={props.item.name} />

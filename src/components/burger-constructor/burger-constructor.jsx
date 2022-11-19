@@ -6,12 +6,27 @@ import { useCallback } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { ACTION_CONSTRUCTOR_REMOVE, placeOrderAction, ACTION_CONSTRUCTOR_ORDER_HIDE } from '../../services/actions/constructor';
+import { ACTION_CONSTRUCTOR_REMOVE, placeOrderAction, ACTION_CONSTRUCTOR_ORDER_HIDE, ACTION_CONSTRUCTOR_ADD } from '../../services/actions/constructor';
+import { useDrop } from 'react-dnd';
 
 function BurgerConstructor() {
 
     const dispatch = useDispatch();
     const state = useSelector(store => store.cart);
+    const ingredients = useSelector(store => store.catalog.ingredients);
+
+    const [{ isHover } , drop] = useDrop({
+        accept: "ingredient",
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        }),
+        drop(item) {
+            dispatch({
+                type: ACTION_CONSTRUCTOR_ADD,
+                item: ingredients.find(element => element._id === item.id),
+            });
+        },
+    });
 
     const hideOrder = useCallback((e) => {
         dispatch({type: ACTION_CONSTRUCTOR_ORDER_HIDE});
@@ -34,15 +49,23 @@ function BurgerConstructor() {
 
     return (
         <section className={styles.section}>
+          <div ref={drop}>
+            {state.ingredients.length === 0 && !state.bun && (
+                <div className={styles.empty_burger}>
+                    Перетяните булки и ингредиенты
+                </div>                
+            )}
             <div className={styles.bun_top}>
-                {state.bun && 
-                    (<ConstructorElement
+                {state.bun &&
+                    (
+                    <ConstructorElement
                         type="top"
                         text={`${state.bun.name} (верх)`}
                         thumbnail={state.bun.image_mobile}
                         price={state.bun.price}
                         isLocked
-                    />)
+                    />
+                    )
                 }
             </div>
             <div className={styles.main_items}>
@@ -63,16 +86,19 @@ function BurgerConstructor() {
                 })}
             </div>
             <div className={styles.bun_bottom}>
-                {state.bun && 
-                    (<ConstructorElement
+                {state.bun &&
+                    (
+                      <ConstructorElement
                         type="bottom"
                         text={`${state.bun.name} (низ)`}
                         thumbnail={state.bun.image_mobile}
                         price={state.bun.price}
                         isLocked
-                    />)
+                      />
+                    )
                 }
             </div>
+          </div>
             {state.orderRequest ? (
                 <p>Подождите...</p>
              ) : (state.orderRequestFail ? (
