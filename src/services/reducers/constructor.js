@@ -1,15 +1,19 @@
-import { ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE } from '../actions/constructor';
+import { 
+  ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE,
+  ACTION_CONSTRUCTOR_REQUEST, ACTION_CONSTRUCTOR_REQUEST_FAIL, 
+  ACTION_CONSTRUCTOR_REQUEST_SUCCESS, ACTION_CONSTRUCTOR_ORDER_HIDE
+ } from '../actions/constructor';
 
 const constructorInitialState = {
     bun: null,
-    ingredients: []
+    ingredients: [],
+    order: null,
+    orderRequest: false,
+    orderRequestFail: false,
 };
 
 /**
  * Reducer for burger constructor
- * @param {bun: , ingredients: } state 
- * @param {type: add|remove|clear, playbook: } action 
- * @returns {bun: , ingredients: }
  */
  export const constructorReducer = (state = constructorInitialState, action) => {
     switch(action.type) {
@@ -28,6 +32,14 @@ const constructorInitialState = {
           return {...state, bun: null};
         }
         return {...state, ingredients: state.ingredients.filter(item => item._id !== action.playbook)};
+      case ACTION_CONSTRUCTOR_REQUEST:
+        return {...state, orderRequest: true}
+      case ACTION_CONSTRUCTOR_REQUEST_FAIL:
+        return {...state, orderRequest: false, orderRequestFail: true}
+      case ACTION_CONSTRUCTOR_REQUEST_SUCCESS:
+        return {...state, order: action.order, orderRequest: false, orderRequestFail: false};
+      case ACTION_CONSTRUCTOR_ORDER_HIDE:
+        return {...state, order: null};
       default:
         return state;
     }

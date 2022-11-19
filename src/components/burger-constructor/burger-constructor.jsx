@@ -3,29 +3,19 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
 import { useCallback } from 'react';
-import { placeOrder } from '../../api/order';
-import { useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { ACTION_CONSTRUCTOR_REMOVE } from '../../services/actions/constructor';
+import { ACTION_CONSTRUCTOR_REMOVE, placeOrderAction, ACTION_CONSTRUCTOR_ORDER_HIDE } from '../../services/actions/constructor';
 
 function BurgerConstructor() {
-
-    const [orderModalVisible, setOrderModalVisible] = useState(false);
-    const [orderId, setOrderId] = useState('');
-    const [error, setError] = useState('');
 
     const dispatch = useDispatch();
     const state = useSelector(store => store.cart);
 
-    const showOrder = useCallback((e) => {
-        setOrderModalVisible(true);
-    }, []);
-
     const hideOrder = useCallback((e) => {
-        setOrderModalVisible(false);
-    }, []);
+        dispatch({type: ACTION_CONSTRUCTOR_ORDER_HIDE});
+    }, [dispatch]);
 
     const burgerTotal = useMemo(() => {
         return state.ingredients.reduce(
@@ -35,20 +25,8 @@ function BurgerConstructor() {
     }, [state]);
 
     const onPlaceOrder = useCallback(async () => {
-        setError('');
-        try {
-            const ingredients = [state.bun._id, ...state.ingredients.map(item => item._id), state.bun._id] ;
-            const result = await placeOrder(ingredients);
-            if (result && result.orderId) {
-                setOrderId(result.orderId);
-                showOrder();
-            } else {
-                throw new Error('No result or order id');
-            }
-        } catch(error) {
-            setError('Oops, an error occurred, please try again later');
-        }
-    }, [showOrder, setOrderId, setError, state]);
+        dispatch(placeOrderAction());
+    }, [dispatch]);
     
     const onRemoveItem = useCallback((id) => {
         dispatch({type: ACTION_CONSTRUCTOR_REMOVE, playbook: id});
@@ -95,14 +73,17 @@ function BurgerConstructor() {
                     />)
                 }
             </div>
-            {error ? (
-                <p>{error}</p>
-             ) : ''}
+            {state.orderRequest ? (
+                <p>Подождите...</p>
+             ) : (state.orderRequestFail ? (
+                <p>Не удалось разместить заказ, произошла ошибка</p>
+             )
+             :'')}
             <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} />
             
-            {orderModalVisible && (
+            {state.order && (
                 <Modal title="" onClose={hideOrder}>
-                    <OrderDetails id={orderId} />
+                    <OrderDetails id={state.order.orderId} />
                 </Modal>
             )}
         </section>
