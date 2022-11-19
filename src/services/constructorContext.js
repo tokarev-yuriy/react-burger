@@ -1,4 +1,5 @@
 import React from 'react';
+import { ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE } from '../constants';
 
 export const ConstructorContext = React.createContext();
 export const ConstructorDispatcherContext = React.createContext();
@@ -11,7 +12,7 @@ export const ConstructorDispatcherContext = React.createContext();
  */
 export const constructorReducer = (state, action) => {
     switch(action.type) {
-      case "add":
+      case ACTION_CONSTRUCTOR_ADD:
         if (!action.playbook) {
           throw new Error('No ingredient');
         }
@@ -19,9 +20,9 @@ export const constructorReducer = (state, action) => {
           return {...state, bun: action.playbook};
         }
         return {...state, ingredients: [...state.ingredients, action.playbook]}
-      case "clear":
+      case ACTION_CONSTRUCTOR_CLEAR:
         return {bun: null, ingredients: []};
-      case "remove":
+      case ACTION_CONSTRUCTOR_REMOVE:
         if (state.bun && state.bun._id === action.playbook) {
           return {...state, bun: null};
         }

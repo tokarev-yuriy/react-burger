@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { ConstructorContext, ConstructorDispatcherContext } from '../../services/constructorContext';
+import { ACTION_CONSTRUCTOR_REMOVE } from '../../constants';
 
 function BurgerConstructor() {
 
@@ -58,7 +59,7 @@ function BurgerConstructor() {
     }, [showOrder, setOrderId, setError, state]);
     
     const onRemoveItem = useCallback((id) => {
-        dispatch({type: 'remove', playbook: id});
+        dispatch({type: ACTION_CONSTRUCTOR_REMOVE, playbook: id});
     }, [dispatch]);
 
     return (
