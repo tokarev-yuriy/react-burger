@@ -37,11 +37,7 @@ function BurgerConstructor() {
     const onPlaceOrder = useCallback(async () => {
         setError('');
         try {
-            let ingredients = [state.bun._id];
-            for(let ingredient of state.ingredients) {
-                ingredients.push(ingredient._id);
-            }
-            ingredients.push(state.bun._id);
+            const ingredients = [state.bun._id, ...state.ingredients.map(item => item._id), state.bun._id] ;
             const result = await placeOrder(ingredients);
             if (result && result.orderId) {
                 setOrderId(result.orderId);
