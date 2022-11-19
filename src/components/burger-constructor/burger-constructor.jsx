@@ -28,14 +28,10 @@ function BurgerConstructor() {
     }, []);
 
     const burgerTotal = useMemo(() => {
-        let total = 0;
-        if (state.bun) {
-            total += 2 * state.bun.price;
-        }
-        state.ingredients.forEach((item) => {
-            total += item.price;
-        });
-        return total;
+        return state.ingredients.reduce(
+            (value, item) => value + item.price,
+            state.bun ? 2 * state.bun.price : 0
+        );
     }, [state]);
 
     const onPlaceOrder = useCallback(async () => {
