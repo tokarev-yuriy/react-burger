@@ -1,8 +1,9 @@
-import React from 'react';
-import { ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE } from '../constants';
+import { ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE } from '../actions/index.js';
 
-export const ConstructorContext = React.createContext();
-export const ConstructorDispatcherContext = React.createContext();
+const constructorInitialState = {
+    bun: null,
+    ingredients: []
+};
 
 /**
  * Reducer for burger constructor
@@ -10,7 +11,7 @@ export const ConstructorDispatcherContext = React.createContext();
  * @param {type: add|remove|clear, playbook: } action 
  * @returns {bun: , ingredients: }
  */
-export const constructorReducer = (state, action) => {
+ export const constructorReducer = (state = constructorInitialState, action) => {
     switch(action.type) {
       case ACTION_CONSTRUCTOR_ADD:
         if (!action.playbook) {
@@ -28,6 +29,6 @@ export const constructorReducer = (state, action) => {
         }
         return {...state, ingredients: state.ingredients.filter(item => item._id !== action.playbook)};
       default:
-        throw new Error("unknown action");
+        return state;
     }
 };
