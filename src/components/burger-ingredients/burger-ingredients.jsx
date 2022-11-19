@@ -33,6 +33,27 @@ function BurgerIngredients(props) {
         }
     }, []);
 
+    const onScroll = (event) => {
+        const scrollTop = event.currentTarget.scrollTop;
+        const tabs = {
+            bun: 0,
+            sauce: 0,
+            main: 0
+        }
+        for(let x in tabs) {
+            tabs[x] = document.getElementById('ingredients-tab-'  + x).offsetTop;
+        }
+        let tab = false;
+        let minScroll = false;
+        for(let x in tabs) {
+            if (minScroll === false || Math.abs(scrollTop - tabs[x]) < minScroll) {
+                minScroll = Math.abs(scrollTop - tabs[x]);
+                tab = x;
+            }
+        }
+        setActiveTab(tab);
+    };
+
     const types = useMemo(() => ([
         {
             'code': 'bun',
@@ -63,7 +84,7 @@ function BurgerIngredients(props) {
                 ))}
             </div>
             
-            <div className={styles.scrollable}>
+            <div className={styles.scrollable} onScroll={onScroll}>
                 {types.map((type)=>(
                     <React.Fragment key={type.code}>
                         <h2 className={styles.section_items_title} id={'ingredients-tab-' + type.code}>{type.title}</h2>
