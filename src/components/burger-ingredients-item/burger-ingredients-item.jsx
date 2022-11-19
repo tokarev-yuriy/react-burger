@@ -3,20 +3,15 @@ import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
-import { useState } from 'react';
-import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
-import { Modal } from '../modal/modal';
+import { useDispatch } from 'react-redux';
+import { ACTION_CATALOG_DETAIL_SHOW } from '../../services/actions/catalog';
 
 function BurgerIngredientsItem(props) {
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const dispatch = useDispatch();
 
-    const showDetails = () => {
-        setModalVisible(true);
-    };
-
-    const hideDetails = () => {
-        setModalVisible(false);
+    const showDetails = (e) => {
+        dispatch({type: ACTION_CATALOG_DETAIL_SHOW, id: props.item._id});
     };
 
     return (
@@ -30,13 +25,6 @@ function BurgerIngredientsItem(props) {
                 <CurrencyIcon />
             </p>
             <p className={styles.item_name}  onClick={showDetails}>{props.item.name}</p>
-
-            {modalVisible && (
-                <Modal title="Детали ингредиента" onClose={hideDetails}>
-                    <BurgerIngredientDetails item={props.item} />
-                </Modal>
-            )}
-
         </div>
     );
 }

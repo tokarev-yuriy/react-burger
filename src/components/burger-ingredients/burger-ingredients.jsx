@@ -5,10 +5,21 @@ import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredi
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
 import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
+import { Modal } from '../modal/modal';
+import { ACTION_CATALOG_DETAIL_HIDE } from '../../services/actions/catalog';
 
 function BurgerIngredients(props) {
 
     const [activeTab, setActiveTab] = useState('bun');
+
+    const detail = useSelector(store => store.catalog.detail);
+    const dispatch = useDispatch();
+
+    const hideDetails = () => {
+        dispatch({type: ACTION_CATALOG_DETAIL_HIDE});
+    };
 
     /**
      * меняем активный tab
@@ -64,6 +75,12 @@ function BurgerIngredients(props) {
                     </React.Fragment>
                 ))}
             </div>
+
+            {detail && (
+                <Modal title="Детали ингредиента" onClose={hideDetails}>
+                    <BurgerIngredientDetails item={detail} />
+                </Modal>
+            )}
         </section>
     );
 }
