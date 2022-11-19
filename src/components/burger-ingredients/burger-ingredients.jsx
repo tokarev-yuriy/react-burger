@@ -15,10 +15,18 @@ function BurgerIngredients(props) {
     const [activeTab, setActiveTab] = useState('bun');
 
     const detail = useSelector(store => store.catalog.detail);
+    const cart = useSelector(store => store.cart);
     const dispatch = useDispatch();
 
     const hideDetails = () => {
         dispatch({type: ACTION_CATALOG_DETAIL_HIDE});
+    };
+
+    const getCounts = (id) => {
+        if (cart.bun && cart.bun._id === id) {
+            return 1;
+        }
+        return cart.ingredients.reduce((value, item) => (item._id === id)?++value:value, 0);
     };
 
     /**
@@ -90,7 +98,7 @@ function BurgerIngredients(props) {
                         <h2 className={styles.section_items_title} id={'ingredients-tab-' + type.code}>{type.title}</h2>
                         <div className={styles.ingredients}>
                             {type.items.map((ingredient) => (
-                                <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={1} />
+                                <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={getCounts(ingredient._id)} />
                             ))}
                         </div>
                     </React.Fragment>
