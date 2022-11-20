@@ -1,0 +1,6 @@
+.main_items_item {
+    composes: pb-4 pr-4 from global;
+}
+.main_items_item_icon {
+    composes: mr-2 from global;
+}

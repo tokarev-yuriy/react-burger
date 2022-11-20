@@ -1,13 +1,14 @@
 import { useMemo, useContext } from 'react';
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
 import { useCallback } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { ACTION_CONSTRUCTOR_REMOVE, placeOrderAction, ACTION_CONSTRUCTOR_ORDER_HIDE, ACTION_CONSTRUCTOR_ADD } from '../../services/actions/constructor';
+import { placeOrderAction, ACTION_CONSTRUCTOR_ORDER_HIDE, ACTION_CONSTRUCTOR_ADD } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
+import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 
 function BurgerConstructor() {
 
@@ -20,6 +21,16 @@ function BurgerConstructor() {
         collect: monitor => ({
             isHover: monitor.isOver(),
         }),
+        drop(item) {
+            dispatch({
+                type: ACTION_CONSTRUCTOR_ADD,
+                item: ingredients.find(element => element._id === item.id),
+            });
+        },
+    });
+
+    const [,dropCart] = useDrop({
+        accept: "cart",
         drop(item) {
             dispatch({
                 type: ACTION_CONSTRUCTOR_ADD,
@@ -41,10 +52,6 @@ function BurgerConstructor() {
 
     const onPlaceOrder = useCallback(async () => {
         dispatch(placeOrderAction());
-    }, [dispatch]);
-    
-    const onRemoveItem = useCallback((id) => {
-        dispatch({type: ACTION_CONSTRUCTOR_REMOVE, id: id});
     }, [dispatch]);
 
     return (
@@ -68,20 +75,10 @@ function BurgerConstructor() {
                     )
                 }
             </div>
-            <div className={styles.main_items}>
+            <div className={styles.main_items} ref={dropCart}>
                 {state.ingredients.map(item => {
                     return (
-                        <div className={styles.main_items_item} key={item.id}>
-                            <span className={styles.main_items_item_icon}>
-                                <DragIcon />
-                            </span>
-                            <ConstructorElement
-                                text={item.name}
-                                thumbnail={item.image_mobile}
-                                price={item.price}
-                                handleClose={() => {onRemoveItem(item.id)}}
-                            />
-                        </div>
+                        <BurgerConstructorItem {...item}  key={item.id} />
                     );
                 })}
             </div>
