@@ -1,16 +1,11 @@
 import { 
   ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE,
-  ACTION_CONSTRUCTOR_REQUEST, ACTION_CONSTRUCTOR_REQUEST_FAIL, 
-  ACTION_CONSTRUCTOR_REQUEST_SUCCESS, ACTION_CONSTRUCTOR_ORDER_HIDE,
   ACTION_CONSTRUCTOR_MOVE
  } from '../actions/constructor';
 
 const constructorInitialState = {
     bun: null,
     ingredients: [],
-    order: null,
-    orderRequest: false,
-    orderRequestFail: false,
 };
 
 /**
@@ -38,8 +33,7 @@ const constructorInitialState = {
       
       case ACTION_CONSTRUCTOR_CLEAR:
         return {
-          ...constructorInitialState,
-          order: {...state.order}
+          ...constructorInitialState
         };
       
       case ACTION_CONSTRUCTOR_MOVE:
@@ -57,33 +51,6 @@ const constructorInitialState = {
         return {
           ...state,
           ingredients: state.ingredients.filter(item => item.id !== action.id)
-        };
-      
-      case ACTION_CONSTRUCTOR_REQUEST:
-        return {
-          ...state, 
-          orderRequest: true
-        }
-
-      case ACTION_CONSTRUCTOR_REQUEST_FAIL:
-        return {
-          ...state, 
-          orderRequest: false, 
-          orderRequestFail: true
-        }
-
-      case ACTION_CONSTRUCTOR_REQUEST_SUCCESS:
-        return {
-          ...state, 
-          order: action.order, 
-          orderRequest: false, 
-          orderRequestFail: false
-        };
-
-      case ACTION_CONSTRUCTOR_ORDER_HIDE:
-        return {
-          ...state, 
-          order: null
         };
 
       default:

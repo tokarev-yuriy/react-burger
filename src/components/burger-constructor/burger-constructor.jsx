@@ -6,7 +6,8 @@ import { useCallback } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { placeOrderAction, ACTION_CONSTRUCTOR_ORDER_HIDE, ACTION_CONSTRUCTOR_ADD } from '../../services/actions/constructor';
+import { placeOrderAction, ACTION_ORDER_HIDE } from '../../services/actions/order';
+import { ACTION_CONSTRUCTOR_ADD } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 import { guuid } from '../../utils/guuid';
@@ -16,6 +17,7 @@ function BurgerConstructor() {
     const dispatch = useDispatch();
     const state = useSelector(store => store.cart);
     const ingredients = useSelector(store => store.catalog.ingredients);
+    const order = useSelector(store => store.order.order);
 
     const [, drop] = useDrop({
         accept: "ingredient",
@@ -31,7 +33,7 @@ function BurgerConstructor() {
     });
 
     const hideOrder = useCallback((e) => {
-        dispatch({type: ACTION_CONSTRUCTOR_ORDER_HIDE});
+        dispatch({type: ACTION_ORDER_HIDE});
     }, [dispatch]);
 
     const burgerTotal = useMemo(() => {
@@ -99,9 +101,9 @@ function BurgerConstructor() {
              :'')}
             <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} isDisabled={!canPlaceOrder} />
             
-            {state.order && (
+            {order && (
                 <Modal title="" onClose={hideOrder}>
-                    <OrderDetails id={state.order.orderId} />
+                    <OrderDetails id={order.orderId} />
                 </Modal>
             )}
         </section>
