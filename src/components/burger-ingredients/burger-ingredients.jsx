@@ -37,7 +37,7 @@ function BurgerIngredients(props) {
         setActiveTab(val);
         const tabElement = document.getElementById('ingredients-tab-'  + val);
         if (tabElement) {
-            tabElement.scrollIntoView();
+            tabElement.scrollIntoView({ behavior: 'smooth' });
         }
     }, []);
 
