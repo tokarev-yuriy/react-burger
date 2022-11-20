@@ -19,7 +19,11 @@ export function placeOrderAction() {
         dispatch({type: ACTION_CONSTRUCTOR_REQUEST_FAIL});
         return;
       }
-      let ingredients = [state.cart.bun._id, ...state.cart.ingredients.map(item => item._id), state.cart.bun._id];
+      const ingredients = [
+        state.cart.bun._id, 
+        ...state.cart.ingredients.map(item => item._id), 
+        state.cart.bun._id
+      ];
       placeOrder(ingredients)
       .then(order => {
         dispatch({type: ACTION_CONSTRUCTOR_REQUEST_SUCCESS, order: order})
