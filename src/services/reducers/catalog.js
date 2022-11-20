@@ -1,10 +1,9 @@
-import { ACTION_CATALOG_REQUEST, ACTION_CATALOG_REQUEST_FAIL, ACTION_CATALOG_REQUEST_SUCCESS, ACTION_CATALOG_DETAIL_SHOW, ACTION_CATALOG_DETAIL_HIDE } from '../actions/catalog';
+import { ACTION_CATALOG_REQUEST, ACTION_CATALOG_REQUEST_FAIL, ACTION_CATALOG_REQUEST_SUCCESS } from '../actions/catalog';
 
 const catalogInitialState = {
     catalogRequest: false,
     catalogRequestFail: false,
     ingredients: [],
-    detail: null
 };
 
 /**
@@ -33,18 +32,6 @@ const catalogInitialState = {
           catalogRequestFail: false
         }
 
-      case ACTION_CATALOG_DETAIL_SHOW:
-        return {
-          ...state, 
-          detail: state.ingredients.find(item => item._id === action.id)
-        }
-
-      case ACTION_CATALOG_DETAIL_HIDE:
-        return {
-          ...state, 
-          detail: null
-        }
-        
       default:
         return state;
     }

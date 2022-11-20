@@ -4,7 +4,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
 import { useDispatch } from 'react-redux';
-import { ACTION_CATALOG_DETAIL_SHOW } from '../../services/actions/catalog';
+import { ACTION_CATALOG_DETAIL_SHOW } from '../../services/actions/catalog-detail';
 import { useDrag } from 'react-dnd';
 
 function BurgerIngredientsItem(props) {
@@ -12,7 +12,7 @@ function BurgerIngredientsItem(props) {
     const dispatch = useDispatch();
 
     const showDetails = (e) => {
-        dispatch({type: ACTION_CATALOG_DETAIL_SHOW, id: props.item._id});
+        dispatch({type: ACTION_CATALOG_DETAIL_SHOW, item: props.item});
     };
 
     const [{ isDrag }, drag] = useDrag({

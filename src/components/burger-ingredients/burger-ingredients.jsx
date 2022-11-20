@@ -8,13 +8,13 @@ import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
 import { Modal } from '../modal/modal';
-import { ACTION_CATALOG_DETAIL_HIDE } from '../../services/actions/catalog';
+import { ACTION_CATALOG_DETAIL_HIDE } from '../../services/actions/catalog-detail';
 
 function BurgerIngredients(props) {
 
     const [activeTab, setActiveTab] = useState('bun');
 
-    const detail = useSelector(store => store.catalog.detail);
+    const detail = useSelector(store => store.catalogDetail.detail);
     const cart = useSelector(store => store.cart);
     const dispatch = useDispatch();
 
