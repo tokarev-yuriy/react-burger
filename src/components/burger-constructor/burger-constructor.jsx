@@ -41,6 +41,10 @@ function BurgerConstructor() {
         );
     }, [state]);
 
+    const canPlaceOrder = useMemo(() => {
+        return state.ingredients.length > 0 && state.bun;
+    }, [state]);
+
     const onPlaceOrder = useCallback(async () => {
         dispatch(placeOrderAction());
     }, [dispatch]);
@@ -93,7 +97,7 @@ function BurgerConstructor() {
                 <p>Не удалось разместить заказ, произошла ошибка</p>
              )
              :'')}
-            <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} />
+            <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} isDisabled={!canPlaceOrder} />
             
             {state.order && (
                 <Modal title="" onClose={hideOrder}>
