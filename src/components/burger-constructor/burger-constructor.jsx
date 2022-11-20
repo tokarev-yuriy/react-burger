@@ -16,21 +16,8 @@ function BurgerConstructor() {
     const state = useSelector(store => store.cart);
     const ingredients = useSelector(store => store.catalog.ingredients);
 
-    const [{ isHover } , drop] = useDrop({
+    const [, drop] = useDrop({
         accept: "ingredient",
-        collect: monitor => ({
-            isHover: monitor.isOver(),
-        }),
-        drop(item) {
-            dispatch({
-                type: ACTION_CONSTRUCTOR_ADD,
-                item: ingredients.find(element => element._id === item.id),
-            });
-        },
-    });
-
-    const [,dropCart] = useDrop({
-        accept: "cart",
         drop(item) {
             dispatch({
                 type: ACTION_CONSTRUCTOR_ADD,
@@ -75,7 +62,7 @@ function BurgerConstructor() {
                     )
                 }
             </div>
-            <div className={styles.main_items} ref={dropCart}>
+            <div className={styles.main_items}>
                 {state.ingredients.map(item => {
                     return (
                         <BurgerConstructorItem {...item}  key={item.id} />

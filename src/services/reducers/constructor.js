@@ -1,7 +1,8 @@
 import { 
   ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE,
   ACTION_CONSTRUCTOR_REQUEST, ACTION_CONSTRUCTOR_REQUEST_FAIL, 
-  ACTION_CONSTRUCTOR_REQUEST_SUCCESS, ACTION_CONSTRUCTOR_ORDER_HIDE
+  ACTION_CONSTRUCTOR_REQUEST_SUCCESS, ACTION_CONSTRUCTOR_ORDER_HIDE,
+  ACTION_CONSTRUCTOR_MOVE
  } from '../actions/constructor';
  import { guuid } from '../../utils/guuid';
 
@@ -28,6 +29,15 @@ const constructorInitialState = {
         return {...state, ingredients: [...state.ingredients, {...action.item, id: guuid()}]}
       case ACTION_CONSTRUCTOR_CLEAR:
         return {bun: null, ingredients: []};
+      case ACTION_CONSTRUCTOR_MOVE:
+        const index = state.ingredients.findIndex(item => item.id === action.src);
+        const src = state.ingredients.find(item => item.id === action.dest)
+
+        return {...state, ingredients: [
+          ...state.ingredients.slice(0,index),
+          {...src, id: guuid()},
+          ...state.ingredients.slice(index)
+          ].filter(item => item.id !== action.dest)};
       case ACTION_CONSTRUCTOR_REMOVE:
         return {...state, ingredients: state.ingredients.filter(item => item.id !== action.id)};
       case ACTION_CONSTRUCTOR_REQUEST:

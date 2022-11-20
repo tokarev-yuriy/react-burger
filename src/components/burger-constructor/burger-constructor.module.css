@@ -15,19 +15,6 @@
     max-height: calc(100vh - var(--header-height) - 364px);
 }
 
-.main_items > div {
-    scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-}
-
-.main_items_item {
-    composes: pb-4 pr-4 from global;
-}
-.main_items_item_icon {
-    composes: mr-2 from global;
-}
-
 .total {
     display: flex;
     justify-content: flex-end;

@@ -1,6 +1,12 @@
 .main_items_item {
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
     composes: pb-4 pr-4 from global;
 }
 .main_items_item_icon {
     composes: mr-2 from global;
+}
+.hover {
+    border: 1px solid white;
 }

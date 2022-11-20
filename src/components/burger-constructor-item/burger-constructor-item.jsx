@@ -2,8 +2,8 @@ import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { ACTION_CONSTRUCTOR_REMOVE } from '../../services/actions/constructor';
-import { useDrag } from 'react-dnd';
+import { ACTION_CONSTRUCTOR_REMOVE, ACTION_CONSTRUCTOR_MOVE } from '../../services/actions/constructor';
+import { useDrag, useDrop } from 'react-dnd';
 
 function BurgerConstructorItem(item) {
 
@@ -16,13 +16,30 @@ function BurgerConstructorItem(item) {
             isDrag: monitor.isDragging()
         })
     });
+
+    const [{isHover},drop] = useDrop({
+        accept: "cart",
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        }),
+        drop(element) {
+            dispatch({
+                type: ACTION_CONSTRUCTOR_MOVE,
+                src: item.id,
+                dest: element.id,
+            });
+        },
+    });
     
     const onRemoveItem = useCallback((id) => {
         dispatch({type: ACTION_CONSTRUCTOR_REMOVE, id: id});
     }, [dispatch]);
 
     return (
-        <div className={styles.main_items_item} draggable ref={drag}>
+        <div ref={drop}>
+          <div className={styles.main_items_item} 
+            draggable ref={drag} 
+            style={{opacity: isDrag?0.5:1}}>
             <span className={styles.main_items_item_icon}>
                 <DragIcon />
             </span>
@@ -31,7 +48,9 @@ function BurgerConstructorItem(item) {
                 thumbnail={item.image_mobile}
                 price={item.price}
                 handleClose={() => {onRemoveItem(item.id)}}
+                extraClass={isHover ? styles.hover : ''}
             />
+          </div>
         </div>
     );
 }
