@@ -24,30 +24,63 @@ const constructorInitialState = {
           throw new Error('No ingredient');
         }
         if (action.item.type === 'bun') {
-          return {...state, bun: action.item};
+          return {
+            ...state, 
+            bun: action.item
+          };
         }
-        return {...state, ingredients: [...state.ingredients, {...action.item, id: guuid()}]}
+        return {
+          ...state,
+          ingredients: [...state.ingredients, {...action.item, id: guuid()}]
+        }
+      
       case ACTION_CONSTRUCTOR_CLEAR:
-        return {bun: null, ingredients: []};
+        return constructorInitialState;
+      
       case ACTION_CONSTRUCTOR_MOVE:
-        const index = state.ingredients.findIndex(item => item.id === action.src);
-        const src = state.ingredients.find(item => item.id === action.dest)
+        const hoverIndex = state.ingredients.findIndex((item) => item.id === action.src);
+        const dragIndex = state.ingredients.findIndex((item) => item.id === action.dest);
 
-        return {...state, ingredients: [
-          ...state.ingredients.slice(0,index),
-          {...src, id: guuid()},
-          ...state.ingredients.slice(index)
-          ].filter(item => item.id !== action.dest)};
+        const updateData = [...state.ingredients];
+        updateData.splice(hoverIndex, 0, updateData.splice(dragIndex, 1)[0]);
+
+        return {
+          ...state,
+          ingredients: updateData,
+        };
       case ACTION_CONSTRUCTOR_REMOVE:
-        return {...state, ingredients: state.ingredients.filter(item => item.id !== action.id)};
+        return {
+          ...state,
+          ingredients: state.ingredients.filter(item => item.id !== action.id)
+        };
+      
       case ACTION_CONSTRUCTOR_REQUEST:
-        return {...state, orderRequest: true}
+        return {
+          ...state, 
+          orderRequest: true
+        }
+
       case ACTION_CONSTRUCTOR_REQUEST_FAIL:
-        return {...state, orderRequest: false, orderRequestFail: true}
+        return {
+          ...state, 
+          orderRequest: false, 
+          orderRequestFail: true
+        }
+
       case ACTION_CONSTRUCTOR_REQUEST_SUCCESS:
-        return {...state, order: action.order, orderRequest: false, orderRequestFail: false};
+        return {
+          ...state, 
+          order: action.order, 
+          orderRequest: false, 
+          orderRequestFail: false
+        };
+
       case ACTION_CONSTRUCTOR_ORDER_HIDE:
-        return {...state, order: null};
+        return {
+          ...state, 
+          order: null
+        };
+
       default:
         return state;
     }
