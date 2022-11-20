@@ -37,7 +37,10 @@ const constructorInitialState = {
         }
       
       case ACTION_CONSTRUCTOR_CLEAR:
-        return constructorInitialState;
+        return {
+          ...constructorInitialState,
+          order: {...state.order}
+        };
       
       case ACTION_CONSTRUCTOR_MOVE:
         const hoverIndex = state.ingredients.findIndex((item) => item.id === action.src);
