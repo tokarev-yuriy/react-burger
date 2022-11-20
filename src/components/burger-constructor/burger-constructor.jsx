@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { placeOrderAction, ACTION_CONSTRUCTOR_ORDER_HIDE, ACTION_CONSTRUCTOR_ADD } from '../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
+import { guuid } from '../../utils/guuid';
 
 function BurgerConstructor() {
 
@@ -21,7 +22,10 @@ function BurgerConstructor() {
         drop(item) {
             dispatch({
                 type: ACTION_CONSTRUCTOR_ADD,
-                item: ingredients.find(element => element._id === item.id),
+                item: {
+                    ...ingredients.find(element => element._id === item.id),
+                    id: guuid()
+                },
             });
         },
     });

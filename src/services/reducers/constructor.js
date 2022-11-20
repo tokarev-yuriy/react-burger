@@ -4,7 +4,6 @@ import {
   ACTION_CONSTRUCTOR_REQUEST_SUCCESS, ACTION_CONSTRUCTOR_ORDER_HIDE,
   ACTION_CONSTRUCTOR_MOVE
  } from '../actions/constructor';
- import { guuid } from '../../utils/guuid';
 
 const constructorInitialState = {
     bun: null,
@@ -31,7 +30,10 @@ const constructorInitialState = {
         }
         return {
           ...state,
-          ingredients: [...state.ingredients, {...action.item, id: guuid()}]
+          ingredients: [
+            ...state.ingredients,
+            action.item
+          ]
         }
       
       case ACTION_CONSTRUCTOR_CLEAR:
