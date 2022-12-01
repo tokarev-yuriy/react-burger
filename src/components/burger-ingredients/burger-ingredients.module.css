@@ -30,4 +30,5 @@
     overflow-y: overlay;
     overflow-x: hidden;
     max-height: calc(100vh - var(--header-height) - 156px);
+    position: relative;
 }

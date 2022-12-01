@@ -5,10 +5,29 @@ import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredi
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
 import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
+import { Modal } from '../modal/modal';
+import { ACTION_CATALOG_DETAIL_HIDE } from '../../services/actions/catalog-detail';
 
 function BurgerIngredients(props) {
 
     const [activeTab, setActiveTab] = useState('bun');
+
+    const detail = useSelector(store => store.catalogDetail.detail);
+    const cart = useSelector(store => store.cart);
+    const dispatch = useDispatch();
+
+    const hideDetails = () => {
+        dispatch({type: ACTION_CATALOG_DETAIL_HIDE});
+    };
+
+    const getCounts = (id) => {
+        if (cart.bun && cart.bun._id === id) {
+            return 1;
+        }
+        return cart.ingredients.reduce((value, item) => (item._id === id)?++value:value, 0);
+    };
 
     /**
      * меняем активный tab
@@ -18,9 +37,30 @@ function BurgerIngredients(props) {
         setActiveTab(val);
         const tabElement = document.getElementById('ingredients-tab-'  + val);
         if (tabElement) {
-            tabElement.scrollIntoView();
+            tabElement.scrollIntoView({ behavior: 'smooth' });
         }
     }, []);
+
+    const onScroll = (event) => {
+        const scrollTop = event.currentTarget.scrollTop;
+        const tabs = {
+            bun: 0,
+            sauce: 0,
+            main: 0
+        }
+        for(let x in tabs) {
+            tabs[x] = document.getElementById('ingredients-tab-'  + x).offsetTop;
+        }
+        let tab = false;
+        let minScroll = false;
+        for(let x in tabs) {
+            if (minScroll === false || Math.abs(scrollTop - tabs[x]) < minScroll) {
+                minScroll = Math.abs(scrollTop - tabs[x]);
+                tab = x;
+            }
+        }
+        setActiveTab(tab);
+    };
 
     const types = useMemo(() => ([
         {
@@ -52,18 +92,24 @@ function BurgerIngredients(props) {
                 ))}
             </div>
             
-            <div className={styles.scrollable}>
+            <div className={styles.scrollable} onScroll={onScroll}>
                 {types.map((type)=>(
                     <React.Fragment key={type.code}>
                         <h2 className={styles.section_items_title} id={'ingredients-tab-' + type.code}>{type.title}</h2>
                         <div className={styles.ingredients}>
                             {type.items.map((ingredient) => (
-                                <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={1} />
+                                <BurgerIngredientsItem item={ingredient} key={ingredient._id} count={getCounts(ingredient._id)} />
                             ))}
                         </div>
                     </React.Fragment>
                 ))}
             </div>
+
+            {detail && (
+                <Modal title="Детали ингредиента" onClose={hideDetails}>
+                    <BurgerIngredientDetails item={detail} />
+                </Modal>
+            )}
         </section>
     );
 }

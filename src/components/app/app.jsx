@@ -3,54 +3,45 @@ import { AppHeader } from '../app-header/app-header';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import styles from './app.module.css';
-import { getIngredientsService } from '../../api/ingredients';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { ErrorBoundary } from '../error-boundary/error-boundary';
-import { ConstructorContext, ConstructorDispatcherContext, constructorReducer } from '../../services/constructorContext';
-import { useReducer } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getCatalog } from '../../services/actions/catalog';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
 
-  const [items, setItems] = useState(false);
-  const [error, setError] = useState('');
+  const { items, isLoading, isFailed } = useSelector(store => ({
+    items: store.catalog.ingredients,
+    isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
+    isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,
+  }));
+  const dispatch = useDispatch();
 
   useEffect(()=>{
-    const loadData = async () => {
-      try {
-        const data = await getIngredientsService();
-        setItems(data);
-      } catch(error) {
-        setError('Не удалось загрузить данные =(');
-      }
-    }
-
-    loadData();
+    dispatch(getCatalog());
   }, []);
-
-  const [state, dispatch] = useReducer(constructorReducer, {
-    bun: null,
-    ingredients: []
-  });
 
   return (
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
         <ErrorBoundary>
-          {error ? (
-            <p>{error}</p>
-          ) : (
-            items && 
-            <>
-              <ConstructorContext.Provider value={state} >
-              <ConstructorDispatcherContext.Provider value={dispatch} >
-                <BurgerIngredients items={items} />
-                <BurgerConstructor />
-              </ConstructorDispatcherContext.Provider>
-              </ConstructorContext.Provider>
-            </>
-          )}
+          {isFailed ? (
+            <p>Не удалось загрузить каталог</p>
+          ) : 
+            isLoading ? (
+              <p>Идет загрузка</p>
+            ):(
+              items && 
+              <>
+                <DndProvider backend={HTML5Backend}>
+                  <BurgerIngredients items={items} />
+                  <BurgerConstructor />
+                </DndProvider>
+              </>
+            )}
         </ErrorBoundary>
       </main>
     </div>

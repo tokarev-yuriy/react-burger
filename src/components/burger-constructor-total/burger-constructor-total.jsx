@@ -5,10 +5,12 @@ import PropTypes from 'prop-types';
 
 function BurgerConstructorTotal(props) {
 
-    const {onPlaceOrder, total} = props;
+    const {onPlaceOrder, total, isDisabled} = props;
     
     const onClick = () => {
-        onPlaceOrder();
+        if (!isDisabled) {
+            onPlaceOrder();
+        }
     }
 
     return (
@@ -16,7 +18,7 @@ function BurgerConstructorTotal(props) {
             <span className={styles.price}>
                 {total} <CurrencyIcon />
             </span>
-            <Button size="large" htmlType="button" onClick={onClick}>
+            <Button size="large" htmlType="button" onClick={onClick} extraClass={isDisabled ? styles.disabled : ''}>
                 Оформить заказ
             </Button>
         </div>

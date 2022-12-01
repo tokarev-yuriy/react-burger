@@ -3,28 +3,28 @@ import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/prop-type';
-import { useState } from 'react';
-import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
-import { Modal } from '../modal/modal';
-import { ConstructorDispatcherContext } from '../../services/constructorContext';
-import { ACTION_CONSTRUCTOR_ADD } from '../../constants';
+import { useDispatch } from 'react-redux';
+import { ACTION_CATALOG_DETAIL_SHOW } from '../../services/actions/catalog-detail';
+import { useDrag } from 'react-dnd';
 
 function BurgerIngredientsItem(props) {
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const constructorDispatcher = useContext(ConstructorDispatcherContext);
+    const dispatch = useDispatch();
 
-    const showDetails = () => {
-        setModalVisible(true);
-        constructorDispatcher({type: ACTION_CONSTRUCTOR_ADD, playbook: props.item});
+    const showDetails = (e) => {
+        dispatch({type: ACTION_CATALOG_DETAIL_SHOW, item: props.item});
     };
 
-    const hideDetails = () => {
-        setModalVisible(false);
-    };
+    const [{ isDrag }, drag] = useDrag({
+        type: "ingredient",
+        item: { id: props.item._id },
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
 
     return (
-        <div key={props.item._id} className={styles.item}>
+        <div key={props.item._id} className={styles.item} draggable ref={drag}>
             <Counter count={props.count} />
             <div className={styles.item_img} onClick={showDetails}>
                 <img src={props.item.image} alt={props.item.name} />
@@ -34,13 +34,6 @@ function BurgerIngredientsItem(props) {
                 <CurrencyIcon />
             </p>
             <p className={styles.item_name}  onClick={showDetails}>{props.item.name}</p>
-
-            {modalVisible && (
-                <Modal title="Детали ингредиента" onClose={hideDetails}>
-                    <BurgerIngredientDetails item={props.item} />
-                </Modal>
-            )}
-
         </div>
     );
 }

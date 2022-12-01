@@ -8,6 +8,9 @@ import { checkJsonResponse } from './helpers';
 async function placeOrder (ingredients) {
     const resp = await fetch(endpoints.orders, {
         method: 'POST',
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
         body:  JSON.stringify({
             ingredients: ingredients
         })

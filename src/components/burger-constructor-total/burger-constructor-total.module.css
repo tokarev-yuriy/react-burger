@@ -12,3 +12,7 @@
 .price {
     composes: mr-10 text text_type_digits-medium from global;
 }
+.disabled {
+    cursor: not-allowed!important;
+    opacity: 0.7!important;
+}
