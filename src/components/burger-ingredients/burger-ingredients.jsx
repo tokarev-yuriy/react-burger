@@ -24,7 +24,7 @@ function BurgerIngredients(props) {
 
     const getCounts = (id) => {
         if (cart.bun && cart.bun._id === id) {
-            return 1;
+            return 2;
         }
         return cart.ingredients.reduce((value, item) => (item._id === id)?++value:value, 0);
     };
