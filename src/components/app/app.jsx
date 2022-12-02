@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
 import { Route, Switch } from 'react-router-dom';
 import { MainPage } from '../../pages/main-page';
+import { NotFoundPage } from '../../pages/not-found-page';
 
 function App() {
 
@@ -35,6 +36,9 @@ function App() {
               <Switch>
                 <Route path="/" exact>
                   <MainPage />
+                </Route>
+                <Route>
+                  <NotFoundPage />
                 </Route>
               </Switch>
             )}
