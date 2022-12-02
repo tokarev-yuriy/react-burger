@@ -1,19 +1,16 @@
 import React from 'react';
 import { AppHeader } from '../app-header/app-header';
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import styles from './app.module.css';
 import { useEffect } from 'react';
 import { ErrorBoundary } from '../error-boundary/error-boundary';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Route, Switch } from 'react-router-dom';
+import { MainPage } from '../../pages/main-page';
 
 function App() {
 
-  const { items, isLoading, isFailed } = useSelector(store => ({
-    items: store.catalog.ingredients,
+  const { isLoading, isFailed } = useSelector(store => ({
     isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
     isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,
   }));
@@ -21,6 +18,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(getCatalog());
+    // eslint-disable-next-line 
   }, []);
 
   return (
@@ -29,18 +27,16 @@ function App() {
       <main className={styles.main}>
         <ErrorBoundary>
           {isFailed ? (
-            <p>Не удалось загрузить каталог</p>
+            <p>Не удалось загрузить данные</p>
           ) : 
             isLoading ? (
               <p>Идет загрузка</p>
             ):(
-              items && 
-              <>
-                <DndProvider backend={HTML5Backend}>
-                  <BurgerIngredients items={items} />
-                  <BurgerConstructor />
-                </DndProvider>
-              </>
+              <Switch>
+                <Route path="/" exact>
+                  <MainPage />
+                </Route>
+              </Switch>
             )}
         </ErrorBoundary>
       </main>
