@@ -10,6 +10,7 @@ import { MainPage } from '../../pages/main-page';
 import { NotFoundPage } from '../../pages/not-found-page';
 import { LoginPage } from '../../pages/login-page';
 import { RegisterPage } from '../../pages/register-page';
+import { ForgotPage } from '../../pages/forgot-page';
 
 function App() {
 
@@ -44,6 +45,9 @@ function App() {
                 </Route>
                 <Route path="/register" exact>
                   <RegisterPage />
+                </Route>
+                <Route path="/forgot-password" exact>
+                  <ForgotPage />
                 </Route>
                 <Route>
                   <NotFoundPage />
