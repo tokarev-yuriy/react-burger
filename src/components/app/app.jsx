@@ -9,6 +9,7 @@ import { Route, Switch } from 'react-router-dom';
 import { MainPage } from '../../pages/main-page';
 import { NotFoundPage } from '../../pages/not-found-page';
 import { LoginPage } from '../../pages/login-page';
+import { RegisterPage } from '../../pages/register-page';
 
 function App() {
 
@@ -40,6 +41,9 @@ function App() {
                 </Route>
                 <Route path="/login" exact>
                   <LoginPage />
+                </Route>
+                <Route path="/register" exact>
+                  <RegisterPage />
                 </Route>
                 <Route>
                   <NotFoundPage />
