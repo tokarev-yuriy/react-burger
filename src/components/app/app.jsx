@@ -12,6 +12,8 @@ import { LoginPage } from '../../pages/login-page';
 import { RegisterPage } from '../../pages/register-page';
 import { ForgotPage } from '../../pages/forgot-page';
 import { ResetPage } from '../../pages/reset-page';
+import { PersonalPage } from '../../pages/personal-page';
+
 
 function App() {
 
@@ -52,6 +54,9 @@ function App() {
                 </Route>
                 <Route path="/reset-password" exact>
                   <ResetPage />
+                </Route>
+                <Route path="/profile">
+                  <PersonalPage />
                 </Route>
                 <Route>
                   <NotFoundPage />
