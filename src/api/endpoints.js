@@ -5,6 +5,7 @@ const endpoints = {
     orders: `${BURGER_API_URL}/orders`,
     auth: {
         register: `${BURGER_API_URL}/auth/register`,
+        login: `${BURGER_API_URL}/auth/login`,
     }
 }
 
