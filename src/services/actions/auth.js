@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "../../api/auth";
+import { loginUser, logoutUser, registerUser } from "../../api/auth";
 
 
 // Actions for register
@@ -53,3 +53,16 @@ export function refresh(refreshToken) {
     });
   }
 }
+
+// Actions for logout
+export const ACTION_TOKEN_LOGOUT_SUCCESS = 'ACTION_TOKEN_LOGOUT_SUCCESS';
+
+export function logout(refreshToken, cb) {
+  return function(dispatch) {
+    logoutUser(refreshToken)
+    .finally(() => {
+        dispatch({type: ACTION_TOKEN_LOGOUT_SUCCESS, cb: cb})
+    });
+  }
+}
+

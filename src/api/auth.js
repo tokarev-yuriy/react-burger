@@ -85,4 +85,26 @@ async function registerUser (fields) {
     throw new Error('Api error');
 }
 
-export { registerUser, loginUser, refreshToken };
+/**
+ * Logout User
+ * @returns object 
+ */
+ async function logoutUser (refreshToken) {
+    const resp = await fetch(endpoints.auth.logout, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body:  JSON.stringify({
+            token: refreshToken,
+        })
+    });
+
+    const json = await checkJsonResponse(resp);
+    if (json.success) {
+        return {};
+    }
+    throw new Error('Api error');
+}
+
+export { registerUser, loginUser, refreshToken, logoutUser };
