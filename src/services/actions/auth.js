@@ -1,4 +1,4 @@
-import { loginUser, logoutUser, registerUser } from "../../api/auth";
+import { loginUser, logoutUser, registerUser, refreshToken } from "../../api/auth";
 
 
 // Actions for register
@@ -42,9 +42,9 @@ export function login(email, password, cb = null) {
 export const ACTION_TOKEN_REQUEST_FAIL = 'ACTION_TOKEN_REQUEST_FAIL';
 export const ACTION_TOKEN_REQUEST_SUCCESS = 'ACTION_TOKEN_REQUEST_SUCCESS';
 
-export function refresh(refreshToken) {
+export function refresh(token) {
   return function(dispatch) {
-    refreshToken(refreshToken)
+    refreshToken(token)
     .then(({token}) => {
         dispatch({type: ACTION_TOKEN_REQUEST_SUCCESS, token: token})
     })

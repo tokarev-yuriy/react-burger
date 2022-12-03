@@ -1,5 +1,5 @@
 import { endpoints } from './endpoints';
-import { checkJsonResponse } from './helpers';
+import { checkJsonResponse, TokenError } from './helpers';
 
 /**
  * Register user
@@ -107,4 +107,27 @@ async function registerUser (fields) {
     throw new Error('Api error');
 }
 
-export { registerUser, loginUser, refreshToken, logoutUser };
+/**
+ * Logout User
+ * @returns object 
+ */
+ async function getUser (token) {
+    const resp = await fetch(endpoints.auth.user, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "Authorization": token,
+        }
+    });
+    if (resp.status === 403) {
+        throw new TokenError('Access error');
+    }
+
+    const json = await checkJsonResponse(resp);
+    if (json.success && json.user) {
+        return json.user;
+    }
+    throw new Error('Api error');
+}
+
+export { registerUser, loginUser, refreshToken, logoutUser, getUser };

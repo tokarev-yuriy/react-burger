@@ -3,22 +3,51 @@ import styles from './profile-form.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { EditableInput } from '../../misc/editable-input/editable-input';
+import { getUser } from '../../../api/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { TokenError } from '../../../api/helpers';
+import { refresh } from '../../../services/actions/auth';
+import { useHistory } from 'react-router-dom';
 
 
 function ProfileForm(props) {
 
     const initialForm = {
-        login: '',
+        email: '',
         name: '',
         password: '',
     };
     const [form, setForm] = useState(initialForm);
+    const [loading, setLoading] = useState(false);
+    const [changed, setChanged] = useState(false);
+    const token = useSelector(store => store.auth.token);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const setField = (name, val) => {
         const f = {...form};
         f[name] = val;
+        setChanged(true);
         setForm(f);
     };
+
+    const loadUser = async () => {
+        setLoading(true);
+        try {
+            const user = await getUser(token['access'], token['refresh']);
+            setForm({...user, password: ''});
+            setChanged(false);
+        } catch (e) {
+            if (e instanceof TokenError) {
+                dispatch(refresh(token['refresh']));
+                if (token['access']) {
+                    return loadUser();
+                }
+            }
+            history.replace('/');
+        }
+        setLoading(false);
+    }
 
     useEffect(() => {
         props.setHelp(() => (
@@ -27,11 +56,15 @@ function ProfileForm(props) {
             изменить свои персональные данные
             </p>
         ));
+        loadUser();
         // eslint-disable-next-line 
     }, []);
 
     return (
         <div className={styles.form}>
+            { loading && (
+                <div className={styles.loading} />
+            )}
             <EditableInput 
                 type={'text'} 
                 value={form.name}
@@ -41,9 +74,9 @@ function ProfileForm(props) {
             />
             <EditableInput 
                 type={'email'} 
-                value={form.login}
+                value={form.email}
                 placeholder={'E-mail'} 
-                onChange={e => setField('login', e.target.value)}
+                onChange={e => setField('email', e.target.value)}
                 extraClass={styles.input}
             />
             <EditableInput 
@@ -53,10 +86,12 @@ function ProfileForm(props) {
                 onChange={e => setField('password', e.target.value)}
                 extraClass={styles.input}
             />
-            <div className={styles.buttons}>
-                <Button htmlType='reset' type='secondary'>Отмена</Button>
-                <Button htmlType='submit'>Сохранить</Button>
-            </div>
+            {changed && (
+                <div className={styles.buttons}>
+                    <Button htmlType='reset' type='secondary' onClick={loadUser}>Отмена</Button>
+                    <Button htmlType='submit'>Сохранить</Button>
+                </div>
+            )}
             
         </div>
     );

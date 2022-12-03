@@ -11,4 +11,13 @@ async function checkJsonResponse(res) {
     return await res.json();
 };
 
-export { checkJsonResponse };
+
+function TokenError(message) {
+    this.name = 'TokenError';
+    this.message = message || 'Error';
+    this.stack = (new Error()).stack;
+}
+TokenError.prototype = Object.create(Error.prototype);
+TokenError.prototype.constructor = TokenError;
+
+export { checkJsonResponse, TokenError };
