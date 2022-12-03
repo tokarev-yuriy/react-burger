@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppHeader } from '../app-header/app-header';
 import styles from './app.module.css';
-import { useEffect } from 'react';
 import { ErrorBoundary } from '../error-boundary/error-boundary';
-import { useSelector, useDispatch } from 'react-redux';
-import { getCatalog } from '../../services/actions/catalog';
 import { Route, Switch } from 'react-router-dom';
 import { MainPage } from '../../pages/main-page';
 import { NotFoundPage } from '../../pages/not-found-page';
@@ -13,14 +10,12 @@ import { RegisterPage } from '../../pages/register-page';
 import { ForgotPage } from '../../pages/forgot-page';
 import { ResetPage } from '../../pages/reset-page';
 import { PersonalPage } from '../../pages/personal-page';
+import { useDispatch } from 'react-redux';
+import { getCatalog } from '../../services/actions/catalog';
 
 
 function App() {
-
-  const { isLoading, isFailed } = useSelector(store => ({
-    isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
-    isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,
-  }));
+  
   const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -33,36 +28,29 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <ErrorBoundary>
-          {isFailed ? (
-            <p>Не удалось загрузить данные</p>
-          ) : 
-            isLoading ? (
-              <p>Идет загрузка</p>
-            ):(
-              <Switch>
-                <Route path="/" exact>
-                  <MainPage />
-                </Route>
-                <Route path="/login" exact>
-                  <LoginPage />
-                </Route>
-                <Route path="/register" exact>
-                  <RegisterPage />
-                </Route>
-                <Route path="/forgot-password" exact>
-                  <ForgotPage />
-                </Route>
-                <Route path="/reset-password" exact>
-                  <ResetPage />
-                </Route>
-                <Route path="/profile">
-                  <PersonalPage />
-                </Route>
-                <Route>
-                  <NotFoundPage />
-                </Route>
-              </Switch>
-            )}
+          <Switch>
+            <Route path="/" exact>
+              <MainPage />
+            </Route>
+            <Route path="/login" exact>
+              <LoginPage />
+            </Route>
+            <Route path="/register" exact>
+              <RegisterPage />
+            </Route>
+            <Route path="/forgot-password" exact>
+              <ForgotPage />
+            </Route>
+            <Route path="/reset-password" exact>
+              <ResetPage />
+            </Route>
+            <Route path="/profile">
+              <PersonalPage />
+            </Route>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
         </ErrorBoundary>
       </main>
     </div>
