@@ -58,4 +58,31 @@ async function registerUser (fields) {
     throw new Error('Api error');
 }
 
-export { registerUser, loginUser };
+/**
+ * Refresh token
+ * @returns object 
+ */
+ async function refreshToken (refreshToken) {
+    const resp = await fetch(endpoints.auth.token, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body:  JSON.stringify({
+            token: refreshToken,
+        })
+    });
+
+    const json = await checkJsonResponse(resp);
+    if (json.success && json.accessToken && json.refreshToken) {
+        return {
+            token: {
+                access: json.accessToken,
+                refresh: json.refreshToken
+            }
+        };
+    }
+    throw new Error('Api error');
+}
+
+export { registerUser, loginUser, refreshToken };

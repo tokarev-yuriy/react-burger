@@ -6,6 +6,7 @@ const endpoints = {
     auth: {
         register: `${BURGER_API_URL}/auth/register`,
         login: `${BURGER_API_URL}/auth/login`,
+        token: `${BURGER_API_URL}/auth/token`,
     }
 }
 
