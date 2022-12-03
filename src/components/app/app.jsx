@@ -8,6 +8,7 @@ import { getCatalog } from '../../services/actions/catalog';
 import { Route, Switch } from 'react-router-dom';
 import { MainPage } from '../../pages/main-page';
 import { NotFoundPage } from '../../pages/not-found-page';
+import { LoginPage } from '../../pages/login-page';
 
 function App() {
 
@@ -36,6 +37,9 @@ function App() {
               <Switch>
                 <Route path="/" exact>
                   <MainPage />
+                </Route>
+                <Route path="/login" exact>
+                  <LoginPage />
                 </Route>
                 <Route>
                   <NotFoundPage />
