@@ -43,7 +43,7 @@ function RegisterForm(props) {
                 onIconClick={e => switchPassword()}
                 extraClass={styles.input}
             />
-            <Button>Зарегистрироваться</Button>
+            <Button htmlType='submit'>Зарегистрироваться</Button>
             <div className={styles.help}>
                 <p>
                     Уже зарегистрированы?&nbsp;

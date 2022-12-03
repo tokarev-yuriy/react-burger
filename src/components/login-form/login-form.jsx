@@ -35,7 +35,7 @@ function LoginForm(props) {
                 onIconClick={e => switchPassword()}
                 extraClass={styles.input}
             />
-            <Button>Войти</Button>
+            <Button htmlType='submit'>Войти</Button>
             <div className={styles.help}>
                 <p>
                     Вы - новый пользователь?&nbsp;

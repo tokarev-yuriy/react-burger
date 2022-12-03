@@ -20,7 +20,7 @@ function ForgotForm(props) {
                 onChange={e => setLogin(e.target.value)}
                 extraClass={styles.input}
             />
-            <Button>Восстановить</Button>
+            <Button htmlType='submit'>Восстановить</Button>
             <div className={styles.help}>
                 <p>
                     Вспомнили пароль?&nbsp;

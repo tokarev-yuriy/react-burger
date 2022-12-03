@@ -36,7 +36,7 @@ function ResetForm(props) {
                 onChange={e => setCode(e.target.value)}
                 extraClass={styles.input}
             />
-            <Button>Сохранить</Button>
+            <Button htmlType='submit'>Сохранить</Button>
             <div className={styles.help}>
                 <p>
                     Вспомнили пароль?&nbsp;
