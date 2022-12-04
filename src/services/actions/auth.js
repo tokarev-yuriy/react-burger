@@ -1,4 +1,4 @@
-import { loginUser, logoutUser, registerUser, refreshToken } from "../../api/auth";
+import { loginUser, logoutUser, registerUser } from "../../api/auth";
 
 
 // Actions for register
@@ -38,30 +38,14 @@ export function login(email, password, cb = null) {
   }
 };
 
-// Actions for refresh Token
-export const ACTION_TOKEN_REQUEST_FAIL = 'ACTION_TOKEN_REQUEST_FAIL';
-export const ACTION_TOKEN_REQUEST_SUCCESS = 'ACTION_TOKEN_REQUEST_SUCCESS';
-
-export function refresh(token) {
-  return function(dispatch) {
-    refreshToken(token)
-    .then(({token}) => {
-        dispatch({type: ACTION_TOKEN_REQUEST_SUCCESS, token: token})
-    })
-    .catch(err => {
-        dispatch({type: ACTION_TOKEN_REQUEST_FAIL});
-    });
-  }
-}
-
 // Actions for logout
-export const ACTION_TOKEN_LOGOUT_SUCCESS = 'ACTION_TOKEN_LOGOUT_SUCCESS';
+export const ACTION_LOGOUT_REQUEST_SUCCESS = 'ACTION_LOGOUT_REQUEST_SUCCESS';
 
-export function logout(refreshToken, cb) {
+export function logout(cb) {
   return function(dispatch) {
-    logoutUser(refreshToken)
+    logoutUser()
     .finally(() => {
-        dispatch({type: ACTION_TOKEN_LOGOUT_SUCCESS, cb: cb})
+        dispatch({type: ACTION_LOGOUT_REQUEST_SUCCESS, cb: cb})
     });
   }
 }

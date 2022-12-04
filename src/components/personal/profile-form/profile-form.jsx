@@ -6,7 +6,6 @@ import { EditableInput } from '../../misc/editable-input/editable-input';
 import { getUser } from '../../../api/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { TokenError } from '../../../api/helpers';
-import { refresh } from '../../../services/actions/auth';
 import { useHistory } from 'react-router-dom';
 
 
@@ -38,12 +37,6 @@ function ProfileForm(props) {
             setForm({...user, password: ''});
             setChanged(false);
         } catch (e) {
-            if (e instanceof TokenError) {
-                dispatch(refresh(token['refresh']));
-                if (token['access']) {
-                    return loadUser();
-                }
-            }
             history.replace('/');
         }
         setLoading(false);

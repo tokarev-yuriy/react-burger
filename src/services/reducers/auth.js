@@ -1,16 +1,15 @@
 import { 
   ACTION_LOGIN_REQUEST, ACTION_LOGIN_REQUEST_FAIL, ACTION_LOGIN_REQUEST_SUCCESS, 
   ACTION_REGISTER_REQUEST, ACTION_REGISTER_REQUEST_FAIL, ACTION_REGISTER_REQUEST_SUCCESS,
-  ACTION_TOKEN_REQUEST_FAIL, ACTION_TOKEN_REQUEST_SUCCESS,
-  ACTION_TOKEN_LOGOUT_SUCCESS
+  ACTION_LOGOUT_REQUEST_SUCCESS
 
 } from "../actions/auth";
+import { tokenStorage } from "../token-storage";
 
 
 const authInitialState = {
     user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
-    token: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null,
-
+    
     registerRequest: false,
     registerRequestFail: false,
 
@@ -40,7 +39,7 @@ const authInitialState = {
       case ACTION_REGISTER_REQUEST_SUCCESS:
 
         localStorage.setItem('user', JSON.stringify(action.user));
-        localStorage.setItem('token', JSON.stringify(action.token));
+        tokenStorage.getInstance().setToken(action.token);
         if (action['cb']) {
           action.cb();
         }
@@ -48,7 +47,6 @@ const authInitialState = {
         return {
           ...state, 
           user: action.user,
-          token: action.token,
           registerRequest: false, 
           registerRequestFail: false
         };
@@ -70,7 +68,7 @@ const authInitialState = {
       case ACTION_LOGIN_REQUEST_SUCCESS:
 
         localStorage.setItem('user', JSON.stringify(action.user));
-        localStorage.setItem('token', JSON.stringify(action.token));
+        tokenStorage.getInstance().setToken(action.token);
         if (action['cb']) {
           action.cb();
         }
@@ -78,41 +76,21 @@ const authInitialState = {
         return {
           ...state, 
           user: action.user,
-          token: action.token,
           loginRequest: false, 
           loginRequestFail: false
         };
-
-      case ACTION_TOKEN_REQUEST_FAIL:
-        // Если токен не удалось обновить, значит что-то пошло не так
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        return {
-          ...state, 
-          user: null, 
-          token: null
-        }
-
-      case ACTION_TOKEN_REQUEST_SUCCESS:
-        localStorage.setItem('token', JSON.stringify(action.token));
-        
-        return {
-          ...state, 
-          token: action.token,
-        };
       
-      case ACTION_TOKEN_LOGOUT_SUCCESS:
+      case ACTION_LOGOUT_REQUEST_SUCCESS:
         localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        
+        tokenStorage.getInstance().setToken(null);
+
         if (action['cb']) {
           action.cb();
         }
 
         return {
           ...state, 
-          user: null, 
-          token: null
+          user: null
         }
 
       default:

@@ -1,3 +1,4 @@
+import { tokenStorage } from '../services/token-storage';
 import { endpoints } from './endpoints';
 import { checkJsonResponse, TokenError } from './helpers';
 
@@ -89,14 +90,14 @@ async function registerUser (fields) {
  * Logout User
  * @returns object 
  */
- async function logoutUser (refreshToken) {
+ async function logoutUser () {
     const resp = await fetch(endpoints.auth.logout, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
         body:  JSON.stringify({
-            token: refreshToken,
+            token: tokenStorage.getInstance.getToken() ? tokenStorage.getInstance.getToken().refresh : '',
         })
     });
 
