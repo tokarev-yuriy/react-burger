@@ -1,4 +1,4 @@
-import { loginUser, logoutUser, registerUser } from "../../api/auth";
+import { loginUser, logoutUser, registerUser, saveUser } from "../../api/auth";
 
 
 // Actions for register
@@ -49,4 +49,22 @@ export function logout(cb) {
     });
   }
 }
+
+// Actions for Login
+export const ACTION_PROFILE_REQUEST = 'ACTION_PROFILE_REQUEST';
+export const ACTION_PROFILE_REQUEST_FAIL = 'ACTION_PROFILE_REQUEST_FAIL';
+export const ACTION_PROFILE_REQUEST_SUCCESS = 'ACTION_PROFILE_REQUEST_SUCCESS';
+
+export function saveProfile(fields) {
+  return function(dispatch) {
+    dispatch({type: ACTION_PROFILE_REQUEST});
+    saveUser(fields)
+    .then((user) => {
+        dispatch({type: ACTION_PROFILE_REQUEST_SUCCESS, user: user})
+    })
+    .catch(err => {
+        dispatch({type: ACTION_PROFILE_REQUEST_FAIL, error: err.message});
+    });
+  }
+};
 

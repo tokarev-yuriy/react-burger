@@ -107,34 +107,73 @@ async function registerUser (fields) {
 }
 
 /**
- * Logout User
+ * Get User
  * @returns object 
  */
  async function getUser () {
-    const resp = await fetch(endpoints.auth.user, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json;charset=utf-8",
-            "Authorization": tokenStorage.getInstance().getAccessToken(),
+    try {
+        const resp = await fetch(endpoints.auth.user, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                "Authorization": tokenStorage.getInstance().getAccessToken(),
+            },
+        });
+        
+        const json = await checkJsonResponse(resp);
+        if (json.success && json.user) {
+            return json.user;
         }
-    });
-    if (resp.status === 403 && tokenStorage.getInstance().getRefreshToken()) {
-        // try to refresh token and get again
-        try {
-            const token = await refreshToken();
-            tokenStorage.getInstance().setToken(token);
-            return getUser();
-        } catch (e) {
-            tokenStorage.getInstance().clearToken();
-            throw new Error('Token expired');
+    } catch (err) {
+        if (err instanceof TokenError && tokenStorage.getInstance().getRefreshToken()) {
+            try {
+                const token = await refreshToken();
+                tokenStorage.getInstance().setToken(token);
+                return getUser();
+            } catch (e) {
+                tokenStorage.getInstance().clearToken();
+                throw new Error('Token expired');
+            }
         }
     }
-
-    const json = await checkJsonResponse(resp);
-    if (json.success && json.user) {
-        return json.user;
-    }
+    
     throw new Error('Api error');
 }
 
-export { registerUser, loginUser, refreshToken, logoutUser, getUser };
+/**
+ * Save User
+ * @returns object 
+ */
+ async function saveUser (fields) {
+    try {
+        const resp = await fetch(endpoints.auth.user, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                "Authorization": tokenStorage.getInstance().getAccessToken(),
+            },
+            body: JSON.stringify(fields)
+        });
+        
+        const json = await checkJsonResponse(resp);
+        if (json.success && json.user) {
+            return json.user;
+        }
+    } catch (err) {
+        if (err instanceof TokenError && tokenStorage.getInstance().getRefreshToken()) {
+            try {
+                const token = await refreshToken();
+                tokenStorage.getInstance().setToken(token);
+                return saveUser(fields);
+            } catch (e) {
+                tokenStorage.getInstance().clearToken();
+                throw new Error('Token expired');
+            }
+        }
+        throw new Error(err.message);
+    }
+    
+    throw new Error('Api error');
+}
+
+export { registerUser, loginUser, refreshToken, logoutUser, getUser, saveUser };

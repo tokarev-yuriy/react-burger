@@ -1,19 +1,18 @@
 import React from 'react';
 import styles from './personal-menu.module.css';
 import { NavLink, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../../services/actions/auth';
 
 
 
 function PersonalMenu() {
 
-    const token = useSelector(store => store.auth.token);
     const dispatch = useDispatch();
     const history = useHistory();
 
     const logoutUser = () => {
-        dispatch(logout(token.refresh, () => {
+        dispatch(logout(() => {
             history.replace('/');
         }))
     }

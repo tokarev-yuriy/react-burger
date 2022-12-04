@@ -22,3 +22,7 @@
     left: 0;
     top: 0;
 }
+.error {
+    composes: mb-1 text text_type_main-default from global;
+    color: var(--error);
+}
