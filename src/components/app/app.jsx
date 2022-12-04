@@ -49,6 +49,9 @@ function App() {
             <ProtectedRoute path="/reset-password" exact role={'unauthorized'}>
               <ResetPage />
             </ProtectedRoute>
+            <ProtectedRoute path="/reset-password/:token" exact role={'unauthorized'}>
+              <ResetPage />
+            </ProtectedRoute>
             <ProtectedRoute path="/profile" role={'authorized'}>
               <PersonalPage />
             </ProtectedRoute>

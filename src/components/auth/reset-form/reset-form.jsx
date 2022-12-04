@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './reset-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { resetPassword } from '../../../api/password';
+import { useEffect } from 'react';
 
 
 
@@ -16,6 +17,18 @@ function ResetForm(props) {
     const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
     const history = useHistory();
+    const location = useLocation();
+    const params = useParams();
+
+    useEffect(() => {
+        if (params && params['token']) {
+            setCode(params['token']);
+        } else {
+            if (!location || !location['state'] || !location.state['referer'] || location.state.referer !== '/forgot-password') {
+                history.replace('/forgot-password');
+            }
+        }
+    }, [params]);
 
     const changePassword = async (e) => {
         e.preventDefault();
