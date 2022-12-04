@@ -32,9 +32,7 @@ function RegisterForm(props) {
 
     const registerUser = (e) => {
         e.preventDefault();
-        dispatch(register(fields, () => {
-            history.replace('/');
-        }));
+        dispatch(register(fields));
     };
 
     const getError = (field) => {

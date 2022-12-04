@@ -23,9 +23,7 @@ function LoginForm(props) {
 
     const loginUser = (e) => {
         e.preventDefault();
-        dispatch(login(email, password, () => {
-            history.replace('/');
-        }));
+        dispatch(login(email, password));
     }
 
     return (

@@ -12,9 +12,7 @@ function PersonalMenu() {
     const history = useHistory();
 
     const logoutUser = () => {
-        dispatch(logout(() => {
-            history.replace('/');
-        }))
+        dispatch(logout())
     }
 
     return (

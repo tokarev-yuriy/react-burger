@@ -45,9 +45,6 @@ const authInitialState = {
 
         localStorage.setItem('user', JSON.stringify(action.user));
         tokenStorage.getInstance().setToken(action.token);
-        if (action['cb']) {
-          action.cb();
-        }
 
         return {
           ...state, 
@@ -74,9 +71,6 @@ const authInitialState = {
 
         localStorage.setItem('user', JSON.stringify(action.user));
         tokenStorage.getInstance().setToken(action.token);
-        if (action['cb']) {
-          action.cb();
-        }
 
         return {
           ...state, 
@@ -88,10 +82,6 @@ const authInitialState = {
       case ACTION_LOGOUT_REQUEST_SUCCESS:
         localStorage.removeItem('user');
         tokenStorage.getInstance().setToken(null);
-
-        if (action['cb']) {
-          action.cb();
-        }
 
         return {
           ...state, 

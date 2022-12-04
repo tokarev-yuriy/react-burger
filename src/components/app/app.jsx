@@ -12,6 +12,7 @@ import { ResetPage } from '../../pages/reset-page';
 import { PersonalPage } from '../../pages/personal-page';
 import { useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
+import { ProtectedRoute } from '../misc/protected-route/protected-route';
 
 
 function App() {
@@ -32,21 +33,21 @@ function App() {
             <Route path="/" exact>
               <MainPage />
             </Route>
-            <Route path="/login" exact>
+            <ProtectedRoute path="/login" exact role={'unauthorized'}>
               <LoginPage />
-            </Route>
-            <Route path="/register" exact>
+            </ProtectedRoute>
+            <ProtectedRoute path="/register" exact role={'unauthorized'}>
               <RegisterPage />
-            </Route>
-            <Route path="/forgot-password" exact>
+            </ProtectedRoute>
+            <ProtectedRoute path="/forgot-password" exact role={'unauthorized'}>
               <ForgotPage />
-            </Route>
-            <Route path="/reset-password" exact>
+            </ProtectedRoute>
+            <ProtectedRoute path="/reset-password" exact role={'unauthorized'}>
               <ResetPage />
-            </Route>
-            <Route path="/profile">
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile" role={'authorized'}>
               <PersonalPage />
-            </Route>
+            </ProtectedRoute>
             <Route>
               <NotFoundPage />
             </Route>
