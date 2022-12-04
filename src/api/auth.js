@@ -63,24 +63,22 @@ async function registerUser (fields) {
  * Refresh token
  * @returns object 
  */
- async function refreshToken (refreshToken) {
+ async function refreshToken () {
     const resp = await fetch(endpoints.auth.token, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
         body:  JSON.stringify({
-            token: refreshToken,
+            token: tokenStorage.getInstance().getRefreshToken(),
         })
     });
 
     const json = await checkJsonResponse(resp);
     if (json.success && json.accessToken && json.refreshToken) {
         return {
-            token: {
-                access: json.accessToken,
-                refresh: json.refreshToken
-            }
+            access: json.accessToken,
+            refresh: json.refreshToken
         };
     }
     throw new Error('Api error');
@@ -97,7 +95,7 @@ async function registerUser (fields) {
             "Content-Type": "application/json;charset=utf-8",
         },
         body:  JSON.stringify({
-            token: tokenStorage.getInstance.getToken() ? tokenStorage.getInstance.getToken().refresh : '',
+            token: tokenStorage.getInstance().getRefreshToken(),
         })
     });
 
@@ -112,16 +110,24 @@ async function registerUser (fields) {
  * Logout User
  * @returns object 
  */
- async function getUser (token) {
+ async function getUser () {
     const resp = await fetch(endpoints.auth.user, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
-            "Authorization": token,
+            "Authorization": tokenStorage.getInstance().getAccessToken(),
         }
     });
-    if (resp.status === 403) {
-        throw new TokenError('Access error');
+    if (resp.status === 403 && tokenStorage.getInstance().getRefreshToken()) {
+        // try to refresh token and get again
+        try {
+            const token = await refreshToken();
+            tokenStorage.getInstance().setToken(token);
+            return getUser();
+        } catch (e) {
+            tokenStorage.getInstance().clearToken();
+            throw new Error('Token expired');
+        }
     }
 
     const json = await checkJsonResponse(resp);

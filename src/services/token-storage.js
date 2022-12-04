@@ -12,12 +12,26 @@
     const setToken = (token) => {
         localStorage.setItem('token', JSON.stringify(token));
     }
+
+    const getRefreshToken = () => {
+        return getToken() ? getToken().refresh : '';
+    }
+
+    const getAccessToken = () => {
+        return getToken() ? getToken().access : '';
+    }
+
+    const clearToken = () => {
+        return setToken(null);
+    }
   
     const createInstance = () => {
-      console.log('createInstance');
       return {
         getToken: getToken,
-        setToken: setToken
+        setToken: setToken,
+        getRefreshToken: getRefreshToken,
+        getAccessToken: getAccessToken,
+        clearToken: clearToken,
       }
     }
   

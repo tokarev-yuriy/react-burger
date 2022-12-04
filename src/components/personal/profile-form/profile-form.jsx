@@ -4,8 +4,6 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { EditableInput } from '../../misc/editable-input/editable-input';
 import { getUser } from '../../../api/auth';
-import { useDispatch, useSelector } from 'react-redux';
-import { TokenError } from '../../../api/helpers';
 import { useHistory } from 'react-router-dom';
 
 
@@ -19,8 +17,6 @@ function ProfileForm(props) {
     const [form, setForm] = useState(initialForm);
     const [loading, setLoading] = useState(false);
     const [changed, setChanged] = useState(false);
-    const token = useSelector(store => store.auth.token);
-    const dispatch = useDispatch();
     const history = useHistory();
 
     const setField = (name, val) => {
@@ -33,11 +29,11 @@ function ProfileForm(props) {
     const loadUser = async () => {
         setLoading(true);
         try {
-            const user = await getUser(token['access'], token['refresh']);
+            const user = await getUser();
             setForm({...user, password: ''});
             setChanged(false);
         } catch (e) {
-            history.replace('/');
+            history.push('/login');
         }
         setLoading(false);
     }
