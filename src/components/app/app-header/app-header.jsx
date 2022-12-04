@@ -8,15 +8,15 @@ function AppHeader(props) {
         <header className={styles.header}>
             <div className={styles.header_block} >
                 <nav>
-                    <AppNavLink text='Конструктор' active={true}>
+                    <AppNavLink text='Конструктор' to={'/'} exact>
                         <BurgerIcon />
                     </AppNavLink>
-                    <AppNavLink text='Лента заказов'>
+                    <AppNavLink text='Лента заказов' to={'/orders'} exact>
                         <ListIcon />
                     </AppNavLink>
                 </nav>
-                <AppNavLink text='Личный кабинет'>
-                        <ProfileIcon />
+                <AppNavLink text='Личный кабинет' to={'/profile'}>
+                    <ProfileIcon />
                 </AppNavLink>
             </div>
             <a href="/" className={styles.header_logo} >
