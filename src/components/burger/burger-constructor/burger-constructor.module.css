@@ -41,3 +41,8 @@
     box-sizing: border-box;
     text-align: center;
 }
+
+.info {
+    composes: text text_type_main-default from global;
+    text-align: center;
+}

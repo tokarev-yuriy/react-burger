@@ -11,6 +11,8 @@ import { ACTION_CONSTRUCTOR_ADD } from '../../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
 import { guuid } from '../../../utils/guuid';
+import { tokenStorage } from '../../../services/token-storage';
+import { useHistory } from 'react-router-dom';
 
 function BurgerConstructor() {
 
@@ -18,6 +20,9 @@ function BurgerConstructor() {
     const state = useSelector(store => store.cart);
     const ingredients = useSelector(store => store.catalog.ingredients);
     const order = useSelector(store => store.order.order);
+    const isLoggedIn = useSelector(store => store.auth.user && store.auth.user.email && tokenStorage.getInstance().getToken());
+    const [isRequest, isRequestFail] = useSelector(store => [store.order.orderRequest, store.order.orderRequestFail]);
+    const history = useHistory();
 
     const [, drop] = useDrop({
         accept: "ingredient",
@@ -48,7 +53,11 @@ function BurgerConstructor() {
     }, [state]);
 
     const onPlaceOrder = useCallback(async () => {
-        dispatch(placeOrderAction());
+        if (isLoggedIn) {
+            dispatch(placeOrderAction());
+        } else {
+            history.push('/login', {referer: '/'});
+        }
     }, [dispatch]);
 
     return (
@@ -93,13 +102,15 @@ function BurgerConstructor() {
                 }
             </div>
           </div>
-            {state.orderRequest ? (
-                <p>Подождите...</p>
-             ) : (state.orderRequestFail ? (
+            {isRequest ? (
+                <p className={styles.info}>Мы передаем ваш заказ на кухню... пожождите...</p>
+             ) : (isRequestFail ? (
                 <p>Не удалось разместить заказ, произошла ошибка</p>
              )
              :'')}
-            <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} isDisabled={!canPlaceOrder} />
+            {!isRequest && (
+                <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} isDisabled={!canPlaceOrder} />
+            )}
             
             {order && (
                 <Modal title="" onClose={hideOrder}>

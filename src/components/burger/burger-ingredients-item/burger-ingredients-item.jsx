@@ -11,7 +11,7 @@ function BurgerIngredientsItem(props) {
     const history = useHistory();
 
     const showDetails = (e) => {
-        history.replace(`/ingredients/${props.item._id}`, {from: 'ingredients'});
+        history.replace(`/ingredients/${props.item._id}`, {referer: '/'});
     };
 
     const [{ isDrag }, drag] = useDrag({

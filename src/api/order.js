@@ -1,27 +1,45 @@
+import { tokenStorage } from '../services/token-storage';
+import { refreshToken } from './auth';
 import { endpoints } from './endpoints';
-import { checkJsonResponse } from './helpers';
+import { checkJsonResponse, TokenError } from './helpers';
 
 /**
  * Get order
  * @returns object 
  */
 async function placeOrder (ingredients) {
-    const resp = await fetch(endpoints.orders, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json;charset=utf-8",
-        },
-        body:  JSON.stringify({
-            ingredients: ingredients
-        })
-    });
+    try {
+        const resp = await fetch(endpoints.orders, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                "Authorization": tokenStorage.getInstance().getAccessToken(),
+            },
+            body:  JSON.stringify({
+                ingredients: ingredients
+            })
+        });
 
-    const json = await checkJsonResponse(resp);
-    if (json.success && json.order && json.order.number) {
-        return {
-            orderId: json.order.number
-        };
+        const json = await checkJsonResponse(resp);
+        if (json.success && json.order && json.order.number) {
+            return {
+                orderId: json.order.number
+            };
+        }
+    } catch (err) {
+        if (err instanceof TokenError && tokenStorage.getInstance().getRefreshToken()) {
+            try {
+                const token = await refreshToken();
+                tokenStorage.getInstance().setToken(token);
+                return placeOrder(ingredients);
+            } catch (e) {
+                tokenStorage.getInstance().clearToken();
+                throw new Error('Token expired');
+            }
+        }
+        throw new Error(err.message);
     }
+    
     throw new Error('Api error');
 }
 
