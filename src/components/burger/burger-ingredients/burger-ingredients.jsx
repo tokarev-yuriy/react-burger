@@ -5,21 +5,22 @@ import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredi
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../../utils/prop-type';
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
 import { Modal } from '../../misc/modal/modal';
-import { ACTION_CATALOG_DETAIL_HIDE } from '../../../services/actions/catalog-detail';
+import { useHistory, useParams } from 'react-router-dom';
 
 function BurgerIngredients(props) {
 
     const [activeTab, setActiveTab] = useState('bun');
 
-    const detail = useSelector(store => store.catalogDetail.detail);
     const cart = useSelector(store => store.cart);
-    const dispatch = useDispatch();
+    const params = useParams();
+    const detail = useSelector(store => params['id'] ? store.catalog.ingredients.find(item => item._id === params['id']) : null);
+    const history = useHistory();
 
     const hideDetails = () => {
-        dispatch({type: ACTION_CATALOG_DETAIL_HIDE});
+        history.replace('/');
     };
 
     const getCounts = (id) => {

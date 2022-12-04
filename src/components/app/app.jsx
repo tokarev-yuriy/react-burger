@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { AppHeader } from './app-header/app-header';
 import styles from './app.module.css';
 import { ErrorBoundary } from '../misc/error-boundary/error-boundary';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { MainPage } from '../../pages/main-page';
 import { NotFoundPage } from '../../pages/not-found-page';
 import { LoginPage } from '../../pages/login-page';
@@ -13,11 +13,15 @@ import { PersonalPage } from '../../pages/personal-page';
 import { useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
 import { ProtectedRoute } from '../misc/protected-route/protected-route';
+import { IngredientPage } from '../../pages/ingredient-page';
 
 
 function App() {
   
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const fromIngredients = location && location['state'] && location.state['from'] && location.state.from === 'ingredients';
 
   useEffect(()=>{
     dispatch(getCatalog());
@@ -48,6 +52,13 @@ function App() {
             <ProtectedRoute path="/profile" role={'authorized'}>
               <PersonalPage />
             </ProtectedRoute>
+            <Route path="/ingredients/:id" exact>
+              {fromIngredients ? (
+                <MainPage />
+              ):(
+                <IngredientPage />
+              )}
+            </Route>
             <Route>
               <NotFoundPage />
             </Route>

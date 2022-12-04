@@ -3,16 +3,15 @@ import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../../utils/prop-type';
-import { useDispatch } from 'react-redux';
-import { ACTION_CATALOG_DETAIL_SHOW } from '../../../services/actions/catalog-detail';
 import { useDrag } from 'react-dnd';
+import { useHistory } from 'react-router-dom';
 
 function BurgerIngredientsItem(props) {
 
-    const dispatch = useDispatch();
+    const history = useHistory();
 
     const showDetails = (e) => {
-        dispatch({type: ACTION_CATALOG_DETAIL_SHOW, item: props.item});
+        history.replace(`/ingredients/${props.item._id}`, {from: 'ingredients'});
     };
 
     const [{ isDrag }, drag] = useDrag({
