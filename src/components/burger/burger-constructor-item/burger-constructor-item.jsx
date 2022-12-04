@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { ACTION_CONSTRUCTOR_REMOVE, ACTION_CONSTRUCTOR_MOVE } from '../../../services/actions/constructor';
 import { useDrag, useDrop } from 'react-dnd';
+import { ingredientPropTypes } from '../../../utils/prop-type';
 
 function BurgerConstructorItem(item) {
 
@@ -54,5 +55,7 @@ function BurgerConstructorItem(item) {
         </div>
     );
 }
+
+BurgerConstructorItem.propTypes = ingredientPropTypes.isRequired;
 
 export { BurgerConstructorItem };

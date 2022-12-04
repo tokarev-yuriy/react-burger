@@ -30,6 +30,7 @@ function BurgerConstructorTotal(props) {
 BurgerConstructorTotal.propTypes = {
     total: PropTypes.number.isRequired,
     onPlaceOrder: PropTypes.func.isRequired,
+    isDisabled: PropTypes.bool,
 }; 
 
 export { BurgerConstructorTotal };

@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, useLocation } from "react-router-dom";
 import { tokenStorage } from "../../../services/token-storage";
+import PropTypes from 'prop-types';
 
 function ProtectedRoute({role, children, ...rest}) {
 
@@ -27,5 +28,9 @@ function ProtectedRoute({role, children, ...rest}) {
         </Route>
     )
 }
+
+ProtectedRoute.propTypes = {
+    role: PropTypes.string.isRequired,
+};
 
 export { ProtectedRoute };

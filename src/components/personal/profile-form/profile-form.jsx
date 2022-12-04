@@ -7,6 +7,7 @@ import { getUser } from '../../../api/auth';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveProfile } from '../../../services/actions/auth';
+import PropTypes from 'prop-types';
 
 
 function ProfileForm(props) {
@@ -106,5 +107,9 @@ function ProfileForm(props) {
         </div>
     );
 }
+
+ProfileForm.propTypes = {
+    setHelp: PropTypes.func,
+};
 
 export { ProfileForm };
