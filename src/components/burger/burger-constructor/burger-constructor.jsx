@@ -3,14 +3,14 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
 import { useCallback } from 'react';
-import { Modal } from '../modal/modal';
-import { OrderDetails } from '../order-details/order-details';
+import { Modal } from '../../misc/modal/modal';
+import { OrderDetails } from '../../personal/order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { placeOrderAction, ACTION_ORDER_HIDE } from '../../services/actions/order';
-import { ACTION_CONSTRUCTOR_ADD } from '../../services/actions/constructor';
+import { placeOrderAction, ACTION_ORDER_HIDE } from '../../../services/actions/order';
+import { ACTION_CONSTRUCTOR_ADD } from '../../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
 import { BurgerConstructorItem } from '../burger-constructor-item/burger-constructor-item';
-import { guuid } from '../../utils/guuid';
+import { guuid } from '../../../utils/guuid';
 
 function BurgerConstructor() {
 

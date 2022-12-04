@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './burger-ingredient-details.module.css';
-import { ingredientPropTypes } from '../../utils/prop-type';
+import { ingredientPropTypes } from '../../../utils/prop-type';
 
 function BurgerIngredientDetails(props) {
     return (

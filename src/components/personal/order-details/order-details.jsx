@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import { PropTypes } from 'prop-types';
-import checkIcon from '../../images/check.svg';
+import checkIcon from '../../../images/check.svg';
 
 function OrderDetails(props) {
     return (

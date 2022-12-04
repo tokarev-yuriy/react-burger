@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { AppHeader } from '../app-header/app-header';
+import { AppHeader } from './app-header/app-header';
 import styles from './app.module.css';
-import { ErrorBoundary } from '../error-boundary/error-boundary';
+import { ErrorBoundary } from '../misc/error-boundary/error-boundary';
 import { Route, Switch } from 'react-router-dom';
 import { MainPage } from '../../pages/main-page';
 import { NotFoundPage } from '../../pages/not-found-page';

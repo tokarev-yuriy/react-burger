@@ -3,12 +3,12 @@ import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-type';
+import { ingredientPropTypes } from '../../../utils/prop-type';
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
-import { Modal } from '../modal/modal';
-import { ACTION_CATALOG_DETAIL_HIDE } from '../../services/actions/catalog-detail';
+import { Modal } from '../../misc/modal/modal';
+import { ACTION_CATALOG_DETAIL_HIDE } from '../../../services/actions/catalog-detail';
 
 function BurgerIngredients(props) {
 

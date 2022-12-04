@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/prop-type';
+import { ingredientPropTypes } from '../../../utils/prop-type';
 import { useDispatch } from 'react-redux';
-import { ACTION_CATALOG_DETAIL_SHOW } from '../../services/actions/catalog-detail';
+import { ACTION_CATALOG_DETAIL_SHOW } from '../../../services/actions/catalog-detail';
 import { useDrag } from 'react-dnd';
 
 function BurgerIngredientsItem(props) {

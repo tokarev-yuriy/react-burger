@@ -3,7 +3,7 @@ import styles from './login-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { login } from '../../services/actions/auth';
+import { login } from '../../../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
 
