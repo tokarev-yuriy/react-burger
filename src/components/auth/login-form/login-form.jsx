@@ -55,7 +55,9 @@ function LoginForm(props) {
                     Неверный email или пароль
                 </div>
             )}
-            <Button htmlType='submit'>Войти</Button>
+            {!isRequest && (
+                <Button htmlType='submit'>Войти</Button> 
+            )}
             </form>
             <div className={styles.help}>
                 <p>

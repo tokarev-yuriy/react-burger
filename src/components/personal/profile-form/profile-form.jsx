@@ -18,7 +18,7 @@ function ProfileForm(props) {
         password: '',
     };
     const [form, setForm] = useState(initialForm);
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const [changed, setChanged] = useState(false);
     const history = useHistory();
     const dispatch = useDispatch();
@@ -67,8 +67,8 @@ function ProfileForm(props) {
 
     return (
         <div className={styles.form}>
-            { ( loading || isRequest ) && (
-                <div className={styles.loading} />
+            { ( isLoading || isRequest ) && (
+                <div className={styles.loadingBlock} />
             )}
             <form onSubmit={saveUser}>
             <EditableInput 
@@ -97,7 +97,11 @@ function ProfileForm(props) {
                     Произошла ошибка {requestError}
                 </div>
             )}
-            {changed && (
+            {isLoading ? (
+                <p className={styles.loading}>
+                    Обрабатываю ваш запрос
+                </p>
+            ): changed && (
                 <div className={styles.buttons}>
                     <Button htmlType='reset' type='secondary' onClick={loadUser}>Отмена</Button>
                     <Button htmlType='submit'>Сохранить</Button>

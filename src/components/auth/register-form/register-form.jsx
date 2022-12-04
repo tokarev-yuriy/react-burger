@@ -84,7 +84,9 @@ function RegisterForm(props) {
                     Произошла ошибка
                 </div>
             )}
-            <Button htmlType='submit'>Зарегистрироваться</Button>
+            {!isRequest && (
+                <Button htmlType='submit'>Зарегистрироваться</Button>
+            )}
             </form>
             <div className={styles.help}>
                 <p>
