@@ -17,3 +17,11 @@
     color: var(--link);
     text-decoration: none;
 }
+.error {
+    composes: text text_type_main-default from global;
+    color: var(--error);
+}
+.loading {
+    composes: text text_type_main-default from global;
+    color: var(--inactive);
+}

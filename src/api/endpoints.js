@@ -9,6 +9,10 @@ const endpoints = {
         token: `${BURGER_API_URL}/auth/token`,
         logout: `${BURGER_API_URL}/auth/logout`,
         user: `${BURGER_API_URL}/auth/user`,
+    },
+    password: {
+        forgot: `${BURGER_API_URL}/password-reset`,
+        reset: `${BURGER_API_URL}/password-reset/reset`,
     }
 }
 
