@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ function BurgerIngredientsItem(props) {
         history.replace(`/ingredients/${props.item._id}`, {referer: '/'});
     };
 
-    const [{ isDrag }, drag] = useDrag({
+    const [, drag] = useDrag({
         type: "ingredient",
         item: { id: props.item._id },
         collect: monitor => ({

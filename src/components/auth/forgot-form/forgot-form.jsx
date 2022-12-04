@@ -19,7 +19,7 @@ function ForgotForm(props) {
         setError('');
         setLoading(true);
         try {
-            const res = await forgotPassword(email);
+            await forgotPassword(email);
             history.push('/reset-password', {referer: '/forgot-password'});
         } catch(err) {
             setError(err.message);

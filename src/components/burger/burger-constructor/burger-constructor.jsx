@@ -1,4 +1,4 @@
-import { useMemo, useContext } from 'react';
+import { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
@@ -58,7 +58,7 @@ function BurgerConstructor() {
         } else {
             history.push('/login', {referer: '/'});
         }
-    }, [dispatch]);
+    }, [dispatch, history, isLoggedIn]);
 
     return (
         <section className={styles.section}>

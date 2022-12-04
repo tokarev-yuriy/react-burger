@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './personal-menu.module.css';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../services/actions/auth';
 
@@ -9,7 +9,6 @@ import { logout } from '../../../services/actions/auth';
 function PersonalMenu() {
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const logoutUser = () => {
         dispatch(logout())

@@ -28,14 +28,14 @@ function ResetForm(props) {
                 history.replace('/forgot-password');
             }
         }
-    }, [params]);
+    }, [params, location, history]);
 
     const changePassword = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
         try {
-            const res = await resetPassword(password, code)
+            await resetPassword(password, code)
             history.push('/login', {referer: '/reset-password'});
         } catch(err) {
             setError(err.message);
