@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './login-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { login } from '../../../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,7 +15,6 @@ function LoginForm(props) {
     const [isLocked, setIsLocked] = useState(true);
     const [isRequest, isRequestFailed] = useSelector(store => [store.auth.loginRequest, store.auth.loginRequestFail] );
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const switchPassword = () => {
         setIsLocked(!isLocked);

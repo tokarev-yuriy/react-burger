@@ -21,7 +21,7 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const fromIngredients = location && location['state'] && location.state['from'] && location.state.from === 'ingredients';
+  const isModal = location && location['state'] && location.state['referer'] && location.state.referer === '/';
 
   useEffect(()=>{
     dispatch(getCatalog());
@@ -53,7 +53,7 @@ function App() {
               <PersonalPage />
             </ProtectedRoute>
             <Route path="/ingredients/:id" exact>
-              {fromIngredients ? (
+              {isModal ? (
                 <MainPage />
               ):(
                 <IngredientPage />
