@@ -7,6 +7,7 @@ import {
     ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AppNavLink } from "../app-nav-link/app-nav-link";
+import { Link } from "react-router-dom";
 
 function AppHeader(props) {
     return (
@@ -24,9 +25,9 @@ function AppHeader(props) {
                     <ProfileIcon />
                 </AppNavLink>
             </div>
-            <a href="/" className={styles.header_logo}>
+            <Link to="/" className={styles.header_logo}>
                 <Logo />
-            </a>
+            </Link>
         </header>
     );
 }
