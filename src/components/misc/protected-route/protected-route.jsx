@@ -18,7 +18,7 @@ function ProtectedRoute({ role, children, ...rest }) {
 
     if (role === 'authorized' && !isLoggedIn) {
         return (
-            <Redirect to={'/login'} />
+            <Redirect to={{pathname: '/login', state: {referer: location.pathname}}} />
         );
     }
 
