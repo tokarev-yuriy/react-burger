@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 
 function BurgerConstructorTotal(props) {
 
-    const {onPlaceOrder, total, isDisabled} = props;
+    const { onPlaceOrder, total, isDisabled } = props;
     const isRequest = useSelector(store => store.order.orderRequest);
-    
+
     const onClick = () => {
         if (!isDisabled) {
             onPlaceOrder();
@@ -31,6 +31,6 @@ BurgerConstructorTotal.propTypes = {
     total: PropTypes.number.isRequired,
     onPlaceOrder: PropTypes.func.isRequired,
     isDisabled: PropTypes.bool,
-}; 
+};
 
 export { BurgerConstructorTotal };

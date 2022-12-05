@@ -6,13 +6,13 @@ import { requestWithCheck, TokenError } from './helpers';
  * Register user
  * @returns object 
  */
-async function registerUser (fields) {
+async function registerUser(fields) {
     const json = await requestWithCheck(endpoints.auth.register, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body:  JSON.stringify({
+        body: JSON.stringify({
             ...fields
         })
     });
@@ -32,13 +32,13 @@ async function registerUser (fields) {
  * Login user
  * @returns object 
  */
- async function loginUser (email, password) {
+async function loginUser(email, password) {
     const json = await requestWithCheck(endpoints.auth.login, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body:  JSON.stringify({
+        body: JSON.stringify({
             email: email,
             password: password,
         })
@@ -59,13 +59,13 @@ async function registerUser (fields) {
  * Refresh token
  * @returns object 
  */
- async function refreshToken () {
+async function refreshToken() {
     const json = await requestWithCheck(endpoints.auth.token, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body:  JSON.stringify({
+        body: JSON.stringify({
             token: tokenStorage.getInstance().getRefreshToken(),
         })
     });
@@ -82,13 +82,13 @@ async function registerUser (fields) {
  * Logout User
  * @returns object 
  */
- async function logoutUser () {
+async function logoutUser() {
     const json = await requestWithCheck(endpoints.auth.logout, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
-        body:  JSON.stringify({
+        body: JSON.stringify({
             token: tokenStorage.getInstance().getRefreshToken(),
         })
     });
@@ -102,7 +102,7 @@ async function registerUser (fields) {
  * Get User
  * @returns object 
  */
- async function getUser () {
+async function getUser() {
     try {
         const json = await requestWithCheck(endpoints.auth.user, {
             method: 'GET',
@@ -126,7 +126,7 @@ async function registerUser (fields) {
             }
         }
     }
-    
+
     throw new Error('Api error');
 }
 
@@ -134,7 +134,7 @@ async function registerUser (fields) {
  * Save User
  * @returns object 
  */
- async function saveUser (fields) {
+async function saveUser(fields) {
     try {
         const json = await requestWithCheck(endpoints.auth.user, {
             method: 'PATCH',
@@ -160,7 +160,7 @@ async function registerUser (fields) {
         }
         throw new Error(err.message);
     }
-    
+
     throw new Error('Api error');
 }
 

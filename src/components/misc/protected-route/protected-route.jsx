@@ -4,7 +4,7 @@ import { Redirect, Route, useLocation } from "react-router-dom";
 import { tokenStorage } from "../../../services/token-storage";
 import PropTypes from 'prop-types';
 
-function ProtectedRoute({role, children, ...rest}) {
+function ProtectedRoute({ role, children, ...rest }) {
 
     const isLoggedIn = useSelector(store => store.auth.user && store.auth.user.email && tokenStorage.getInstance().getToken());
     const location = useLocation();
@@ -24,7 +24,7 @@ function ProtectedRoute({role, children, ...rest}) {
 
     return (
         <Route {...rest}>
-           { children }
+            {children}
         </Route>
     )
 }

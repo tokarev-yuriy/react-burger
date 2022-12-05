@@ -17,13 +17,13 @@ import { IngredientPage } from '../../pages/ingredient-page';
 
 
 function App() {
-  
+
   const dispatch = useDispatch();
   const location = useLocation();
 
   const isModal = location && location['state'] && location.state['referer'] && location.state.referer === '/';
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getCatalog());
     // eslint-disable-next-line 
   }, []);
@@ -58,7 +58,7 @@ function App() {
             <Route path="/ingredients/:id" exact>
               {isModal ? (
                 <MainPage />
-              ):(
+              ) : (
                 <IngredientPage />
               )}
             </Route>

@@ -11,7 +11,7 @@ function BurgerIngredientsItem(props) {
     const history = useHistory();
 
     const showDetails = (e) => {
-        history.replace(`/ingredients/${props.item._id}`, {referer: '/'});
+        history.replace(`/ingredients/${props.item._id}`, { referer: '/' });
     };
 
     const [, drag] = useDrag({
@@ -32,7 +32,7 @@ function BurgerIngredientsItem(props) {
                 {props.item.price}
                 <CurrencyIcon />
             </p>
-            <p className={styles.item_name}  onClick={showDetails}>{props.item.name}</p>
+            <p className={styles.item_name} onClick={showDetails}>{props.item.name}</p>
         </div>
     );
 }

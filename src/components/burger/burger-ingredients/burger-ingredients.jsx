@@ -27,7 +27,7 @@ function BurgerIngredients(props) {
         if (cart.bun && cart.bun._id === id) {
             return 2;
         }
-        return cart.ingredients.reduce((value, item) => (item._id === id)?++value:value, 0);
+        return cart.ingredients.reduce((value, item) => (item._id === id) ? ++value : value, 0);
     };
 
     /**
@@ -36,7 +36,7 @@ function BurgerIngredients(props) {
      */
     const changeTab = useCallback((val) => {
         setActiveTab(val);
-        const tabElement = document.getElementById('ingredients-tab-'  + val);
+        const tabElement = document.getElementById('ingredients-tab-' + val);
         if (tabElement) {
             tabElement.scrollIntoView({ behavior: 'smooth' });
         }
@@ -49,12 +49,12 @@ function BurgerIngredients(props) {
             sauce: 0,
             main: 0
         }
-        for(let x in tabs) {
-            tabs[x] = document.getElementById('ingredients-tab-'  + x).offsetTop;
+        for (let x in tabs) {
+            tabs[x] = document.getElementById('ingredients-tab-' + x).offsetTop;
         }
         let tab = false;
         let minScroll = false;
-        for(let x in tabs) {
+        for (let x in tabs) {
             if (minScroll === false || Math.abs(scrollTop - tabs[x]) < minScroll) {
                 minScroll = Math.abs(scrollTop - tabs[x]);
                 tab = x;
@@ -84,17 +84,17 @@ function BurgerIngredients(props) {
     return (
         <section className={styles.section}>
             <h1 className={styles.section_title}>Соберите бургер</h1>
-            
+
             <div className={styles.section_tabs}>
-                {types.map((type)=>(
+                {types.map((type) => (
                     <Tab value={type.code} active={type.code === activeTab} onClick={changeTab} key={type.code}>
                         {type.title}
                     </Tab>
                 ))}
             </div>
-            
+
             <div className={styles.scrollable} onScroll={onScroll}>
-                {types.map((type)=>(
+                {types.map((type) => (
                     <React.Fragment key={type.code}>
                         <h2 className={styles.section_items_title} id={'ingredients-tab-' + type.code}>{type.title}</h2>
                         <div className={styles.ingredients}>
@@ -117,6 +117,6 @@ function BurgerIngredients(props) {
 
 BurgerIngredients.propTypes = {
     items: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-}; 
+};
 
 export { BurgerIngredients };

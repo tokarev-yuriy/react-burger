@@ -15,4 +15,4 @@ const ingredientPropTypes = PropTypes.shape({
     __v: PropTypes.number.isRequired,
 });
 
-export {ingredientPropTypes};
+export { ingredientPropTypes };

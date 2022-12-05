@@ -38,7 +38,7 @@ function BurgerConstructor() {
     });
 
     const hideOrder = useCallback((e) => {
-        dispatch({type: ACTION_ORDER_HIDE});
+        dispatch({ type: ACTION_ORDER_HIDE });
     }, [dispatch]);
 
     const burgerTotal = useMemo(() => {
@@ -56,62 +56,62 @@ function BurgerConstructor() {
         if (isLoggedIn) {
             dispatch(placeOrderAction());
         } else {
-            history.push('/login', {referer: '/'});
+            history.push('/login', { referer: '/' });
         }
     }, [dispatch, history, isLoggedIn]);
 
     return (
         <section className={styles.section}>
-          <div ref={drop}>
-            {state.ingredients.length === 0 && !state.bun && (
-                <div className={styles.empty_burger}>
-                    Перетяните булки и ингредиенты
-                </div>                
-            )}
-            <div className={styles.bun_top}>
-                {state.bun &&
-                    (
-                    <ConstructorElement
-                        type="top"
-                        text={`${state.bun.name} (верх)`}
-                        thumbnail={state.bun.image_mobile}
-                        price={state.bun.price}
-                        isLocked
-                    />
-                    )
-                }
+            <div ref={drop}>
+                {state.ingredients.length === 0 && !state.bun && (
+                    <div className={styles.empty_burger}>
+                        Перетяните булки и ингредиенты
+                    </div>
+                )}
+                <div className={styles.bun_top}>
+                    {state.bun &&
+                        (
+                            <ConstructorElement
+                                type="top"
+                                text={`${state.bun.name} (верх)`}
+                                thumbnail={state.bun.image_mobile}
+                                price={state.bun.price}
+                                isLocked
+                            />
+                        )
+                    }
+                </div>
+                <div className={styles.main_items}>
+                    {state.ingredients.map(item => {
+                        return (
+                            <BurgerConstructorItem {...item} key={item.id} />
+                        );
+                    })}
+                </div>
+                <div className={styles.bun_bottom}>
+                    {state.bun &&
+                        (
+                            <ConstructorElement
+                                type="bottom"
+                                text={`${state.bun.name} (низ)`}
+                                thumbnail={state.bun.image_mobile}
+                                price={state.bun.price}
+                                isLocked
+                            />
+                        )
+                    }
+                </div>
             </div>
-            <div className={styles.main_items}>
-                {state.ingredients.map(item => {
-                    return (
-                        <BurgerConstructorItem {...item}  key={item.id} />
-                    );
-                })}
-            </div>
-            <div className={styles.bun_bottom}>
-                {state.bun &&
-                    (
-                      <ConstructorElement
-                        type="bottom"
-                        text={`${state.bun.name} (низ)`}
-                        thumbnail={state.bun.image_mobile}
-                        price={state.bun.price}
-                        isLocked
-                      />
-                    )
-                }
-            </div>
-          </div>
             {isRequest ? (
                 <p className={styles.info}>Мы передаем ваш заказ на кухню... пожождите...</p>
-             ) : (isRequestFail ? (
+            ) : (isRequestFail ? (
                 <p>Не удалось разместить заказ, произошла ошибка</p>
-             )
-             :'')}
+            )
+                : '')}
             {!isRequest && (
                 <BurgerConstructorTotal total={burgerTotal} onPlaceOrder={onPlaceOrder} isDisabled={!canPlaceOrder} />
             )}
-            
+
             {order && (
                 <Modal title="" onClose={hideOrder}>
                     <OrderDetails id={order.orderId} />

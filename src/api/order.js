@@ -7,7 +7,7 @@ import { requestWithCheck, TokenError } from './helpers';
  * Get order
  * @returns object 
  */
-async function placeOrder (ingredients) {
+async function placeOrder(ingredients) {
     try {
         const json = await requestWithCheck(endpoints.orders, {
             method: 'POST',
@@ -15,7 +15,7 @@ async function placeOrder (ingredients) {
                 "Content-Type": "application/json;charset=utf-8",
                 "Authorization": tokenStorage.getInstance().getAccessToken(),
             },
-            body:  JSON.stringify({
+            body: JSON.stringify({
                 ingredients: ingredients
             })
         });
@@ -38,7 +38,7 @@ async function placeOrder (ingredients) {
         }
         throw new Error(err.message);
     }
-    
+
     throw new Error('Api error');
 }
 

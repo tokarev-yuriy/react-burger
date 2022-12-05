@@ -13,7 +13,7 @@ import { useForm } from '../../../hooks/useForm';
 
 function ProfileForm(props) {
 
-    const {values, handleChange, setValues} = useForm({
+    const { values, handleChange, setValues } = useForm({
         email: '',
         name: '',
         password: '',
@@ -22,7 +22,7 @@ function ProfileForm(props) {
     const [changed, setChanged] = useState(false);
     const history = useHistory();
     const dispatch = useDispatch();
-    const [isRequest, isRequestFailed, requestError] = useSelector(store => [store.auth.profileRequest, store.auth.profileRequestFail, store.auth.profileError] );
+    const [isRequest, isRequestFailed, requestError] = useSelector(store => [store.auth.profileRequest, store.auth.profileRequestFail, store.auth.profileError]);
 
     const handleProfileChange = (e) => {
         setChanged(true);
@@ -33,7 +33,7 @@ function ProfileForm(props) {
         setLoading(true);
         try {
             const user = await getUser();
-            setValues({...user, password: ''});
+            setValues({ ...user, password: '' });
             setChanged(false);
         } catch (e) {
             history.push('/login');
@@ -55,8 +55,8 @@ function ProfileForm(props) {
     useEffect(() => {
         props.setHelp(() => (
             <p>
-            В этом разделе вы можете<br/>
-            изменить свои персональные данные
+                В этом разделе вы можете<br />
+                изменить свои персональные данные
             </p>
         ));
         loadUser();
@@ -65,49 +65,49 @@ function ProfileForm(props) {
 
     return (
         <div className={styles.form}>
-            { ( isLoading || isRequest ) && (
+            {(isLoading || isRequest) && (
                 <div className={styles.loadingBlock} />
             )}
             <form onSubmit={saveUser}>
-            <EditableInput 
-                type={'text'} 
-                value={values.name}
-                name={'name'}
-                placeholder={'Имя'} 
-                onChange={handleProfileChange}
-                extraClass={styles.input}
-            />
-            <EditableInput 
-                type={'email'} 
-                value={values.email}
-                name={'email'}
-                placeholder={'E-mail'} 
-                onChange={handleProfileChange}
-                extraClass={styles.input}
-            />
-            <EditableInput 
-                type={'password'} 
-                value={values.password}
-                name={'password'}
-                placeholder={'Пароль'} 
-                onChange={handleProfileChange}
-                extraClass={styles.input}
-            />
-            { isRequestFailed && (
-                <div className={styles.error}>
-                    Произошла ошибка {requestError}
-                </div>
-            )}
-            {isLoading ? (
-                <p className={styles.loading}>
-                    Обрабатываю ваш запрос
-                </p>
-            ): changed && (
-                <div className={styles.buttons}>
-                    <Button htmlType='reset' type='secondary' onClick={loadUser}>Отмена</Button>
-                    <Button htmlType='submit'>Сохранить</Button>
-                </div>
-            )}
+                <EditableInput
+                    type={'text'}
+                    value={values.name}
+                    name={'name'}
+                    placeholder={'Имя'}
+                    onChange={handleProfileChange}
+                    extraClass={styles.input}
+                />
+                <EditableInput
+                    type={'email'}
+                    value={values.email}
+                    name={'email'}
+                    placeholder={'E-mail'}
+                    onChange={handleProfileChange}
+                    extraClass={styles.input}
+                />
+                <EditableInput
+                    type={'password'}
+                    value={values.password}
+                    name={'password'}
+                    placeholder={'Пароль'}
+                    onChange={handleProfileChange}
+                    extraClass={styles.input}
+                />
+                {isRequestFailed && (
+                    <div className={styles.error}>
+                        Произошла ошибка {requestError}
+                    </div>
+                )}
+                {isLoading ? (
+                    <p className={styles.loading}>
+                        Обрабатываю ваш запрос
+                    </p>
+                ) : changed && (
+                    <div className={styles.buttons}>
+                        <Button htmlType='reset' type='secondary' onClick={loadUser}>Отмена</Button>
+                        <Button htmlType='submit'>Сохранить</Button>
+                    </div>
+                )}
             </form>
         </div>
     );

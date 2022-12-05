@@ -18,7 +18,7 @@ function BurgerConstructorItem(item) {
         })
     });
 
-    const [{isHover},drop] = useDrop({
+    const [{ isHover }, drop] = useDrop({
         accept: "cart",
         collect: monitor => ({
             isHover: monitor.isOver(),
@@ -31,27 +31,27 @@ function BurgerConstructorItem(item) {
             });
         },
     });
-    
+
     const onRemoveItem = useCallback((id) => {
-        dispatch({type: ACTION_CONSTRUCTOR_REMOVE, id: id});
+        dispatch({ type: ACTION_CONSTRUCTOR_REMOVE, id: id });
     }, [dispatch]);
 
     return (
         <div ref={drop}>
-          <div className={styles.main_items_item} 
-            draggable ref={drag} 
-            style={{opacity: isDrag?0.5:1}}>
-            <span className={styles.main_items_item_icon}>
-                <DragIcon />
-            </span>
-            <ConstructorElement
-                text={item.name}
-                thumbnail={item.image_mobile}
-                price={item.price}
-                handleClose={() => {onRemoveItem(item.id)}}
-                extraClass={isHover ? styles.hover : ''}
-            />
-          </div>
+            <div className={styles.main_items_item}
+                draggable ref={drag}
+                style={{ opacity: isDrag ? 0.5 : 1 }}>
+                <span className={styles.main_items_item_icon}>
+                    <DragIcon />
+                </span>
+                <ConstructorElement
+                    text={item.name}
+                    thumbnail={item.image_mobile}
+                    price={item.price}
+                    handleClose={() => { onRemoveItem(item.id) }}
+                    extraClass={isHover ? styles.hover : ''}
+                />
+            </div>
         </div>
     );
 }

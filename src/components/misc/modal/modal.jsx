@@ -9,7 +9,7 @@ const modalRoot = document.getElementById("react-modals");
 
 function Modal(props) {
 
-    const {onClose, title, children} = props;
+    const { onClose, title, children } = props;
 
     const onClick = () => {
         onClose();

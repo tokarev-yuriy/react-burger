@@ -7,14 +7,14 @@ function EditableInput(props) {
 
     const ref = useRef();
     const [isEditable, setIsEditable] = useState(false);
-    
+
     const toggleEditableField = () => {
         setIsEditable(!isEditable);
         ref.current.focus();
     };
 
     return (
-        <Input 
+        <Input
             {...props}
             readOnly={!isEditable}
             icon={!isEditable ? 'EditIcon' : 'CloseIcon'}
