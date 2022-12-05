@@ -4,14 +4,15 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../../utils/prop-type';
 import { useDrag } from 'react-dnd';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 function BurgerIngredientsItem(props) {
 
     const history = useHistory();
+    const location = useLocation();
 
     const showDetails = (e) => {
-        history.replace(`/ingredients/${props.item._id}`, { referer: { pathname: '/' } });
+        history.replace(`/ingredients/${props.item._id}`, { background: location });
     };
 
     const [, drag] = useDrag({

@@ -14,14 +14,14 @@ import { useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
 import { ProtectedRoute } from '../misc/protected-route/protected-route';
 import { IngredientPage } from '../../pages/ingredient-page';
+import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
 
 
 function App() {
 
   const dispatch = useDispatch();
   const location = useLocation();
-
-  const isModal = location && location['state'] && location.state['referer'] && location.state.referer === '/';
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getCatalog());
@@ -33,7 +33,7 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <ErrorBoundary>
-          <Switch>
+          <Switch location={background || location}>
             <Route path="/" exact>
               <MainPage />
             </Route>
@@ -56,16 +56,18 @@ function App() {
               <PersonalPage />
             </ProtectedRoute>
             <Route path="/ingredients/:id" exact>
-              {isModal ? (
-                <MainPage />
-              ) : (
-                <IngredientPage />
-              )}
+              <IngredientPage />
             </Route>
             <Route>
               <NotFoundPage />
             </Route>
           </Switch>
+
+          {background && (
+            <Route path="/ingredients/:id">
+              <BurgerIngredientModal />
+            </Route>
+          )}
         </ErrorBoundary>
       </main>
     </div>

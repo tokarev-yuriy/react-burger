@@ -6,22 +6,12 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../../utils/prop-type';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
-import { Modal } from '../../misc/modal/modal';
-import { useHistory, useParams } from 'react-router-dom';
 
 function BurgerIngredients(props) {
 
     const [activeTab, setActiveTab] = useState('bun');
 
     const cart = useSelector(store => store.cart);
-    const params = useParams();
-    const detail = useSelector(store => params['id'] ? store.catalog.ingredients.find(item => item._id === params['id']) : null);
-    const history = useHistory();
-
-    const hideDetails = () => {
-        history.replace('/');
-    };
 
     const getCounts = (id) => {
         if (cart.bun && cart.bun._id === id) {
@@ -105,12 +95,6 @@ function BurgerIngredients(props) {
                     </React.Fragment>
                 ))}
             </div>
-
-            {detail && (
-                <Modal title="Детали ингредиента" onClose={hideDetails}>
-                    <BurgerIngredientDetails item={detail} />
-                </Modal>
-            )}
         </section>
     );
 }
