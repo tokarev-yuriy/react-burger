@@ -5,12 +5,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../../services/actions/auth';
+import { useForm } from '../../../hooks/useForm';
 
 
 
 function RegisterForm(props) {
 
-    const [fields, setFields] = useState({
+    const {values, handleChange, setValues} = useForm({
         email: '',
         password: '',
         name: '',
@@ -19,23 +20,17 @@ function RegisterForm(props) {
     const [isRequest, isRequestFailed] = useSelector(store => [store.auth.registerRequest, store.auth.registerRequestFail] );
     const dispatch = useDispatch();
 
-    const setField = (name, val) => {
-        const f = {...fields};
-        f[name] = val;
-        setFields(f);
-    };
-
     const switchPassword = () => {
         setIsLocked(!isLocked);
     };
 
     const registerUser = (e) => {
         e.preventDefault();
-        dispatch(register(fields));
+        dispatch(register(values));
     };
 
     const getError = (field) => {
-        if (isRequestFailed && !fields[field]) {
+        if (isRequestFailed && !values[field]) {
             return 'Поле не может быть пустым';
         }
         return '';
@@ -47,27 +42,30 @@ function RegisterForm(props) {
             <form onSubmit={registerUser}>
             <Input 
                 type={'text'} 
-                value={fields.name}
+                value={values.name}
+                name={'name'}
                 placeholder={'Имя'} 
-                onChange={e => setField('name', e.target.value)}
+                onChange={handleChange}
                 extraClass={styles.input}
                 error={getError('name') ? true : false}
                 errorText={getError('name')}
             />
             <Input 
                 type={'email'} 
-                value={fields.email}
+                value={values.email}
+                name={'email'}
                 placeholder={'E-mail'} 
-                onChange={e => setField('email', e.target.value)}
+                onChange={handleChange}
                 extraClass={styles.input}
                 error={getError('email') ? true : false}
                 errorText={getError('email')}
             />
             <Input 
                 type={isLocked ? 'password' : 'text'} 
-                value={fields.password}
+                value={values.password}
+                name={'password'}
                 placeholder={'Пароль'} 
-                onChange={e => setField('password', e.target.value)}
+                onChange={handleChange}
                 icon={isLocked ? 'ShowIcon' : 'HideIcon'}
                 onIconClick={e => switchPassword()}
                 extraClass={styles.input}

@@ -4,12 +4,13 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { forgotPassword } from '../../../api/password';
+import { useForm } from '../../../hooks/useForm';
 
 
 
 function ForgotForm(props) {
 
-    const [email, setEmail] = useState('');
+    const {values, handleChange, setValues} = useForm({email: ''});
     const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
     const history = useHistory();
@@ -19,7 +20,7 @@ function ForgotForm(props) {
         setError('');
         setLoading(true);
         try {
-            await forgotPassword(email);
+            await forgotPassword(values.email);
             history.push('/reset-password', {referer: '/forgot-password'});
         } catch(err) {
             setError(err.message);
@@ -33,9 +34,10 @@ function ForgotForm(props) {
             <form onSubmit={sendMail}>
             <Input 
                 type={'email'} 
-                value={email}
+                value={values.email}
+                name={'email'}
                 placeholder={'Укажите e-mail'} 
-                onChange={e => setEmail(e.target.value)}
+                onChange={handleChange}
                 extraClass={styles.input}
             />
             {error && (

@@ -8,34 +8,32 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveProfile } from '../../../services/actions/auth';
 import PropTypes from 'prop-types';
+import { useForm } from '../../../hooks/useForm';
 
 
 function ProfileForm(props) {
 
-    const initialForm = {
+    const {values, handleChange, setValues} = useForm({
         email: '',
         name: '',
         password: '',
-    };
-    const [form, setForm] = useState(initialForm);
+    });
     const [isLoading, setLoading] = useState(false);
     const [changed, setChanged] = useState(false);
     const history = useHistory();
     const dispatch = useDispatch();
     const [isRequest, isRequestFailed, requestError] = useSelector(store => [store.auth.profileRequest, store.auth.profileRequestFail, store.auth.profileError] );
 
-    const setField = (name, val) => {
-        const f = {...form};
-        f[name] = val;
+    const handleProfileChange = (e) => {
         setChanged(true);
-        setForm(f);
-    };
+        return handleChange(e);
+    }
 
     const loadUser = async () => {
         setLoading(true);
         try {
             const user = await getUser();
-            setForm({...user, password: ''});
+            setValues({...user, password: ''});
             setChanged(false);
         } catch (e) {
             history.push('/login');
@@ -47,7 +45,7 @@ function ProfileForm(props) {
         e.preventDefault();
         setLoading(true);
         try {
-            dispatch(saveProfile(form));
+            dispatch(saveProfile(values));
         } catch (e) {
             history.push('/login');
         }
@@ -73,23 +71,26 @@ function ProfileForm(props) {
             <form onSubmit={saveUser}>
             <EditableInput 
                 type={'text'} 
-                value={form.name}
+                value={values.name}
+                name={'name'}
                 placeholder={'Имя'} 
-                onChange={e => setField('name', e.target.value)}
+                onChange={handleProfileChange}
                 extraClass={styles.input}
             />
             <EditableInput 
                 type={'email'} 
-                value={form.email}
+                value={values.email}
+                name={'email'}
                 placeholder={'E-mail'} 
-                onChange={e => setField('email', e.target.value)}
+                onChange={handleProfileChange}
                 extraClass={styles.input}
             />
             <EditableInput 
                 type={'password'} 
-                value={form.password}
+                value={values.password}
+                name={'password'}
                 placeholder={'Пароль'} 
-                onChange={e => setField('password', e.target.value)}
+                onChange={handleProfileChange}
                 extraClass={styles.input}
             />
             { isRequestFailed && (

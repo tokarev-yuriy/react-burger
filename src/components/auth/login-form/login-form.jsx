@@ -5,16 +5,19 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../../../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from '../../../hooks/useForm';
 
 
 
 function LoginForm(props) {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [isLocked, setIsLocked] = useState(true);
     const [isRequest, isRequestFailed] = useSelector(store => [store.auth.loginRequest, store.auth.loginRequestFail] );
     const dispatch = useDispatch();
+    const {values, handleChange, setValues} = useForm({
+        email: '',
+        password: ''
+    });
 
     const switchPassword = () => {
         setIsLocked(!isLocked);
@@ -22,7 +25,7 @@ function LoginForm(props) {
 
     const loginUser = (e) => {
         e.preventDefault();
-        dispatch(login(email, password));
+        dispatch(login(values.email, values.password));
     }
 
     return (
@@ -31,18 +34,20 @@ function LoginForm(props) {
             <h2 className={styles.title}>Вход</h2>
             <Input 
                 type={'email'} 
-                value={email}
+                value={values.email}
+                name={'email'}
                 placeholder={'E-mail'} 
-                onChange={e => setEmail(e.target.value)}
+                onChange={handleChange}
                 extraClass={styles.input}
             />
             <Input 
                 type={isLocked ? 'password' : 'text'} 
-                value={password}
+                value={values.password}
+                name={'password'}
                 placeholder={'Пароль'} 
-                onChange={e => setPassword(e.target.value)}
+                onChange={handleChange}
                 icon={isLocked ? 'ShowIcon' : 'HideIcon'}
-                onIconClick={e => switchPassword()}
+                onIconClick={switchPassword}
                 extraClass={styles.input}
             />
             { isRequest && (

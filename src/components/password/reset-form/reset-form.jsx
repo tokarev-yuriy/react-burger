@@ -5,14 +5,17 @@ import { useState } from 'react';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { resetPassword } from '../../../api/password';
 import { useEffect } from 'react';
+import { useForm } from '../../../hooks/useForm';
 
 
 
 function ResetForm(props) {
 
     
-    const [code, setCode] = useState('');
-    const [password, setPassword] = useState('');
+    const {values, handleChange, setValues} = useForm({
+        code: '',
+        password: '',
+    });
     const [isLocked, setIsLocked] = useState(true);
     const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
@@ -22,7 +25,7 @@ function ResetForm(props) {
 
     useEffect(() => {
         if (params && params['token']) {
-            setCode(params['token']);
+            setValues({...values, code: params['token']});
         } else {
             if (!location || !location['state'] || !location.state['referer'] || location.state.referer !== '/forgot-password') {
                 history.replace('/forgot-password');
@@ -35,7 +38,7 @@ function ResetForm(props) {
         setError('');
         setLoading(true);
         try {
-            await resetPassword(password, code)
+            await resetPassword(values.password, values.code)
             history.push('/login', {referer: '/reset-password'});
         } catch(err) {
             setError(err.message);
@@ -53,18 +56,20 @@ function ResetForm(props) {
             <form onSubmit={changePassword}>
             <Input 
                 type={isLocked ? 'password' : 'text'} 
-                value={password}
+                value={values.password}
+                name={'password'}
                 placeholder={'Введите новый пароль'} 
-                onChange={e => setPassword(e.target.value)}
+                onChange={handleChange}
                 icon={isLocked ? 'ShowIcon' : 'HideIcon'}
                 onIconClick={e => switchPassword()}
                 extraClass={styles.input}
             />
             <Input 
                 type={'text'} 
-                value={code}
+                value={values.code}
+                name={'code'}
                 placeholder={'Введите код из письма'} 
-                onChange={e => setCode(e.target.value)}
+                onChange={handleChange}
                 extraClass={styles.input}
             />
             {error && (
