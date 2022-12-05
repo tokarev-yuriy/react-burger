@@ -3,7 +3,7 @@
  * @returns 
  */
  export const tokenStorage = (function () {
-    var instance;
+    let instance;
   
     const getToken = () => {
         return localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')) : null;
