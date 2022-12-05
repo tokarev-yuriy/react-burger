@@ -1,13 +1,13 @@
 import { tokenStorage } from '../services/token-storage';
 import { endpoints } from './endpoints';
-import { checkJsonResponse, TokenError } from './helpers';
+import { requestWithCheck, TokenError } from './helpers';
 
 /**
  * Register user
  * @returns object 
  */
 async function registerUser (fields) {
-    const resp = await fetch(endpoints.auth.register, {
+    const json = await requestWithCheck(endpoints.auth.register, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -16,8 +16,6 @@ async function registerUser (fields) {
             ...fields
         })
     });
-
-    const json = await checkJsonResponse(resp);
     if (json.success && json.user && json.accessToken && json.refreshToken) {
         return {
             user: json.user,
@@ -35,7 +33,7 @@ async function registerUser (fields) {
  * @returns object 
  */
  async function loginUser (email, password) {
-    const resp = await fetch(endpoints.auth.login, {
+    const json = await requestWithCheck(endpoints.auth.login, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -45,8 +43,6 @@ async function registerUser (fields) {
             password: password,
         })
     });
-
-    const json = await checkJsonResponse(resp);
     if (json.success && json.user && json.accessToken && json.refreshToken) {
         return {
             user: json.user,
@@ -64,7 +60,7 @@ async function registerUser (fields) {
  * @returns object 
  */
  async function refreshToken () {
-    const resp = await fetch(endpoints.auth.token, {
+    const json = await requestWithCheck(endpoints.auth.token, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -73,8 +69,6 @@ async function registerUser (fields) {
             token: tokenStorage.getInstance().getRefreshToken(),
         })
     });
-
-    const json = await checkJsonResponse(resp);
     if (json.success && json.accessToken && json.refreshToken) {
         return {
             access: json.accessToken,
@@ -89,7 +83,7 @@ async function registerUser (fields) {
  * @returns object 
  */
  async function logoutUser () {
-    const resp = await fetch(endpoints.auth.logout, {
+    const json = await requestWithCheck(endpoints.auth.logout, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -98,10 +92,8 @@ async function registerUser (fields) {
             token: tokenStorage.getInstance().getRefreshToken(),
         })
     });
-
-    const json = await checkJsonResponse(resp);
     if (json.success) {
-        return {};
+        return true;
     }
     throw new Error('Api error');
 }
@@ -112,15 +104,13 @@ async function registerUser (fields) {
  */
  async function getUser () {
     try {
-        const resp = await fetch(endpoints.auth.user, {
+        const json = await requestWithCheck(endpoints.auth.user, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
                 "Authorization": tokenStorage.getInstance().getAccessToken(),
             },
         });
-        
-        const json = await checkJsonResponse(resp);
         if (json.success && json.user) {
             return json.user;
         }
@@ -146,7 +136,7 @@ async function registerUser (fields) {
  */
  async function saveUser (fields) {
     try {
-        const resp = await fetch(endpoints.auth.user, {
+        const json = await requestWithCheck(endpoints.auth.user, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
@@ -154,8 +144,6 @@ async function registerUser (fields) {
             },
             body: JSON.stringify(fields)
         });
-        
-        const json = await checkJsonResponse(resp);
         if (json.success && json.user) {
             return json.user;
         }

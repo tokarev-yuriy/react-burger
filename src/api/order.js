@@ -1,7 +1,7 @@
 import { tokenStorage } from '../services/token-storage';
 import { refreshToken } from './auth';
 import { endpoints } from './endpoints';
-import { checkJsonResponse, TokenError } from './helpers';
+import { requestWithCheck, TokenError } from './helpers';
 
 /**
  * Get order
@@ -9,7 +9,7 @@ import { checkJsonResponse, TokenError } from './helpers';
  */
 async function placeOrder (ingredients) {
     try {
-        const resp = await fetch(endpoints.orders, {
+        const json = await requestWithCheck(endpoints.orders, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
@@ -20,7 +20,6 @@ async function placeOrder (ingredients) {
             })
         });
 
-        const json = await checkJsonResponse(resp);
         if (json.success && json.order && json.order.number) {
             return {
                 orderId: json.order.number

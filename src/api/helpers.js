@@ -18,6 +18,17 @@ async function checkJsonResponse(res) {
     return await res.json();
 };
 
+/**
+ * request with check
+ * @param string url 
+ * @param object options 
+ * @returns 
+ */
+async function requestWithCheck(url, options = {}) {
+    const resp = await fetch(url, options);
+    return await checkJsonResponse(resp);
+}
+
 
 /**
  * TokenError exception
@@ -31,4 +42,4 @@ function TokenError(message) {
 TokenError.prototype = Object.create(Error.prototype);
 TokenError.prototype.constructor = TokenError;
 
-export { checkJsonResponse, TokenError };
+export { checkJsonResponse, TokenError, requestWithCheck };

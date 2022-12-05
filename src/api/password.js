@@ -1,12 +1,12 @@
 import { endpoints } from './endpoints';
-import { checkJsonResponse } from './helpers';
+import { requestWithCheck } from './helpers';
 
 /**
  * Send password reset mail
  * @returns object 
  */
 async function forgotPassword (email) {
-    const resp = await fetch(endpoints.password.forgot, {
+    const json = await requestWithCheck(endpoints.password.forgot, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -16,7 +16,6 @@ async function forgotPassword (email) {
         })
     });
 
-    const json = await checkJsonResponse(resp);
     if (json.success) {
         return true;
     }
@@ -28,7 +27,7 @@ async function forgotPassword (email) {
  * @returns object 
  */
  async function resetPassword (password, token) {
-    const resp = await fetch(endpoints.password.reset, {
+    const json = await requestWithCheck(endpoints.password.reset, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -38,8 +37,7 @@ async function forgotPassword (email) {
             token: token
         })
     });
-
-    const json = await checkJsonResponse(resp);
+    
     if (json.success) {
         return true;
     }
