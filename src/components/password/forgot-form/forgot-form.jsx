@@ -21,7 +21,7 @@ function ForgotForm(props) {
         setLoading(true);
         try {
             await forgotPassword(values.email);
-            history.push('/reset-password', { referer: '/forgot-password' });
+            history.push('/reset-password', { referer: { pathname: '/forgot-password' } });
         } catch (err) {
             setError(err.message);
         }

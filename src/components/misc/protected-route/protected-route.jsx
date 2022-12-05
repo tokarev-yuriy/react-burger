@@ -10,15 +10,19 @@ function ProtectedRoute({ role, children, ...rest }) {
     const location = useLocation();
 
     if (role === 'unauthorized' && isLoggedIn) {
-        const backUrl = location && location['state'] && location.state['referer'] ? location.state.referer : '/';
+        const { referer } = location.state || { referer: { pathname: "/" } };
         return (
-            <Redirect to={backUrl} />
+            <Route {...rest}>
+                <Redirect to={referer} />
+            </Route>
         );
     }
 
     if (role === 'authorized' && !isLoggedIn) {
         return (
-            <Redirect to={{pathname: '/login', state: {referer: location.pathname}}} />
+            <Route {...rest}>
+                <Redirect to={{ pathname: '/login', state: { referer: location } }} />
+            </Route>
         );
     }
 

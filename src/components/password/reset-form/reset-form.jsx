@@ -26,12 +26,9 @@ function ResetForm(props) {
         if (params && params["token"]) {
             setValues({ ...values, code: params["token"] });
         } else {
-            if (
-                !location ||
-                !location["state"] ||
-                !location.state["referer"] ||
-                location.state.referer !== "/forgot-password"
-            ) {
+            const { referer } = location.state || { referer: {} };
+            const { pathname } = referer || false;
+            if (!pathname || pathname !== "/forgot-password") {
                 history.replace("/forgot-password");
             }
         }
@@ -43,7 +40,7 @@ function ResetForm(props) {
         setLoading(true);
         try {
             await resetPassword(values.password, values.code);
-            history.push("/login", { referer: "/reset-password" });
+            history.push("/login", { referer: { pathname: "/reset-password" } });
         } catch (err) {
             setError(err.message);
         }

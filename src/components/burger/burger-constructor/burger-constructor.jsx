@@ -56,7 +56,7 @@ function BurgerConstructor() {
         if (isLoggedIn) {
             dispatch(placeOrderAction());
         } else {
-            history.push('/login', { referer: '/' });
+            history.push('/login', { referer: { pathname: '/' } });
         }
     }, [dispatch, history, isLoggedIn]);
 
