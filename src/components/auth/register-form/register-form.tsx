@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, FormEventHandler, ReactElement } from 'react';
 import styles from './register-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
@@ -6,30 +6,44 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../../services/actions/auth';
 import { useForm } from '../../../hooks/useForm';
+import { IAuthStore } from '../../../services/reducers/auth';
+import { Action } from 'redux';
 
+interface ISelected {
+    isRequest: boolean;
+    isRequestFailed: boolean;
+}
+  
+interface IStore {
+    auth: IAuthStore;
+}
 
-
-function RegisterForm(props) {
+function RegisterForm(): ReactElement {
 
     const { values, handleChange, setValues } = useForm({
         email: '',
         password: '',
         name: '',
     });
-    const [isLocked, setIsLocked] = useState(true);
-    const [isRequest, isRequestFailed] = useSelector(store => [store.auth.registerRequest, store.auth.registerRequestFail]);
+    const [isLocked, setIsLocked] = useState<boolean>(true);
+    const {isRequest, isRequestFailed} = useSelector<IStore, ISelected>((store: IStore) => {
+        return {
+            isRequest: store.auth.registerRequest,
+            isRequestFailed: store.auth.registerRequestFail
+        }
+    });
     const dispatch = useDispatch();
 
-    const switchPassword = () => {
+    const switchPassword = (): void => {
         setIsLocked(!isLocked);
     };
 
-    const registerUser = (e) => {
-        e.preventDefault();
-        dispatch(register(values));
+    const registerUser: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        dispatch(register(values) as unknown as Action<string>);
     };
 
-    const getError = (field) => {
+    const getError = (field: string): string => {
         if (isRequestFailed && !values[field]) {
             return 'Поле не может быть пустым';
         }

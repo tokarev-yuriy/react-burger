@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, FormEventHandler, ReactElement } from 'react';
 import styles from './login-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
@@ -6,26 +6,42 @@ import { Link } from 'react-router-dom';
 import { login } from '../../../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../../hooks/useForm';
+import { IAuthStore } from '../../../services/reducers/auth';
+import { Action } from 'redux';
 
+interface ISelected {
+    isRequest: boolean;
+    isRequestFailed: boolean;
+  }
+  
+  interface IStore {
+    auth: IAuthStore;
+  }
 
+function LoginForm(): ReactElement {
 
-function LoginForm(props) {
-
-    const [isLocked, setIsLocked] = useState(true);
-    const [isRequest, isRequestFailed] = useSelector(store => [store.auth.loginRequest, store.auth.loginRequestFail]);
+    const [isLocked, setIsLocked] = useState<boolean>(true);
+    const {isRequest, isRequestFailed} = useSelector<IStore, ISelected>(
+        (store: IStore): ISelected => {
+            return {
+                isRequest: store.auth.loginRequest,
+                isRequestFailed: store.auth.loginRequestFail
+            }
+        }
+    );
     const dispatch = useDispatch();
     const { values, handleChange, setValues } = useForm({
         email: '',
         password: ''
     });
 
-    const switchPassword = () => {
+    const switchPassword = (): void => {
         setIsLocked(!isLocked);
     };
 
-    const loginUser = (e) => {
-        e.preventDefault();
-        dispatch(login(values.email, values.password));
+    const loginUser: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        dispatch(login(values.email, values.password) as unknown as Action<string>);
     }
 
     return (

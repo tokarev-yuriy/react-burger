@@ -1,5 +1,4 @@
-import { Action, ActionCreator, AnyAction, Dispatch } from 'redux';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { Action, Dispatch } from 'redux';
 import { getIngredientsService } from '../../api/ingredients';
 import { AppThunk } from '../../utils/types';
 

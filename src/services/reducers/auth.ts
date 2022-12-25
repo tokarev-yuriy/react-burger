@@ -1,3 +1,4 @@
+import { TUser } from "../../utils/types";
 import { 
   ACTION_LOGIN_REQUEST, ACTION_LOGIN_REQUEST_FAIL, ACTION_LOGIN_REQUEST_SUCCESS, 
   ACTION_REGISTER_REQUEST, ACTION_REGISTER_REQUEST_FAIL, ACTION_REGISTER_REQUEST_SUCCESS,
@@ -7,9 +8,22 @@ import {
 } from "../actions/auth";
 import { tokenStorage } from "../token-storage";
 
+export interface IAuthStore {
+  user: TUser | null;
 
-const authInitialState = {
-    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
+  registerRequest: boolean;
+  registerRequestFail: boolean;
+
+  loginRequest: boolean;
+  loginRequestFail: boolean;
+
+  profileRequest: boolean;
+  profileRequestFail: boolean;
+  profileError: string;
+}
+
+const authInitialState: IAuthStore = {
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) as TUser : null,
     
     registerRequest: false,
     registerRequestFail: false,
@@ -25,7 +39,7 @@ const authInitialState = {
 /**
  * Reducer for auth operations
  */
- export const authReducer = (state = authInitialState, action) => {
+ export const authReducer = (state: IAuthStore = authInitialState, action: any): IAuthStore => {
     switch(action.type) {
       
       case ACTION_REGISTER_REQUEST:
