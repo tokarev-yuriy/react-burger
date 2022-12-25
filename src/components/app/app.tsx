@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { AppHeader } from './app-header/app-header';
 import styles from './app.module.css';
 import { ErrorBoundary } from '../misc/error-boundary/error-boundary';
@@ -17,7 +17,6 @@ import { IngredientPage } from '../../pages/ingredient-page';
 import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
 import { TModalState } from '../../utils/types';
 import { Action } from 'redux';
-
 
 function App(): ReactElement {
 
