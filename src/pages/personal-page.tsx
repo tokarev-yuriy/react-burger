@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { PersonalMenu } from '../components/personal/personal-menu/personal-menu';
 import { ProfileForm } from '../components/personal/profile-form/profile-form';
 import styles from './personal-page.module.css';
 
-function PersonalPage() {
+function PersonalPage(): ReactElement<any, any> {
   
-  const [ help, setHelp] = useState('');
+  const [ help, setHelp] = useState<string>('');
 
   return (
       <div className={styles.row}>

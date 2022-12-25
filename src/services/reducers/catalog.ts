@@ -1,6 +1,14 @@
+import { TIngredient } from '../../utils/types';
 import { ACTION_CATALOG_REQUEST, ACTION_CATALOG_REQUEST_FAIL, ACTION_CATALOG_REQUEST_SUCCESS } from '../actions/catalog';
 
-const catalogInitialState = {
+
+export interface ICatalogStore {
+  catalogRequest: boolean;
+  catalogRequestFail: boolean;
+  ingredients: Array<TIngredient>;
+}
+
+const catalogInitialState: ICatalogStore = {
     catalogRequest: false,
     catalogRequestFail: false,
     ingredients: [],
@@ -9,7 +17,7 @@ const catalogInitialState = {
 /**
  * Reducer for burger catalog
  */
- export const catalogReducer = (state = catalogInitialState, action) => {
+ export const catalogReducer = (state: ICatalogStore = catalogInitialState, action: any):ICatalogStore => {
     switch(action.type) {
       case ACTION_CATALOG_REQUEST:
         return {

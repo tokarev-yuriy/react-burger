@@ -1,12 +1,24 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styles from "./ingredient-page.module.css";
 import { BurgerIngredientDetails } from "../components/burger/burger-ingredient-details/burger-ingredient-details";
+import { ICatalogStore } from "../services/reducers/catalog";
+import { TIngredient } from "../utils/types";
 
-function IngredientPage() {
-  const params = useParams();
-  const { isLoading, isFailed, detail } = useSelector((store) => ({
+interface ISelected {
+  isLoading: boolean;
+  isFailed: boolean;
+  detail: TIngredient | undefined;
+}
+
+interface IStore {
+  catalog: ICatalogStore;
+}
+
+function IngredientPage(): ReactElement<any, any> {
+  const params = useParams<{id: string}>();
+  const { isLoading, isFailed, detail } = useSelector<IStore, ISelected>((store: IStore) => ({
     isLoading:
       store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
     isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,

@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { FC, ReactElement } from 'react';
 import { ForgotForm } from '../components/password/forgot-form/forgot-form';
 
-function ForgotPage() {
-
+function ForgotPage(): ReactElement<any, any> {
   return (
       <ForgotForm />
   );
