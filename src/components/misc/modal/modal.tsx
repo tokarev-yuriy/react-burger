@@ -3,20 +3,25 @@ import ReactDOM from 'react-dom';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
+import { FC } from 'react';
+
+interface IModalProps {
+    onClose: () => void;
+    title?: string;
+    children?: ReactNode;
+}
 
 const modalRoot = document.getElementById("react-modals");
 
-function Modal(props) {
+const Modal: FC<IModalProps> = ({ onClose, title, children }: IModalProps) => {
 
-    const { onClose, title, children } = props;
-
-    const onClick = () => {
+    const onClick = (): void => {
         onClose();
     }
 
     useEffect(() => {
-        const catchEscKey = (event) => {
+        const catchEscKey = (event: KeyboardEvent): void => {
             if (event.key === "Escape") {
                 onClose();
             }
@@ -33,7 +38,7 @@ function Modal(props) {
             <div className={styles.modal}>
                 <h2 className={styles.modal_title}>{title}</h2>
                 <div className={styles.modal_close}>
-                    <CloseIcon onClick={onClick} className />
+                    <CloseIcon onClick={onClick} type="primary" />
                 </div>
                 <div className={styles.modal_content}>
                     {children}
@@ -42,7 +47,7 @@ function Modal(props) {
             <ModalOverlay onClose={onClose} />
         </div>
         ,
-        modalRoot
+        modalRoot as Element
     );
 };
 
