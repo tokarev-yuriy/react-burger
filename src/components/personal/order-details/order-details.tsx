@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './order-details.module.css';
-import { PropTypes } from 'prop-types';
-import checkIcon from '../../../images/check.svg';
+import * as PropTypes from 'prop-types';
+import * as checkIcon from '../../../images/check.svg';
 
-function OrderDetails(props) {
+interface IOrderDetailsProps {
+    id: number;
+}
+
+const OrderDetails: FC<IOrderDetailsProps> = (props: IOrderDetailsProps) => {
     return (
         <div className={styles.order}>
             <h2 className={styles.order_number}>{props.id}</h2>

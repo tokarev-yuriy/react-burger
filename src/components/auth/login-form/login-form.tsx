@@ -12,11 +12,11 @@ import { Action } from 'redux';
 interface ISelected {
     isRequest: boolean;
     isRequestFailed: boolean;
-  }
+}
   
-  interface IStore {
+interface IStore {
     auth: IAuthStore;
-  }
+}
 
 function LoginForm(): ReactElement {
 

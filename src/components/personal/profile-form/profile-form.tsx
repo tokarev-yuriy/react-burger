@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, Dispatch, FC, ReactElement, SetStateAction, SyntheticEvent, useEffect } from 'react';
 import styles from './profile-form.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
@@ -7,29 +7,50 @@ import { getUser } from '../../../api/auth';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveProfile } from '../../../services/actions/auth';
-import PropTypes from 'prop-types';
 import { useForm } from '../../../hooks/useForm';
+import { IAuthStore } from '../../../services/reducers/auth';
+import { Action } from 'redux';
 
+interface IProfileFormProps {
+    setHelp: Dispatch<SetStateAction<ReactElement | string>>;
+}
 
-function ProfileForm(props) {
+interface ISelected {
+    isRequest: boolean;
+    isRequestFailed: boolean;
+    requestError: string;
+}
+  
+interface IStore {
+    auth: IAuthStore;
+}
 
+const ProfileForm: FC<IProfileFormProps> = (props: IProfileFormProps) => {
     const { values, handleChange, setValues } = useForm({
         email: '',
         name: '',
         password: '',
     });
-    const [isLoading, setLoading] = useState(false);
-    const [changed, setChanged] = useState(false);
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [changed, setChanged] = useState<boolean>(false);
     const history = useHistory();
     const dispatch = useDispatch();
-    const [isRequest, isRequestFailed, requestError] = useSelector(store => [store.auth.profileRequest, store.auth.profileRequestFail, store.auth.profileError]);
+    const {isRequest, isRequestFailed, requestError} = useSelector<IStore, ISelected> (
+        (store:IStore)  => {
+            return {
+                isRequest: store.auth.profileRequest,
+                isRequestFailed: store.auth.profileRequestFail,
+                requestError: store.auth.profileError
+            }
+        }
+    );
 
-    const handleProfileChange = (e) => {
+    const handleProfileChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setChanged(true);
-        return handleChange(e);
+        return handleChange(event);
     }
 
-    const loadUser = async () => {
+    const loadUser = async (): Promise<void> => {
         setLoading(true);
         try {
             const user = await getUser();
@@ -41,11 +62,11 @@ function ProfileForm(props) {
         setLoading(false);
     }
 
-    const saveUser = async (e) => {
-        e.preventDefault();
+    const saveUser = async (event: SyntheticEvent): Promise<void> => {
+        event.preventDefault();
         setLoading(true);
         try {
-            dispatch(saveProfile(values));
+            dispatch(saveProfile(values) as unknown as Action<string>);
         } catch (e) {
             history.push('/login');
         }
@@ -112,9 +133,5 @@ function ProfileForm(props) {
         </div>
     );
 }
-
-ProfileForm.propTypes = {
-    setHelp: PropTypes.func,
-};
 
 export { ProfileForm };

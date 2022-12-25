@@ -6,7 +6,7 @@ import styles from './personal-page.module.css';
 
 function PersonalPage(): ReactElement<any, any> {
   
-  const [ help, setHelp] = useState<string>('');
+  const [ help, setHelp] = useState<ReactElement | string>('');
 
   return (
       <div className={styles.row}>

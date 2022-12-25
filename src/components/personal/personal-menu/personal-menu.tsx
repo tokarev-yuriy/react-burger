@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styles from './personal-menu.module.css';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../../services/actions/auth';
+import { Action } from 'redux';
 
 
 
-function PersonalMenu() {
+function PersonalMenu(): ReactElement {
 
     const dispatch = useDispatch();
 
-    const logoutUser = () => {
-        dispatch(logout())
+    const logoutUser = (): void => {
+        dispatch(logout() as unknown as Action<string>)
     }
 
     return (
