@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styles from "./app-header.module.css";
 import {
     Logo,
@@ -9,20 +9,20 @@ import {
 import { AppNavLink } from "../app-nav-link/app-nav-link";
 import { Link } from "react-router-dom";
 
-function AppHeader(props) {
+function AppHeader(): ReactElement {
     return (
         <header className={styles.header}>
             <div className={styles.header_block}>
                 <nav>
                     <AppNavLink text="Конструктор" to={"/"} exact>
-                        <BurgerIcon />
+                        <BurgerIcon type="primary" />
                     </AppNavLink>
                     <AppNavLink text="Лента заказов" to={"/orders"} exact>
-                        <ListIcon />
+                        <ListIcon type="primary" />
                     </AppNavLink>
                 </nav>
                 <AppNavLink text="Личный кабинет" to={"/profile"}>
-                    <ProfileIcon />
+                    <ProfileIcon type="primary" />
                 </AppNavLink>
             </div>
             <Link to="/" className={styles.header_logo}>

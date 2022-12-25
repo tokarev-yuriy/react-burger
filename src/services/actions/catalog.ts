@@ -1,12 +1,15 @@
+import { Action, ActionCreator, AnyAction, Dispatch } from 'redux';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { getIngredientsService } from '../../api/ingredients';
+import { AppThunk } from '../../utils/types';
 
 // Actions of catalog
 export const ACTION_CATALOG_REQUEST = 'ACTION_CATALOG_REQUEST';
 export const ACTION_CATALOG_REQUEST_FAIL = 'ACTION_CATALOG_REQUEST_FAIL';
 export const ACTION_CATALOG_REQUEST_SUCCESS = 'ACTION_CATALOG_REQUEST_SUCCESS';
 
-export function getCatalog() {
-  return function(dispatch) {
+export function getCatalog(): AppThunk {
+  return function(dispatch: Dispatch<Action<string>>) {
     dispatch({type: ACTION_CATALOG_REQUEST});
     getIngredientsService()
     .then(items => {

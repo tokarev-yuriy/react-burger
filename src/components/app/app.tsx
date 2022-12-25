@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { AppHeader } from './app-header/app-header';
 import styles from './app.module.css';
 import { ErrorBoundary } from '../misc/error-boundary/error-boundary';
@@ -15,16 +15,18 @@ import { getCatalog } from '../../services/actions/catalog';
 import { ProtectedRoute } from '../misc/protected-route/protected-route';
 import { IngredientPage } from '../../pages/ingredient-page';
 import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
+import { TModalState } from '../../utils/types';
+import { Action } from 'redux';
 
 
-function App() {
+function App(): ReactElement<any, any> {
 
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<TModalState>();
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getCatalog());
+    dispatch(getCatalog() as unknown as Action<string>);
     // eslint-disable-next-line 
   }, []);
 

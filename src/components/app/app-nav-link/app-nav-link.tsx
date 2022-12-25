@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import styles from './app-nav-link.module.css';
 import PropTypes from 'prop-types';
 
-function AppNavLink(props) {
+interface IAppNavLinkProps {
+    to: string;
+    exact?: boolean;
+    text: string;
+    children: React.ReactNode;
+}
+
+const AppNavLink: FC<IAppNavLinkProps> = (props: IAppNavLinkProps) => {
     const active = useRouteMatch({ path: props.to, exact: props.exact });
     return (
         <Link to={props.to} className={active ? styles.nav_link_active : styles.nav_link}>

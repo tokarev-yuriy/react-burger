@@ -1,3 +1,7 @@
+import * as H from "history";
+import { Action } from "redux";
+import { ThunkAction } from "redux-thunk";
+
 export type TIngredient = {
     _id: string;
     name: string;
@@ -27,3 +31,9 @@ export type TToken = {
 export interface IApiResponse {
     success: boolean;
 };
+
+export type TModalState = {
+  background: H.Location
+}
+
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, {}, null, Action<string>>
