@@ -18,7 +18,7 @@ interface IStore {
   catalog: ICatalogStore;
 }
 
-function MainPage(): ReactElement<any, any> {
+function MainPage(): ReactElement {
 
   const { isLoading, isFailed, items } = useSelector<IStore, ISelected>((store: IStore) => ({
     isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,

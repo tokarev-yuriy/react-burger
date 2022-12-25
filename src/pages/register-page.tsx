@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { RegisterForm } from '../components/auth/register-form/register-form';
 
-function RegisterPage() {
+function RegisterPage(): ReactElement {
 
   return (
       <RegisterForm />

@@ -4,7 +4,7 @@ import { PersonalMenu } from '../components/personal/personal-menu/personal-menu
 import { ProfileForm } from '../components/personal/profile-form/profile-form';
 import styles from './personal-page.module.css';
 
-function PersonalPage(): ReactElement<any, any> {
+function PersonalPage(): ReactElement {
   
   const [ help, setHelp] = useState<ReactElement | string>('');
 

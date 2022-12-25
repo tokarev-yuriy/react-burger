@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { ResetForm } from '../components/password/reset-form/reset-form';
 
-function ResetPage() {
+function ResetPage(): ReactElement {
 
   return (
       <ResetForm />

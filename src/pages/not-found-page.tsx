@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-function NotFoundPage() {
+function NotFoundPage(): ReactElement {
 
   return (
     <h1>

@@ -16,7 +16,7 @@ interface IStore {
   catalog: ICatalogStore;
 }
 
-function IngredientPage(): ReactElement<any, any> {
+function IngredientPage(): ReactElement {
   const params = useParams<{id: string}>();
   const { isLoading, isFailed, detail } = useSelector<IStore, ISelected>((store: IStore) => ({
     isLoading:
