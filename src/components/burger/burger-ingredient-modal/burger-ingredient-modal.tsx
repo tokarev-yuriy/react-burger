@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import styles from './burger-ingredient-modal.module.css';
 import { useSelector } from 'react-redux';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
 import { Modal } from '../../misc/modal/modal';
 import { useHistory, useParams } from 'react-router-dom';
+import { ICatalogStore } from '../../../services/reducers/catalog';
+import { TIngredient } from '../../../utils/types';
 
-function BurgerIngredientModal(props) {
-    const params = useParams();
-    const detail = useSelector(store => params['id'] ? store.catalog.ingredients.find(item => item._id === params['id']) : null);
+  
+interface IStore {
+    catalog: ICatalogStore;
+}
+
+function BurgerIngredientModal(): ReactElement {
+    const params = useParams<{id: string}>();
+    const detail = useSelector<IStore, TIngredient | undefined>((store: IStore) => {
+        return params['id'] ? store.catalog.ingredients.find(item => item._id === params['id']) : undefined;
+    });
     const history = useHistory();
 
-    const hideDetails = () => {
+    const hideDetails = (): void => {
         history.replace('/');
     };
 

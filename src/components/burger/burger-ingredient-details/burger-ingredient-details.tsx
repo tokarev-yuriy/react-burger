@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './burger-ingredient-details.module.css';
-import { ingredientPropTypes } from '../../../utils/prop-type';
+import { TIngredient } from '../../../utils/types';
 
-function BurgerIngredientDetails(props) {
+interface IBurgerIngredientDetailsProps {
+    item: TIngredient;
+}
+
+const BurgerIngredientDetails: FC<IBurgerIngredientDetailsProps> = (props: IBurgerIngredientDetailsProps) => {
     return (
         <div key={props.item._id} className={styles.item}>
             <div className={styles.item_img}>
@@ -30,9 +34,5 @@ function BurgerIngredientDetails(props) {
         </div>
     );
 }
-
-BurgerIngredientDetails.propTypes = {
-    item: ingredientPropTypes.isRequired,
-};
 
 export { BurgerIngredientDetails };

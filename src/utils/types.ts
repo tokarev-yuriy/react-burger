@@ -17,6 +17,10 @@ export type TIngredient = {
     __v: number;
 };
 
+export type TCartIngredient = TIngredient & {
+    id: number;
+};
+
 export type TUser = {
     email: string;
     password?: string;
@@ -34,6 +38,10 @@ export interface IApiResponse {
 
 export type TModalState = {
   background: H.Location
-}
+};
 
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, {}, null, Action<string>>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, {}, null, Action<string>>;
+
+export type TOrder = {
+    orderId: number;
+};

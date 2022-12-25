@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './burger-constructor-total.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { IOrderStore } from '../../../services/reducers/order';
 
-function BurgerConstructorTotal(props) {
+interface IBurgerConstructorTotalProps {
+    onPlaceOrder: () => void;
+    total: number;
+    isDisabled?: boolean;
+}
+ 
+interface IStore {
+    order: IOrderStore;
+}
 
-    const { onPlaceOrder, total, isDisabled } = props;
-    const isRequest = useSelector(store => store.order.orderRequest);
+const BurgerConstructorTotal: FC<IBurgerConstructorTotalProps> = ({ onPlaceOrder, total, isDisabled }: IBurgerConstructorTotalProps) => {
 
-    const onClick = () => {
+    const isRequest = useSelector<IStore, boolean>(store => store.order.orderRequest);
+
+    const onClick = (): void => {
         if (!isDisabled) {
             onPlaceOrder();
         }
@@ -18,7 +28,7 @@ function BurgerConstructorTotal(props) {
     return (
         <div className={styles.total}>
             <span className={styles.price}>
-                {total} <CurrencyIcon />
+                {total} <CurrencyIcon type="primary" />
             </span>
             <Button size="large" htmlType="button" onClick={onClick} extraClass={isDisabled || isRequest ? styles.disabled : ''}>
                 Оформить заказ

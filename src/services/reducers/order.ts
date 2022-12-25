@@ -1,9 +1,16 @@
+import { TOrder } from '../../utils/types';
 import { 
   ACTION_ORDER_REQUEST, ACTION_ORDER_REQUEST_FAIL, 
   ACTION_ORDER_REQUEST_SUCCESS, ACTION_ORDER_HIDE
- } from '../actions/order';
+} from '../actions/order';
 
-const orderInitialState = {
+export interface IOrderStore {
+  order: TOrder | null;
+  orderRequest: boolean;
+  orderRequestFail: boolean;
+}
+
+const orderInitialState: IOrderStore = {
     order: null,
     orderRequest: false,
     orderRequestFail: false,
@@ -12,7 +19,7 @@ const orderInitialState = {
 /**
  * Reducer for burger order
  */
- export const orderReducer = (state = orderInitialState, action) => {
+ export const orderReducer = (state: IOrderStore = orderInitialState, action: any): IOrderStore => {
     switch(action.type) {
       
       case ACTION_ORDER_REQUEST:

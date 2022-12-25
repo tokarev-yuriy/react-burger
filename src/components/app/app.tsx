@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, ReactNode, useEffect } from 'react';
 import { AppHeader } from './app-header/app-header';
 import styles from './app.module.css';
 import { ErrorBoundary } from '../misc/error-boundary/error-boundary';
@@ -19,7 +19,7 @@ import { TModalState } from '../../utils/types';
 import { Action } from 'redux';
 
 
-function App(): ReactElement<any, any> {
+function App(): ReactElement {
 
   const dispatch = useDispatch();
   const location = useLocation<TModalState>();

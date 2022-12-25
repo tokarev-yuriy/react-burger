@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../../utils/prop-type';
 import { useDrag } from 'react-dnd';
 import { useHistory, useLocation } from 'react-router-dom';
+import { TIngredient } from '../../../utils/types';
 
-function BurgerIngredientsItem(props) {
+interface IBurgerIngredientsItemProps {
+    item: TIngredient;
+    count: number;
+    children?: ReactNode;
+}
+
+const BurgerIngredientsItem: FC<IBurgerIngredientsItemProps> = (props: IBurgerIngredientsItemProps) => {
 
     const history = useHistory();
     const location = useLocation();
 
-    const showDetails = (e) => {
+    const showDetails = (): void => {
         history.replace(`/ingredients/${props.item._id}`, { background: location });
     };
 
@@ -31,16 +36,11 @@ function BurgerIngredientsItem(props) {
             </div>
             <p className={styles.item_price} onClick={showDetails}>
                 {props.item.price}
-                <CurrencyIcon />
+                <CurrencyIcon type="primary" />
             </p>
             <p className={styles.item_name} onClick={showDetails}>{props.item.name}</p>
         </div>
     );
 }
-
-BurgerIngredientsItem.propTypes = {
-    count: PropTypes.number,
-    item: ingredientPropTypes.isRequired,
-};
 
 export { BurgerIngredientsItem };

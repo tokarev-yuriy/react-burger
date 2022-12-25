@@ -17,7 +17,7 @@ const catalogInitialState: ICatalogStore = {
 /**
  * Reducer for burger catalog
  */
- export const catalogReducer = (state: ICatalogStore = catalogInitialState, action: any):ICatalogStore => {
+ export const catalogReducer = (state: ICatalogStore = catalogInitialState, action: any): ICatalogStore => {
     switch(action.type) {
       case ACTION_CATALOG_REQUEST:
         return {

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
@@ -13,20 +13,44 @@ import { BurgerConstructorItem } from '../burger-constructor-item/burger-constru
 import { guuid } from '../../../utils/guuid';
 import { tokenStorage } from '../../../services/token-storage';
 import { useHistory } from 'react-router-dom';
+import { ICartStore } from '../../../services/reducers/constructor';
+import { IOrderStore } from '../../../services/reducers/order';
+import { IAuthStore } from '../../../services/reducers/auth';
+import { ICatalogStore } from '../../../services/reducers/catalog';
+import { TIngredient, TOrder } from '../../../utils/types';
+import { Action } from 'redux';
 
-function BurgerConstructor() {
+ 
+interface IStore {
+    order: IOrderStore;
+    cart: ICartStore;
+    auth: IAuthStore;
+    catalog: ICatalogStore;
+}
+
+interface ISelectOrderRequest {
+    isRequest: boolean;
+    isRequestFail: boolean;
+}
+
+const BurgerConstructor: FC<{}> = () => {
 
     const dispatch = useDispatch();
-    const state = useSelector(store => store.cart);
-    const ingredients = useSelector(store => store.catalog.ingredients);
-    const order = useSelector(store => store.order.order);
-    const isLoggedIn = useSelector(store => store.auth.user && store.auth.user.email && tokenStorage.getInstance().getToken());
-    const [isRequest, isRequestFail] = useSelector(store => [store.order.orderRequest, store.order.orderRequestFail]);
+    const state = useSelector<IStore, ICartStore>(store => store.cart);
+    const ingredients = useSelector<IStore, Array<TIngredient>>(store => store.catalog.ingredients);
+    const order = useSelector<IStore, TOrder | null>(store => store.order.order);
+    const isLoggedIn = useSelector<IStore, boolean>(store => store.auth.user && store.auth.user.email && tokenStorage.getInstance().getToken() ? true: false);
+    const {isRequest, isRequestFail} = useSelector<IStore, ISelectOrderRequest>(store => {
+        return {
+            isRequest: store.order.orderRequest,
+            isRequestFail: store.order.orderRequestFail
+        }
+    });
     const history = useHistory();
 
     const [, drop] = useDrop({
         accept: "ingredient",
-        drop(item) {
+        drop(item: {id: string}) {
             dispatch({
                 type: ACTION_CONSTRUCTOR_ADD,
                 item: {
@@ -37,24 +61,24 @@ function BurgerConstructor() {
         },
     });
 
-    const hideOrder = useCallback((e) => {
+    const hideOrder = useCallback((): void => {
         dispatch({ type: ACTION_ORDER_HIDE });
     }, [dispatch]);
 
-    const burgerTotal = useMemo(() => {
+    const burgerTotal = useMemo((): number => {
         return state.ingredients.reduce(
             (value, item) => value + item.price,
             state.bun ? 2 * state.bun.price : 0
         );
     }, [state]);
 
-    const canPlaceOrder = useMemo(() => {
-        return state.ingredients.length > 0 && state.bun;
+    const canPlaceOrder = useMemo((): boolean => {
+        return state.ingredients.length > 0 && state.bun !== null;
     }, [state]);
 
-    const onPlaceOrder = useCallback(async () => {
+    const onPlaceOrder = useCallback(async (): Promise<void> => {
         if (isLoggedIn) {
-            dispatch(placeOrderAction());
+            dispatch(placeOrderAction() as unknown as Action<string>);
         } else {
             history.push('/login', { referer: { pathname: '/' } });
         }

@@ -1,9 +1,15 @@
+import { TCartIngredient } from '../../utils/types';
 import { 
   ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE,
   ACTION_CONSTRUCTOR_MOVE
  } from '../actions/constructor';
 
-const constructorInitialState = {
+export interface ICartStore {
+  bun: TCartIngredient | null;
+  ingredients: Array<TCartIngredient>;
+}
+
+const constructorInitialState: ICartStore = {
     bun: null,
     ingredients: [],
 };
@@ -11,7 +17,7 @@ const constructorInitialState = {
 /**
  * Reducer for burger constructor
  */
- export const constructorReducer = (state = constructorInitialState, action) => {
+ export const constructorReducer = (state: ICartStore = constructorInitialState, action: any): ICartStore => {
     switch(action.type) {
       case ACTION_CONSTRUCTOR_ADD:
         if (!action.item) {

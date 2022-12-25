@@ -1,12 +1,14 @@
 import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { ACTION_CONSTRUCTOR_REMOVE, ACTION_CONSTRUCTOR_MOVE } from '../../../services/actions/constructor';
 import { useDrag, useDrop } from 'react-dnd';
-import { ingredientPropTypes } from '../../../utils/prop-type';
+import { TCartIngredient } from '../../../utils/types';
 
-function BurgerConstructorItem(item) {
+interface IBurgerConstructorItemProps extends TCartIngredient {}
+ 
+const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = (item: IBurgerConstructorItemProps) => {
 
     const dispatch = useDispatch();
 
@@ -27,12 +29,12 @@ function BurgerConstructorItem(item) {
             dispatch({
                 type: ACTION_CONSTRUCTOR_MOVE,
                 src: item.id,
-                dest: element.id,
+                dest: (element as {id: number}).id,
             });
         },
     });
 
-    const onRemoveItem = useCallback((id) => {
+    const onRemoveItem = useCallback((id: number): void => {
         dispatch({ type: ACTION_CONSTRUCTOR_REMOVE, id: id });
     }, [dispatch]);
 
@@ -42,7 +44,7 @@ function BurgerConstructorItem(item) {
                 draggable ref={drag}
                 style={{ opacity: isDrag ? 0.5 : 1 }}>
                 <span className={styles.main_items_item_icon}>
-                    <DragIcon />
+                    <DragIcon type="primary" />
                 </span>
                 <ConstructorElement
                     text={item.name}
@@ -55,7 +57,5 @@ function BurgerConstructorItem(item) {
         </div>
     );
 }
-
-BurgerConstructorItem.propTypes = ingredientPropTypes.isRequired;
 
 export { BurgerConstructorItem };

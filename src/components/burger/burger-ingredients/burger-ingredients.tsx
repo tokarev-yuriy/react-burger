@@ -1,19 +1,27 @@
-import React, { useMemo, useState } from 'react';
+import React, { FC, SyntheticEvent, useMemo, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../../utils/prop-type';
 import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
+import { TIngredient } from '../../../utils/types';
+import { ICartStore } from '../../../services/reducers/constructor';
 
-function BurgerIngredients(props) {
+interface IBurgerIngredientsProps {
+    items: Array<TIngredient>;
+}
+ 
+interface IStore {
+    cart: ICartStore;
+}
 
-    const [activeTab, setActiveTab] = useState('bun');
+const BurgerIngredients: FC<IBurgerIngredientsProps> = (props: IBurgerIngredientsProps) => {
 
-    const cart = useSelector(store => store.cart);
+    const [activeTab, setActiveTab] = useState<string>('bun');
 
-    const getCounts = (id) => {
+    const cart = useSelector<IStore, ICartStore>((store: IStore) => store.cart);
+
+    const getCounts = (id: string): number => {
         if (cart.bun && cart.bun._id === id) {
             return 2;
         }
@@ -24,7 +32,7 @@ function BurgerIngredients(props) {
      * меняем активный tab
      * @param string val 
      */
-    const changeTab = useCallback((val) => {
+    const changeTab = useCallback((val: string): void => {
         setActiveTab(val);
         const tabElement = document.getElementById('ingredients-tab-' + val);
         if (tabElement) {
@@ -32,25 +40,28 @@ function BurgerIngredients(props) {
         }
     }, []);
 
-    const onScroll = (event) => {
+    const onScroll = (event: SyntheticEvent) => {
         const scrollTop = event.currentTarget.scrollTop;
-        const tabs = {
+        const tabs: {[name:string]: number} = {
             bun: 0,
             sauce: 0,
             main: 0
         }
         for (let x in tabs) {
-            tabs[x] = document.getElementById('ingredients-tab-' + x).offsetTop;
+            const tabElement = document.getElementById('ingredients-tab-' + x);
+            if (tabElement instanceof HTMLElement) {
+                tabs[x] = tabElement.offsetTop;
+            }
         }
-        let tab = false;
-        let minScroll = false;
+        let tab: boolean | string = false;
+        let minScroll: boolean | number = false;
         for (let x in tabs) {
             if (minScroll === false || Math.abs(scrollTop - tabs[x]) < minScroll) {
                 minScroll = Math.abs(scrollTop - tabs[x]);
                 tab = x;
             }
         }
-        setActiveTab(tab);
+        setActiveTab(tab as string);
     };
 
     const types = useMemo(() => ([
@@ -98,9 +109,5 @@ function BurgerIngredients(props) {
         </section>
     );
 }
-
-BurgerIngredients.propTypes = {
-    items: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
 
 export { BurgerIngredients };
