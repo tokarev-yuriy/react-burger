@@ -1,13 +1,36 @@
+import { isTemplateLiteralToken } from 'typescript';
 import { tokenStorage } from '../services/token-storage';
+import { IApiResponse, TToken, TUser } from '../utils/types';
 import { endpoints } from './endpoints';
 import { requestWithCheck, TokenError } from './helpers';
+
+interface IApiUserResponse extends IApiResponse {
+    user: TUser;
+};
+
+interface IApiTokenResponse extends IApiResponse {
+    accessToken: string;
+    refreshToken: string;
+};
+
+interface IApiUserWithTokenResponse extends IApiUserResponse, IApiTokenResponse {};
+
+interface IUserResult {
+    user: TUser;
+};
+
+interface ITokenResult extends TToken {};
+
+interface IUserWithTokenResult extends IUserResult {
+    token: ITokenResult;
+};
 
 /**
  * Register user
  * @returns object 
  */
-async function registerUser(fields) {
-    const json = await requestWithCheck(endpoints.auth.register, {
+async function registerUser(fields: TUser): Promise<IUserWithTokenResult> {
+    const json = await requestWithCheck<IApiUserWithTokenResponse>(endpoints.auth.register, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -32,8 +55,8 @@ async function registerUser(fields) {
  * Login user
  * @returns object 
  */
-async function loginUser(email, password) {
-    const json = await requestWithCheck(endpoints.auth.login, {
+async function loginUser(email: string, password: string): Promise<IUserWithTokenResult> {
+    const json = await requestWithCheck<IApiUserWithTokenResponse>(endpoints.auth.login, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -59,8 +82,8 @@ async function loginUser(email, password) {
  * Refresh token
  * @returns object 
  */
-async function refreshToken() {
-    const json = await requestWithCheck(endpoints.auth.token, {
+async function refreshToken(): Promise<ITokenResult> {
+    const json = await requestWithCheck<IApiTokenResponse>(endpoints.auth.token, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -82,8 +105,8 @@ async function refreshToken() {
  * Logout User
  * @returns object 
  */
-async function logoutUser() {
-    const json = await requestWithCheck(endpoints.auth.logout, {
+async function logoutUser(): Promise<boolean> {
+    const json = await requestWithCheck<IApiResponse>(endpoints.auth.logout, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -102,9 +125,9 @@ async function logoutUser() {
  * Get User
  * @returns object 
  */
-async function getUser() {
+async function getUser(): Promise<TUser> {
     try {
-        const json = await requestWithCheck(endpoints.auth.user, {
+        const json = await requestWithCheck<IApiUserResponse>(endpoints.auth.user, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
@@ -114,7 +137,7 @@ async function getUser() {
         if (json.success && json.user) {
             return json.user;
         }
-    } catch (err) {
+    } catch (err: TokenError | Error | unknown) {
         if (err instanceof TokenError && tokenStorage.getInstance().getRefreshToken()) {
             try {
                 const token = await refreshToken();
@@ -134,9 +157,9 @@ async function getUser() {
  * Save User
  * @returns object 
  */
-async function saveUser(fields) {
+async function saveUser(fields: TUser): Promise<TUser> {
     try {
-        const json = await requestWithCheck(endpoints.auth.user, {
+        const json = await requestWithCheck<IApiUserResponse>(endpoints.auth.user, {
             method: 'PATCH',
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
@@ -147,7 +170,7 @@ async function saveUser(fields) {
         if (json.success && json.user) {
             return json.user;
         }
-    } catch (err) {
+    } catch (err: TokenError | Error | unknown) {
         if (err instanceof TokenError && tokenStorage.getInstance().getRefreshToken()) {
             try {
                 const token = await refreshToken();
@@ -158,7 +181,7 @@ async function saveUser(fields) {
                 throw new Error('Token expired');
             }
         }
-        throw new Error(err.message);
+        throw new Error((err as Error).message);
     }
 
     throw new Error('Api error');

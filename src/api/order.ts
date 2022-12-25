@@ -1,15 +1,27 @@
 import { tokenStorage } from '../services/token-storage';
+import { IApiResponse, TIngredient } from '../utils/types';
 import { refreshToken } from './auth';
 import { endpoints } from './endpoints';
 import { requestWithCheck, TokenError } from './helpers';
+
+interface IApiOrderResponse extends IApiResponse {
+    order: {
+        number: number;
+    };
+};
+
+
+interface IOrderResult {
+    orderId: number;
+};
 
 /**
  * Get order
  * @returns object 
  */
-async function placeOrder(ingredients) {
+async function placeOrder(ingredients: Array<TIngredient>): Promise<IOrderResult> {
     try {
-        const json = await requestWithCheck(endpoints.orders, {
+        const json = await requestWithCheck<IApiOrderResponse>(endpoints.orders, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
@@ -25,7 +37,7 @@ async function placeOrder(ingredients) {
                 orderId: json.order.number
             };
         }
-    } catch (err) {
+    } catch (err: TokenError | Error | unknown) {
         if (err instanceof TokenError && tokenStorage.getInstance().getRefreshToken()) {
             try {
                 const token = await refreshToken();
@@ -36,7 +48,7 @@ async function placeOrder(ingredients) {
                 throw new Error('Token expired');
             }
         }
-        throw new Error(err.message);
+        throw new Error((err as Error).message);
     }
 
     throw new Error('Api error');

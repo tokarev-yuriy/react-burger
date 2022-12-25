@@ -1,3 +1,4 @@
+import { IApiResponse } from '../utils/types';
 import { endpoints } from './endpoints';
 import { requestWithCheck } from './helpers';
 
@@ -5,8 +6,8 @@ import { requestWithCheck } from './helpers';
  * Send password reset mail
  * @returns object 
  */
-async function forgotPassword (email) {
-    const json = await requestWithCheck(endpoints.password.forgot, {
+async function forgotPassword (email: string): Promise<boolean> {
+    const json = await requestWithCheck<IApiResponse>(endpoints.password.forgot, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -26,8 +27,8 @@ async function forgotPassword (email) {
  * Change password
  * @returns object 
  */
- async function resetPassword (password, token) {
-    const json = await requestWithCheck(endpoints.password.reset, {
+ async function resetPassword (password: string, token: string): Promise<boolean> {
+    const json = await requestWithCheck<IApiResponse>(endpoints.password.reset, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",

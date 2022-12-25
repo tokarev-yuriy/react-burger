@@ -12,3 +12,18 @@ export type TIngredient = {
     image_large: string;
     __v: number;
 };
+
+export type TUser = {
+    email: string;
+    password?: string;
+    name: string;
+}
+
+export type TToken = {
+    access: string;
+    refresh: string;
+};
+
+export interface IApiResponse {
+    success: boolean;
+};
