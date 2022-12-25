@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent, FormEventHandler, ReactElement } from "react";
 import styles from "./reset-form.module.css";
 import {
     Button,
@@ -9,45 +9,56 @@ import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { resetPassword } from "../../../api/password";
 import { useEffect } from "react";
 import { useForm } from "../../../hooks/useForm";
+import * as H from "history";
 
-function ResetForm(props) {
+interface StateWithReferer extends H.Location {
+    referer?: {
+        pathname?: string;
+    }
+};
+
+function ResetForm(): ReactElement {
     const { values, handleChange, setValues } = useForm({
         code: "",
         password: "",
     });
-    const [isLocked, setIsLocked] = useState(true);
-    const [error, setError] = useState("");
-    const [isLoading, setLoading] = useState(false);
+    const [isLocked, setIsLocked] = useState<boolean>(true);
+    const [error, setError] = useState<string>("");
+    const [isLoading, setLoading] = useState<boolean>(false);
     const history = useHistory();
-    const location = useLocation();
-    const params = useParams();
+    const location = useLocation<StateWithReferer>();
+    const params = useParams<{token?: string}>();
 
     useEffect(() => {
         if (params && params["token"]) {
             setValues({ ...values, code: params["token"] });
         } else {
             const { referer } = location.state || { referer: {} };
-            const { pathname } = referer || false;
+            const { pathname } = referer || {pathname: null};
             if (!pathname || pathname !== "/forgot-password") {
                 history.replace("/forgot-password");
             }
         }
     }, [params, location, history]);
 
-    const changePassword = async (e) => {
-        e.preventDefault();
+    const changePassword: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         setError("");
         setLoading(true);
         try {
             await resetPassword(values.password, values.code);
             history.push("/login", { referer: { pathname: "/reset-password" } });
         } catch (err) {
-            setError(err.message);
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Неизвестная ошибка');
+            }
         }
         setLoading(false);
     };
 
-    const switchPassword = () => {
+    const switchPassword = (): void => {
         setIsLocked(!isLocked);
     };
 

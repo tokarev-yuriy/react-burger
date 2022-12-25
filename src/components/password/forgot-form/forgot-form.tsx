@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, FormEventHandler, ReactElement } from 'react';
 import styles from './forgot-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
@@ -8,22 +8,26 @@ import { useForm } from '../../../hooks/useForm';
 
 
 
-function ForgotForm(props) {
+function ForgotForm(): ReactElement {
 
     const { values, handleChange, setValues } = useForm({ email: '' });
-    const [error, setError] = useState('');
-    const [isLoading, setLoading] = useState(false);
+    const [error, setError] = useState<string>('');
+    const [isLoading, setLoading] = useState<boolean>(false);
     const history = useHistory();
 
-    const sendMail = async (e) => {
-        e.preventDefault();
+    const sendMail: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         setError('');
         setLoading(true);
         try {
             await forgotPassword(values.email);
             history.push('/reset-password', { referer: { pathname: '/forgot-password' } });
-        } catch (err) {
-            setError(err.message);
+        } catch (err: Error | unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Неизвестная ошибка');
+            }
         }
         setLoading(false);
     }
