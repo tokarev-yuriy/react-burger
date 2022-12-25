@@ -19,8 +19,7 @@ interface IStore {
 function IngredientPage(): ReactElement {
   const params = useParams<{id: string}>();
   const { isLoading, isFailed, detail } = useSelector<IStore, ISelected>((store: IStore) => ({
-    isLoading:
-      store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
+    isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
     isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,
     detail: store.catalog.ingredients.find((item) => item._id === params["id"]),
   }));

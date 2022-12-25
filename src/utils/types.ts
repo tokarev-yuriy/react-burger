@@ -45,3 +45,11 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, {}, null, Acti
 export type TOrder = {
     orderId: number;
 };
+
+export type TDragIngredient = {
+    id: string;
+};
+
+export type TDragCartIngredient = {
+    id: number;
+};

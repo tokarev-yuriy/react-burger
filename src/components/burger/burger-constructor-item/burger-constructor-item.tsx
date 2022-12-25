@@ -4,7 +4,7 @@ import { FC, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { ACTION_CONSTRUCTOR_REMOVE, ACTION_CONSTRUCTOR_MOVE } from '../../../services/actions/constructor';
 import { useDrag, useDrop } from 'react-dnd';
-import { TCartIngredient } from '../../../utils/types';
+import { TCartIngredient, TDragCartIngredient } from '../../../utils/types';
 
 interface IBurgerConstructorItemProps extends TCartIngredient {}
  
@@ -12,7 +12,7 @@ const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = (item: IBurgerCon
 
     const dispatch = useDispatch();
 
-    const [{ isDrag }, drag] = useDrag({
+    const [{ isDrag }, drag] = useDrag<TDragCartIngredient, unknown, {isDrag: boolean}>({
         type: "cart",
         item: { id: item.id },
         collect: monitor => ({
@@ -20,16 +20,16 @@ const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = (item: IBurgerCon
         })
     });
 
-    const [{ isHover }, drop] = useDrop({
+    const [{ isHover }, drop] = useDrop<TDragCartIngredient, unknown, {isHover: boolean}>({
         accept: "cart",
         collect: monitor => ({
             isHover: monitor.isOver(),
         }),
-        drop(element) {
+        drop(element: TDragCartIngredient) {
             dispatch({
                 type: ACTION_CONSTRUCTOR_MOVE,
                 src: item.id,
-                dest: (element as {id: number}).id,
+                dest: element.id,
             });
         },
     });

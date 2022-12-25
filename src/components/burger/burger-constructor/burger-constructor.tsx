@@ -17,7 +17,7 @@ import { ICartStore } from '../../../services/reducers/constructor';
 import { IOrderStore } from '../../../services/reducers/order';
 import { IAuthStore } from '../../../services/reducers/auth';
 import { ICatalogStore } from '../../../services/reducers/catalog';
-import { TIngredient, TOrder } from '../../../utils/types';
+import { TDragIngredient, TIngredient, TOrder } from '../../../utils/types';
 import { Action } from 'redux';
 
  
@@ -48,9 +48,9 @@ const BurgerConstructor: FC<{}> = () => {
     });
     const history = useHistory();
 
-    const [, drop] = useDrop({
+    const [, drop] = useDrop<TDragIngredient>({
         accept: "ingredient",
-        drop(item: {id: string}) {
+        drop(item: TDragIngredient) {
             dispatch({
                 type: ACTION_CONSTRUCTOR_ADD,
                 item: {

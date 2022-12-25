@@ -3,7 +3,7 @@ import styles from './burger-ingredients-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 import { useHistory, useLocation } from 'react-router-dom';
-import { TIngredient } from '../../../utils/types';
+import { TDragIngredient, TIngredient } from '../../../utils/types';
 
 interface IBurgerIngredientsItemProps {
     item: TIngredient;
@@ -20,7 +20,7 @@ const BurgerIngredientsItem: FC<IBurgerIngredientsItemProps> = (props: IBurgerIn
         history.replace(`/ingredients/${props.item._id}`, { background: location });
     };
 
-    const [, drag] = useDrag({
+    const [, drag] = useDrag<TDragIngredient>({
         type: "ingredient",
         item: { id: props.item._id },
         collect: monitor => ({

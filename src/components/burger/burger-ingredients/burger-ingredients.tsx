@@ -40,7 +40,7 @@ const BurgerIngredients: FC<IBurgerIngredientsProps> = (props: IBurgerIngredient
         }
     }, []);
 
-    const onScroll = (event: SyntheticEvent) => {
+    const onScroll = (event: SyntheticEvent): void => {
         const scrollTop = event.currentTarget.scrollTop;
         const tabs: {[name:string]: number} = {
             bun: 0,
