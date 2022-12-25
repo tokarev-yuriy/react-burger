@@ -1,0 +1,16 @@
+.row {
+  width: 100%;
+  display: flex;
+  composes: mt-20 from global;
+}
+.colLeft {
+  width: 30%;
+}
+.colMain {
+  width: 40%;
+  text-align: center;
+}
+.help {
+  composes: mt-20 text text_type_main-default from global;
+  color: var(--inactive);
+}

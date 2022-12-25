@@ -1,0 +1,48 @@
+.section {
+    composes: pt-15 ml-10 pl-4 pr-4 from global;
+}
+.bun_top {
+    composes: pl-8 pb-4 pr-4 from global;
+}
+.bun_bottom {
+    composes: pl-8 pr-4 mb-10 from global;
+}
+
+.main_items {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    scroll-snap-type: y;
+    max-height: calc(100vh - var(--header-height) - 364px);
+}
+
+.total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.total svg {
+    width: 40px;
+    height: 40px;
+    vertical-align: bottom;
+}
+.empty_burger {
+    padding: 80px 80px;
+    display: inline-block;
+    border-radius: var(--common-border-radius-s);
+    background: var(--background-element);
+    max-width: 536px;
+    width: 100%;
+    min-height: 160px;
+    font-family: 'Jet Brains Mono';
+    font-size: 16px;
+    line-height: 24px;
+    color: #F2F2F3;
+    flex-grow: 1;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.info {
+    composes: text text_type_main-default from global;
+    text-align: center;
+}

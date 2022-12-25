@@ -1,26 +1,31 @@
-import React from 'react';
-import { AppHeader } from '../app-header/app-header';
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
-import { BurgerConstructor } from '../burger-constructor/burger-constructor';
+import React, { useEffect } from 'react';
+import { AppHeader } from './app-header/app-header';
 import styles from './app.module.css';
-import { useEffect } from 'react';
-import { ErrorBoundary } from '../error-boundary/error-boundary';
-import { useSelector, useDispatch } from 'react-redux';
+import { ErrorBoundary } from '../misc/error-boundary/error-boundary';
+import { Route, Switch, useLocation } from 'react-router-dom';
+import { MainPage } from '../../pages/main-page';
+import { NotFoundPage } from '../../pages/not-found-page';
+import { LoginPage } from '../../pages/login-page';
+import { RegisterPage } from '../../pages/register-page';
+import { ForgotPage } from '../../pages/forgot-page';
+import { ResetPage } from '../../pages/reset-page';
+import { PersonalPage } from '../../pages/personal-page';
+import { useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { ProtectedRoute } from '../misc/protected-route/protected-route';
+import { IngredientPage } from '../../pages/ingredient-page';
+import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
+
 
 function App() {
 
-  const { items, isLoading, isFailed } = useSelector(store => ({
-    items: store.catalog.ingredients,
-    isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
-    isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,
-  }));
   const dispatch = useDispatch();
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getCatalog());
+    // eslint-disable-next-line 
   }, []);
 
   return (
@@ -28,20 +33,41 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <ErrorBoundary>
-          {isFailed ? (
-            <p>Не удалось загрузить каталог</p>
-          ) : 
-            isLoading ? (
-              <p>Идет загрузка</p>
-            ):(
-              items && 
-              <>
-                <DndProvider backend={HTML5Backend}>
-                  <BurgerIngredients items={items} />
-                  <BurgerConstructor />
-                </DndProvider>
-              </>
-            )}
+          <Switch location={background || location}>
+            <Route path="/" exact>
+              <MainPage />
+            </Route>
+            <ProtectedRoute path="/login" exact role={'unauthorized'}>
+              <LoginPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/register" exact role={'unauthorized'}>
+              <RegisterPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/forgot-password" exact role={'unauthorized'}>
+              <ForgotPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/reset-password" exact role={'unauthorized'}>
+              <ResetPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/reset-password/:token" exact role={'unauthorized'}>
+              <ResetPage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile" role={'authorized'}>
+              <PersonalPage />
+            </ProtectedRoute>
+            <Route path="/ingredients/:id" exact>
+              <IngredientPage />
+            </Route>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
+
+          {background && (
+            <Route path="/ingredients/:id">
+              <BurgerIngredientModal />
+            </Route>
+          )}
         </ErrorBoundary>
       </main>
     </div>

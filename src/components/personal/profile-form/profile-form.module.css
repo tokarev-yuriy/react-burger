@@ -1,0 +1,32 @@
+.form {
+    width: 480px;
+    margin: auto;
+    text-align: center;
+}
+.title {
+    composes: text text_type_main-medium mb-6 from global;
+}
+.input {
+    composes: mb-6 from global;
+}
+.buttons {
+    text-align: right;
+}
+.loadingBlock {
+    position: fixed;
+    width: calc(100vw);
+    height: calc(100vh);
+    opacity: 0.5;
+    background-color: #000;
+    z-index: 2;
+    left: 0;
+    top: 0;
+}
+.loading {
+    composes: mb-1 text text_type_main-default from global;
+    color: var(--inactive);
+}
+.error {
+    composes: mb-1 text text_type_main-default from global;
+    color: var(--error);
+}
