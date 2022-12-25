@@ -1,6 +1,30 @@
 import { BURGER_API_URL } from '../constants';
 
-const endpoints = {
+type TEndpointIngredients = {
+    ingredients: string;
+}
+type TEndpointOrders = {
+    orders: string;
+}
+type TEndpointAuth = {
+    auth: {
+        register: string;
+        login: string;
+        token: string;
+        logout: string;
+        user: string;
+    };
+}
+type TEndpointPassword = {
+    password: {
+        forgot: string;
+        reset: string;
+    };
+}
+
+type TEndpoints = TEndpointIngredients | TEndpointOrders | TEndpointAuth | TEndpointPassword;
+
+const endpoints:TEndpoints = {
     ingredients: `${BURGER_API_URL}/ingredients`,
     orders: `${BURGER_API_URL}/orders`,
     auth: {

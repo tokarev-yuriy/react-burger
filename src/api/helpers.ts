@@ -1,10 +1,10 @@
 
 /**
  * Check if json response is ok
- * @param object res 
+ * @param Response res 
  * @returns 
  */
-async function checkJsonResponse(res) {
+async function checkJsonResponse<T>(res: Response): Promise<T> {
     if (!res.ok) {
         const json = await res.json();
         if (res.status === 403) {
@@ -20,11 +20,11 @@ async function checkJsonResponse(res) {
 
 /**
  * request with check
- * @param string url 
- * @param object options 
+ * @param RequestInfo url 
+ * @param RequestInit options 
  * @returns 
  */
-async function requestWithCheck(url, options = {}) {
+async function requestWithCheck<T>(url: RequestInfo, options: RequestInit = {}): Promise<T> {
     const resp = await fetch(url, options);
     return await checkJsonResponse(resp);
 }
@@ -34,12 +34,17 @@ async function requestWithCheck(url, options = {}) {
  * TokenError exception
  * @param string message 
  */
-function TokenError(message) {
-    this.name = 'TokenError';
-    this.message = message || 'Error';
-    this.stack = (new Error()).stack;
+class TokenError extends Error {
+    name: 'TokenError';
+    message: string;
+    stack?: string;
+
+    constructor(message?: string) {
+        super(message);
+        this.name = 'TokenError';
+        this.message = message || 'Error';
+        this.stack = (new Error()).stack;
+    }
 }
-TokenError.prototype = Object.create(Error.prototype);
-TokenError.prototype.constructor = TokenError;
 
 export { checkJsonResponse, TokenError, requestWithCheck };
