@@ -1,4 +1,3 @@
-import { isTemplateLiteralToken } from 'typescript';
 import { tokenStorage } from '../services/token-storage';
 import { IApiResponse, TToken, TUser } from '../utils/types';
 import { endpoints } from './endpoints';
