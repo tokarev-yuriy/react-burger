@@ -4,7 +4,7 @@ import { FC, useCallback } from 'react';
 import { ACTION_CONSTRUCTOR_REMOVE, ACTION_CONSTRUCTOR_MOVE } from '../../../services/actions/constructor';
 import { useDrag, useDrop } from 'react-dnd';
 import { TCartIngredient, TDragCartIngredient } from '../../../utils/types';
-import { useAppDispatch } from '../../../services/hooks';
+import { useAppDispatch } from '../../../services/types/hooks';
 
 interface IBurgerConstructorItemProps extends TCartIngredient {}
  

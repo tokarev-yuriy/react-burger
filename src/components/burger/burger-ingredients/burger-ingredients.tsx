@@ -4,7 +4,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
 import { useCallback } from 'react';
 import { TIngredient } from '../../../utils/types';
-import { useAppSelector } from '../../../services/hooks';
+import { useAppSelector } from '../../../services/types/hooks';
 
 interface IBurgerIngredientsProps {
     items: Array<TIngredient>;

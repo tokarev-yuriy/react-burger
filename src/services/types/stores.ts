@@ -1,4 +1,4 @@
-import { TCartIngredient, TIngredient, TOrder, TUser } from "../utils/types";
+import { TCartIngredient, TIngredient, TOrder, TUser } from "../../utils/types";
 
 export interface IAuthStore {
     user: TUser | null;

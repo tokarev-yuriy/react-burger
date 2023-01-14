@@ -1,5 +1,5 @@
-import { ACTION_CATALOG_REQUEST, ACTION_CATALOG_REQUEST_FAIL, ACTION_CATALOG_REQUEST_SUCCESS } from '../actions/catalog';
-import { ICatalogStore } from '../types';
+import { ACTION_CATALOG_REQUEST, ACTION_CATALOG_REQUEST_FAIL, ACTION_CATALOG_REQUEST_SUCCESS, TCatalogActions } from '../actions/catalog';
+import { ICatalogStore } from '../types/stores';
 
 const catalogInitialState: ICatalogStore = {
     catalogRequest: false,
@@ -10,7 +10,7 @@ const catalogInitialState: ICatalogStore = {
 /**
  * Reducer for burger catalog
  */
- export const catalogReducer = (state: ICatalogStore = catalogInitialState, action: any): ICatalogStore => {
+ export const catalogReducer = (state: ICatalogStore = catalogInitialState, action: TCatalogActions): ICatalogStore => {
     switch(action.type) {
       case ACTION_CATALOG_REQUEST:
         return {

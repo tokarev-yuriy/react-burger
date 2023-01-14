@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./ingredient-page.module.css";
 import { BurgerIngredientDetails } from "../components/burger/burger-ingredient-details/burger-ingredient-details";
-import { useAppSelector } from "../services/hooks";
+import { useAppSelector } from "../services/types/hooks";
 
 function IngredientPage(): ReactElement {
   const params = useParams<{id: string}>();

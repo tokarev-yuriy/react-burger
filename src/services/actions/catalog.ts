@@ -1,21 +1,52 @@
-import { Action, Dispatch } from 'redux';
+import { AppDispatch } from '..';
 import { getIngredientsService } from '../../api/ingredients';
-import { AppThunk } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
+import { AppThunk } from '../types/hooks';
 
 // Actions of catalog
-export const ACTION_CATALOG_REQUEST = 'ACTION_CATALOG_REQUEST';
-export const ACTION_CATALOG_REQUEST_FAIL = 'ACTION_CATALOG_REQUEST_FAIL';
-export const ACTION_CATALOG_REQUEST_SUCCESS = 'ACTION_CATALOG_REQUEST_SUCCESS';
+export const ACTION_CATALOG_REQUEST : 'ACTION_CATALOG_REQUEST' = 'ACTION_CATALOG_REQUEST';
+export const ACTION_CATALOG_REQUEST_FAIL : 'ACTION_CATALOG_REQUEST_FAIL'  = 'ACTION_CATALOG_REQUEST_FAIL';
+export const ACTION_CATALOG_REQUEST_SUCCESS : 'ACTION_CATALOG_REQUEST_SUCCESS'  = 'ACTION_CATALOG_REQUEST_SUCCESS';
 
-export function getCatalog(): AppThunk {
-  return function(dispatch: Dispatch<Action<string>>) {
-    dispatch({type: ACTION_CATALOG_REQUEST});
+export interface ICatalogAction {
+    readonly type: typeof ACTION_CATALOG_REQUEST;
+}
+
+export interface ICatalogFailedAction {
+    readonly type: typeof ACTION_CATALOG_REQUEST_FAIL;
+}
+
+export interface ICatalogSuccessAction {
+    readonly type: typeof ACTION_CATALOG_REQUEST_SUCCESS;
+    readonly items: Array<TIngredient>;
+}
+
+export type TCatalogActions =
+    | ICatalogAction
+    | ICatalogFailedAction
+    | ICatalogSuccessAction;
+
+export const getCatalogAction = (): ICatalogAction => ({
+    type: ACTION_CATALOG_REQUEST
+});
+
+export const getCatalogFailedAction = (): ICatalogFailedAction => ({
+    type: ACTION_CATALOG_REQUEST_FAIL
+});
+
+export const getCatalogSuccessAction = (items: Array<TIngredient>): ICatalogSuccessAction => ({
+    type: ACTION_CATALOG_REQUEST_SUCCESS,
+    items: items
+});
+
+
+export const getCatalog: AppThunk = () => (dispatch: AppDispatch) => {
+    dispatch(getCatalogAction());
     getIngredientsService()
     .then(items => {
-        dispatch({type: ACTION_CATALOG_REQUEST_SUCCESS, items: items})
+        dispatch(getCatalogSuccessAction(items))
     })
     .catch(err => {
-        dispatch({type: ACTION_CATALOG_REQUEST_FAIL});
+        dispatch(getCatalogFailedAction());
     });
-  }
 };

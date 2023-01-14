@@ -16,7 +16,7 @@ import { IngredientPage } from '../../pages/ingredient-page';
 import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
 import { TModalState } from '../../utils/types';
 import { Action } from 'redux';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch } from '../../services/types/hooks';
 
 function App(): ReactElement {
 
@@ -25,7 +25,7 @@ function App(): ReactElement {
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getCatalog() as unknown as Action<string>);
+    dispatch(getCatalog());
     // eslint-disable-next-line 
   }, []);
 

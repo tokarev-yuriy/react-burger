@@ -1,8 +1,9 @@
 import { 
   ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE,
-  ACTION_CONSTRUCTOR_MOVE
+  ACTION_CONSTRUCTOR_MOVE,
+  TConstructorActions
  } from '../actions/constructor';
-import { ICartStore } from '../types';
+import { ICartStore } from '../types/stores';
 
 const constructorInitialState: ICartStore = {
     bun: null,
@@ -12,7 +13,7 @@ const constructorInitialState: ICartStore = {
 /**
  * Reducer for burger constructor
  */
- export const constructorReducer = (state: ICartStore = constructorInitialState, action: any): ICartStore => {
+ export const constructorReducer = (state: ICartStore = constructorInitialState, action: TConstructorActions): ICartStore => {
     switch(action.type) {
       case ACTION_CONSTRUCTOR_ADD:
         if (!action.item) {

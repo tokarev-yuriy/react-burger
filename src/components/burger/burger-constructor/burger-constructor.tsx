@@ -13,7 +13,7 @@ import { guuid } from '../../../utils/guuid';
 import { tokenStorage } from '../../../services/token-storage';
 import { useHistory } from 'react-router-dom';
 import { Action } from 'redux';
-import { useAppDispatch, useAppSelector } from '../../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../../services/types/hooks';
 import { TDragIngredient } from '../../../utils/types';
 
 const BurgerConstructor: FC<{}> = () => {
