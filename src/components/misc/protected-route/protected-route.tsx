@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { useSelector } from "react-redux";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
 import { tokenStorage } from "../../../services/token-storage";
 import { IAuthStore } from "../../../services/reducers/auth";
 import * as H from "history";
@@ -11,10 +11,8 @@ interface StateWithReferer extends H.Location {
     }
 };
 
-interface IProtectedRouteProps {
+interface IProtectedRouteProps extends RouteProps {
     role: "unauthorized" | "authorized";
-    children?: ReactNode;
-    [name: string]: any;
 }
  
 interface IStore {
