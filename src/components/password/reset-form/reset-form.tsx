@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler, ReactElement } from "react";
+import React, { FormEventHandler, ReactElement } from "react";
 import styles from "./reset-form.module.css";
 import {
     Button,
@@ -39,9 +39,10 @@ function ResetForm(): ReactElement {
                 history.replace("/forgot-password");
             }
         }
+    // eslint-disable-next-line
     }, [params, location, history]);
 
-    const changePassword: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
+    const changePassword: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         setError("");
         setLoading(true);

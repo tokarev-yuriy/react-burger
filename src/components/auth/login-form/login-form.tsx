@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler, ReactElement } from 'react';
+import React, { FormEventHandler, ReactElement } from 'react';
 import styles from './login-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
@@ -30,7 +30,7 @@ function LoginForm(): ReactElement {
         }
     );
     const dispatch = useDispatch();
-    const { values, handleChange, setValues } = useForm({
+    const { values, handleChange } = useForm({
         email: '',
         password: ''
     });
@@ -39,7 +39,7 @@ function LoginForm(): ReactElement {
         setIsLocked(!isLocked);
     };
 
-    const loginUser: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
+    const loginUser: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
         dispatch(login(values.email, values.password) as unknown as Action<string>);
     }

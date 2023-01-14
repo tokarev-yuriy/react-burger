@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler, ReactElement } from 'react';
+import React, { FormEventHandler, ReactElement } from 'react';
 import styles from './register-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
@@ -20,7 +20,7 @@ interface IStore {
 
 function RegisterForm(): ReactElement {
 
-    const { values, handleChange, setValues } = useForm({
+    const { values, handleChange } = useForm({
         email: '',
         password: '',
         name: '',
@@ -38,7 +38,7 @@ function RegisterForm(): ReactElement {
         setIsLocked(!isLocked);
     };
 
-    const registerUser: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
+    const registerUser: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault();
         dispatch(register(values) as unknown as Action<string>);
     };

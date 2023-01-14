@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler, ReactElement } from 'react';
+import React, { FormEventHandler, ReactElement } from 'react';
 import styles from './forgot-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
@@ -10,12 +10,12 @@ import { useForm } from '../../../hooks/useForm';
 
 function ForgotForm(): ReactElement {
 
-    const { values, handleChange, setValues } = useForm({ email: '' });
+    const { values, handleChange } = useForm({ email: '' });
     const [error, setError] = useState<string>('');
     const [isLoading, setLoading] = useState<boolean>(false);
     const history = useHistory();
 
-    const sendMail: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
+    const sendMail: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         setError('');
         setLoading(true);
