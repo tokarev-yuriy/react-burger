@@ -3,23 +3,18 @@ import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIngredientsItem } from '../burger-ingredients-item/burger-ingredients-item';
 import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
 import { TIngredient } from '../../../utils/types';
-import { ICartStore } from '../../../services/reducers/constructor';
+import { useAppSelector } from '../../../services/hooks';
 
 interface IBurgerIngredientsProps {
     items: Array<TIngredient>;
-}
- 
-interface IStore {
-    cart: ICartStore;
 }
 
 const BurgerIngredients: FC<IBurgerIngredientsProps> = (props: IBurgerIngredientsProps) => {
 
     const [activeTab, setActiveTab] = useState<string>('bun');
 
-    const cart = useSelector<IStore, ICartStore>((store: IStore) => store.cart);
+    const cart = useAppSelector((store) => store.cart);
 
     const getCounts = (id: string): number => {
         if (cart.bun && cart.bun._id === id) {

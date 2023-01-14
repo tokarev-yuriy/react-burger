@@ -2,22 +2,17 @@ import React, { FC } from 'react';
 import styles from './burger-constructor-total.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
-import { IOrderStore } from '../../../services/reducers/order';
+import { useAppSelector } from '../../../services/hooks';
 
 interface IBurgerConstructorTotalProps {
     onPlaceOrder: () => void;
     total: number;
     isDisabled?: boolean;
 }
- 
-interface IStore {
-    order: IOrderStore;
-}
 
 const BurgerConstructorTotal: FC<IBurgerConstructorTotalProps> = ({ onPlaceOrder, total, isDisabled }: IBurgerConstructorTotalProps) => {
 
-    const isRequest = useSelector<IStore, boolean>(store => store.order.orderRequest);
+    const isRequest = useAppSelector(store => store.order.orderRequest);
 
     const onClick = (): void => {
         if (!isDisabled) {

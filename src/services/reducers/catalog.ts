@@ -1,12 +1,5 @@
-import { TIngredient } from '../../utils/types';
 import { ACTION_CATALOG_REQUEST, ACTION_CATALOG_REQUEST_FAIL, ACTION_CATALOG_REQUEST_SUCCESS } from '../actions/catalog';
-
-
-export interface ICatalogStore {
-  catalogRequest: boolean;
-  catalogRequestFail: boolean;
-  ingredients: Array<TIngredient>;
-}
+import { ICatalogStore } from '../types';
 
 const catalogInitialState: ICatalogStore = {
     catalogRequest: false,

@@ -1,16 +1,16 @@
 import styles from './burger-constructor-item.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { ACTION_CONSTRUCTOR_REMOVE, ACTION_CONSTRUCTOR_MOVE } from '../../../services/actions/constructor';
 import { useDrag, useDrop } from 'react-dnd';
 import { TCartIngredient, TDragCartIngredient } from '../../../utils/types';
+import { useAppDispatch } from '../../../services/hooks';
 
 interface IBurgerConstructorItemProps extends TCartIngredient {}
  
 const BurgerConstructorItem: FC<IBurgerConstructorItemProps> = (item: IBurgerConstructorItemProps) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [{ isDrag }, drag] = useDrag<TDragCartIngredient, unknown, {isDrag: boolean}>({
         type: "cart",

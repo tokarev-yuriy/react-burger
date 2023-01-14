@@ -3,24 +3,11 @@ import { BurgerIngredients } from '../components/burger/burger-ingredients/burge
 import { BurgerConstructor } from '../components/burger/burger-constructor/burger-constructor';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSelector } from 'react-redux';
-import { ICatalogStore } from '../services/reducers/catalog';
-import { TIngredient } from '../utils/types';
-
-
-interface ISelected {
-  isLoading: boolean;
-  isFailed: boolean;
-  items: Array<TIngredient>;
-}
-
-interface IStore {
-  catalog: ICatalogStore;
-}
+import { useAppSelector } from '../services/hooks';
 
 function MainPage(): ReactElement {
 
-  const { isLoading, isFailed, items } = useSelector<IStore, ISelected>((store: IStore) => ({
+  const { isLoading, isFailed, items } = useAppSelector((store) => ({
     isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
     isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,
     items: store.catalog.ingredients,

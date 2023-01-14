@@ -10,17 +10,17 @@ import { RegisterPage } from '../../pages/register-page';
 import { ForgotPage } from '../../pages/forgot-page';
 import { ResetPage } from '../../pages/reset-page';
 import { PersonalPage } from '../../pages/personal-page';
-import { useDispatch } from 'react-redux';
 import { getCatalog } from '../../services/actions/catalog';
 import { ProtectedRoute } from '../misc/protected-route/protected-route';
 import { IngredientPage } from '../../pages/ingredient-page';
 import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
 import { TModalState } from '../../utils/types';
 import { Action } from 'redux';
+import { useAppDispatch } from '../../services/hooks';
 
 function App(): ReactElement {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation<TModalState>();
   const background = location.state && location.state.background;
 

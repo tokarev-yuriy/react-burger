@@ -1,9 +1,8 @@
-import React, { FC, ReactNode } from "react";
-import { useSelector } from "react-redux";
+import React, { FC } from "react";
 import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
 import { tokenStorage } from "../../../services/token-storage";
-import { IAuthStore } from "../../../services/reducers/auth";
 import * as H from "history";
+import { useAppSelector } from "../../../services/hooks";
 
 interface StateWithReferer extends H.Location {
     referer?: {
@@ -14,13 +13,9 @@ interface StateWithReferer extends H.Location {
 interface IProtectedRouteProps extends RouteProps {
     role: "unauthorized" | "authorized";
 }
- 
-interface IStore {
-    auth: IAuthStore;
-}
 
 const ProtectedRoute: FC<IProtectedRouteProps> = ({ role, children, ...rest }: IProtectedRouteProps) => {
-    const isLoggedIn = useSelector<IStore, boolean>((store: IStore): boolean => {
+    const isLoggedIn = useAppSelector((store): boolean => {
         return store.auth.user && store.auth.user.email && tokenStorage.getInstance().getToken() ? true : false;
     });
     const location = useLocation<StateWithReferer>();

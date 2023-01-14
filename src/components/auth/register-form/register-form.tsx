@@ -3,20 +3,10 @@ import styles from './register-form.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../../services/actions/auth';
 import { useForm } from '../../../hooks/useForm';
-import { IAuthStore } from '../../../services/reducers/auth';
 import { Action } from 'redux';
-
-interface ISelected {
-    isRequest: boolean;
-    isRequestFailed: boolean;
-}
-  
-interface IStore {
-    auth: IAuthStore;
-}
+import { useAppDispatch, useAppSelector } from '../../../services/hooks';
 
 function RegisterForm(): ReactElement {
 
@@ -26,13 +16,13 @@ function RegisterForm(): ReactElement {
         name: '',
     });
     const [isLocked, setIsLocked] = useState<boolean>(true);
-    const {isRequest, isRequestFailed} = useSelector<IStore, ISelected>((store: IStore) => {
+    const {isRequest, isRequestFailed} = useAppSelector((store) => {
         return {
             isRequest: store.auth.registerRequest,
             isRequestFailed: store.auth.registerRequestFail
         }
     });
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const switchPassword = (): void => {
         setIsLocked(!isLocked);

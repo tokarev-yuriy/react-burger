@@ -7,20 +7,7 @@ import {
 
 } from "../actions/auth";
 import { tokenStorage } from "../token-storage";
-
-export interface IAuthStore {
-  user: TUser | null;
-
-  registerRequest: boolean;
-  registerRequestFail: boolean;
-
-  loginRequest: boolean;
-  loginRequestFail: boolean;
-
-  profileRequest: boolean;
-  profileRequestFail: boolean;
-  profileError: string;
-}
+import { IAuthStore } from "../types";
 
 const authInitialState: IAuthStore = {
     user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) as TUser : null,

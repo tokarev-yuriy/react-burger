@@ -4,32 +4,20 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../../../services/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../../hooks/useForm';
-import { IAuthStore } from '../../../services/reducers/auth';
 import { Action } from 'redux';
-
-interface ISelected {
-    isRequest: boolean;
-    isRequestFailed: boolean;
-}
-  
-interface IStore {
-    auth: IAuthStore;
-}
+import { useAppDispatch, useAppSelector } from '../../../services/hooks';
 
 function LoginForm(): ReactElement {
 
     const [isLocked, setIsLocked] = useState<boolean>(true);
-    const {isRequest, isRequestFailed} = useSelector<IStore, ISelected>(
-        (store: IStore): ISelected => {
-            return {
-                isRequest: store.auth.loginRequest,
-                isRequestFailed: store.auth.loginRequestFail
-            }
+    const {isRequest, isRequestFailed} = useAppSelector((store) => {
+        return {
+            isRequest: store.auth.loginRequest,
+            isRequestFailed: store.auth.loginRequestFail
         }
-    );
-    const dispatch = useDispatch();
+    });
+    const dispatch = useAppDispatch();
     const { values, handleChange } = useForm({
         email: '',
         password: ''

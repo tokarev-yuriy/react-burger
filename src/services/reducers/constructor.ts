@@ -1,13 +1,8 @@
-import { TCartIngredient } from '../../utils/types';
 import { 
   ACTION_CONSTRUCTOR_ADD, ACTION_CONSTRUCTOR_CLEAR, ACTION_CONSTRUCTOR_REMOVE,
   ACTION_CONSTRUCTOR_MOVE
  } from '../actions/constructor';
-
-export interface ICartStore {
-  bun: TCartIngredient | null;
-  ingredients: Array<TCartIngredient>;
-}
+import { ICartStore } from '../types';
 
 const constructorInitialState: ICartStore = {
     bun: null,

@@ -5,24 +5,13 @@ import { useState } from 'react';
 import { EditableInput } from '../../misc/editable-input/editable-input';
 import { getUser } from '../../../api/auth';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { saveProfile } from '../../../services/actions/auth';
 import { useForm } from '../../../hooks/useForm';
-import { IAuthStore } from '../../../services/reducers/auth';
 import { Action } from 'redux';
+import { useAppDispatch, useAppSelector } from '../../../services/hooks';
 
 interface IProfileFormProps {
     setHelp: Dispatch<SetStateAction<ReactElement | string>>;
-}
-
-interface ISelected {
-    isRequest: boolean;
-    isRequestFailed: boolean;
-    requestError: string;
-}
-  
-interface IStore {
-    auth: IAuthStore;
 }
 
 const ProfileForm: FC<IProfileFormProps> = (props: IProfileFormProps) => {
@@ -34,9 +23,9 @@ const ProfileForm: FC<IProfileFormProps> = (props: IProfileFormProps) => {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [changed, setChanged] = useState<boolean>(false);
     const history = useHistory();
-    const dispatch = useDispatch();
-    const {isRequest, isRequestFailed, requestError} = useSelector<IStore, ISelected> (
-        (store:IStore)  => {
+    const dispatch = useAppDispatch();
+    const {isRequest, isRequestFailed, requestError} = useAppSelector (
+        (store)  => {
             return {
                 isRequest: store.auth.profileRequest,
                 isRequestFailed: store.auth.profileRequestFail,

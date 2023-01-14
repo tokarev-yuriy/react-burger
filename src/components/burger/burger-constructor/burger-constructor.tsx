@@ -5,7 +5,6 @@ import { BurgerConstructorTotal } from '../burger-constructor-total/burger-const
 import { useCallback } from 'react';
 import { Modal } from '../../misc/modal/modal';
 import { OrderDetails } from '../../personal/order-details/order-details';
-import { useDispatch, useSelector } from 'react-redux';
 import { placeOrderAction, ACTION_ORDER_HIDE } from '../../../services/actions/order';
 import { ACTION_CONSTRUCTOR_ADD } from '../../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
@@ -13,34 +12,18 @@ import { BurgerConstructorItem } from '../burger-constructor-item/burger-constru
 import { guuid } from '../../../utils/guuid';
 import { tokenStorage } from '../../../services/token-storage';
 import { useHistory } from 'react-router-dom';
-import { ICartStore } from '../../../services/reducers/constructor';
-import { IOrderStore } from '../../../services/reducers/order';
-import { IAuthStore } from '../../../services/reducers/auth';
-import { ICatalogStore } from '../../../services/reducers/catalog';
-import { TDragIngredient, TIngredient, TOrder } from '../../../utils/types';
 import { Action } from 'redux';
-
- 
-interface IStore {
-    order: IOrderStore;
-    cart: ICartStore;
-    auth: IAuthStore;
-    catalog: ICatalogStore;
-}
-
-interface ISelectOrderRequest {
-    isRequest: boolean;
-    isRequestFail: boolean;
-}
+import { useAppDispatch, useAppSelector } from '../../../services/hooks';
+import { TDragIngredient } from '../../../utils/types';
 
 const BurgerConstructor: FC<{}> = () => {
 
-    const dispatch = useDispatch();
-    const state = useSelector<IStore, ICartStore>(store => store.cart);
-    const ingredients = useSelector<IStore, Array<TIngredient>>(store => store.catalog.ingredients);
-    const order = useSelector<IStore, TOrder | null>(store => store.order.order);
-    const isLoggedIn = useSelector<IStore, boolean>(store => store.auth.user && store.auth.user.email && tokenStorage.getInstance().getToken() ? true: false);
-    const {isRequest, isRequestFail} = useSelector<IStore, ISelectOrderRequest>(store => {
+    const dispatch = useAppDispatch();
+    const state = useAppSelector(store => store.cart);
+    const ingredients = useAppSelector(store => store.catalog.ingredients);
+    const order = useAppSelector(store => store.order.order);
+    const isLoggedIn = useAppSelector(store => store.auth.user && store.auth.user.email && tokenStorage.getInstance().getToken() ? true: false);
+    const {isRequest, isRequestFail} = useAppSelector(store => {
         return {
             isRequest: store.order.orderRequest,
             isRequestFail: store.order.orderRequestFail
