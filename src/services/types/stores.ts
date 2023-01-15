@@ -1,4 +1,4 @@
-import { TCartIngredient, TIngredient, TOrderNumber, TUser } from "../../utils/types";
+import { TCartIngredient, TIngredient, TOrder, TOrderNumber, TUser } from "../../utils/types";
 
 export interface IAuthStore {
     user: TUser | null;
@@ -29,4 +29,12 @@ export interface IOrderStore {
 export interface ICartStore {
     bun: TCartIngredient | null;
     ingredients: Array<TCartIngredient>;
+}
+
+export interface IFeedStore {
+    orders: Array<TOrder>;
+    total: number;
+    totalToday: number;
+    feedRequest: boolean;
+    feedRequestFail: boolean;
 }

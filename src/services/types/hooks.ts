@@ -4,6 +4,7 @@ import { ThunkAction } from 'redux-thunk';
 import { AppDispatch, RootState } from "..";
 import { ILogoutAction, TLoginActions, TProfileActions, TRegisterActions } from '../actions/auth';
 import { TCatalogActions } from '../actions/catalog';
+import { TFeedActions } from '../actions/feed';
 import { TOrderActions } from '../actions/order';
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
@@ -13,7 +14,8 @@ type TApplicationActions =
   TLoginActions | 
   ILogoutAction | 
   TRegisterActions | 
-  TProfileActions;
+  TProfileActions |
+  TFeedActions;
 type DispatchFunc = () => AppDispatch | AppThunk
 export const useAppDispatch: DispatchFunc = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

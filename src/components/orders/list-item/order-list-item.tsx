@@ -61,14 +61,18 @@ const OrderListItem: FC<IOrderListItemProps> = (props: IOrderListItemProps) => {
                         }
                         if (index === props.limitItems-1) {
                             return (
-                                <div key={index}>
-                                    <img src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
+                                <React.Fragment key={index}>
+                                    <div key={index} className={styles.body_image}>
+                                        <img src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
+                                    </div>
                                     <span className={styles.body_add}>+{orderIngredients.length - props.limitItems}</span>
-                                </div>
+                                </React.Fragment>
                             );
                         }
                         return (
-                            <img key={index} src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
+                            <div key={index} className={styles.body_image}>
+                                <img src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
+                            </div>
                         );
                     })}
                 </div>

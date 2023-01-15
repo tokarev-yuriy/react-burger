@@ -1,6 +1,8 @@
 import { compose, createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers';
 import thunk from 'redux-thunk';
+import { socketMiddleware, TWsActions } from './middleware/websocket';
+import { ACTION_FEED_CLOSE, ACTION_FEED_OPEN, getFeedFailedAction, getFeedSuccessAction } from './actions/feed';
 
 
 declare global {
@@ -14,7 +16,19 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const wsFeedUrl = "wss://norma.nomoreparties.space/orders/all";
+const wsFeedActions: TWsActions = {
+    wsOpen: ACTION_FEED_OPEN,
+    wsClose: ACTION_FEED_CLOSE,
+    onClose: getFeedFailedAction,
+    onError: getFeedFailedAction,
+    onMessage: getFeedSuccessAction
+};
+
+const enhancer = composeEnhancers(
+    applyMiddleware(thunk),
+    applyMiddleware(socketMiddleware(wsFeedUrl, wsFeedActions))
+);
 
 export const store = createStore(rootReducer, enhancer);
 
