@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '..';
 import { placeOrder } from '../../api/order';
-import { TCartIngredient, TOrder } from '../../utils/types';
+import { TCartIngredient, TOrderNumber } from '../../utils/types';
 import { AppThunk } from '../types/hooks';
 import { getConstructorClearAction } from './constructor';
 
@@ -20,7 +20,7 @@ export interface IOrderFailedAction {
 
 export interface IOrderSuccessAction {
   readonly type: typeof ACTION_ORDER_REQUEST_SUCCESS;
-  readonly order: TOrder;
+  readonly order: TOrderNumber;
 }
 
 export interface IOrderHideAction {
@@ -41,7 +41,7 @@ export const getOrderFailedAction = (): IOrderFailedAction => ({
   type: ACTION_ORDER_REQUEST_FAIL
 });
 
-export const getOrderSuccessAction = (order: TOrder): IOrderSuccessAction => ({
+export const getOrderSuccessAction = (order: TOrderNumber): IOrderSuccessAction => ({
   type: ACTION_ORDER_REQUEST_SUCCESS,
   order: order
 });

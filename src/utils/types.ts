@@ -40,7 +40,7 @@ export type TModalState = {
   background: H.Location
 };
 
-export type TOrder = {
+export type TOrderNumber = {
     orderId: number;
 };
 
@@ -51,3 +51,13 @@ export type TDragIngredient = {
 export type TDragCartIngredient = {
     id: number;
 };
+
+export type TOrder = {
+    ingredients: Array<string>,
+    _id: string,
+    status: string,
+    number: number,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+}
