@@ -1,26 +1,32 @@
 import { Middleware } from "redux";
+import { tokenStorage } from "../token-storage";
 
 export type TWsActions = {
     wsOpen: string,
     wsClose: string,
-    onClose: () => any,
     onError: () => any,
     onMessage: (data: any) => any,
 };
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWsActions): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWsActions, withToken: boolean = false): Middleware => {
     return store => {
       let socket: WebSocket | null = null;
   
       return next => action => {
         const { dispatch } = store;
-        const { wsOpen, wsClose, onClose, onError, onMessage } = wsActions;
+        const { wsOpen, wsClose, onError, onMessage } = wsActions;
         if (wsOpen === action.type) {
-          socket = new WebSocket(`${wsUrl}`);
+          if (withToken) {
+            const accessToken = tokenStorage.getInstance().getAccessToken().replace('Bearer ','');
+            socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+          } else {
+            socket = new WebSocket(`${wsUrl}`);
+          }
         }
         if (wsClose === action.type) {
-            socket?.close();
-            dispatch(onClose());
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.close();
+          }
         }
         if (socket) {
           socket.onerror = event => {
@@ -43,7 +49,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWsActions): Middlewa
           };
   
           socket.onclose = event => {
-            dispatch(onClose());
+            dispatch(onError());
           };
         }
   

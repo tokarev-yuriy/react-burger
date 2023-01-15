@@ -38,3 +38,9 @@ export interface IFeedStore {
     feedRequest: boolean;
     feedRequestFail: boolean;
 }
+
+export interface IHistoryStore {
+    orders: Array<TOrder>;
+    historyRequest: boolean;
+    historyRequestFail: boolean;
+}

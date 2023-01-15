@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "..";
 import { ILogoutAction, TLoginActions, TProfileActions, TRegisterActions } from '../actions/auth';
 import { TCatalogActions } from '../actions/catalog';
 import { TFeedActions } from '../actions/feed';
+import { THistoryActions } from '../actions/history';
 import { TOrderActions } from '../actions/order';
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
@@ -15,6 +16,7 @@ type TApplicationActions =
   ILogoutAction | 
   TRegisterActions | 
   TProfileActions |
+  THistoryActions |
   TFeedActions;
 type DispatchFunc = () => AppDispatch | AppThunk
 export const useAppDispatch: DispatchFunc = useDispatch
