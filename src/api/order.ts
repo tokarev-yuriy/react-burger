@@ -1,5 +1,5 @@
 import { tokenStorage } from '../services/token-storage';
-import { IApiResponse, TOrder } from '../utils/types';
+import { IApiResponse, TOrderNumber } from '../utils/types';
 import { refreshToken } from './auth';
 import { endpoints } from './endpoints';
 import { requestWithCheck, TokenError } from './helpers';
@@ -15,7 +15,7 @@ interface IApiOrderResponse extends IApiResponse {
  * Get order
  * @returns object 
  */
-async function placeOrder(ingredients: Array<string>): Promise<TOrder> {
+async function placeOrder(ingredients: Array<string>): Promise<TOrderNumber> {
     try {
         const json = await requestWithCheck<IApiOrderResponse>(endpoints.orders, {
             method: 'POST',
