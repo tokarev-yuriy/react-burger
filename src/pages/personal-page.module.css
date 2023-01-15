@@ -7,6 +7,10 @@
   width: 30%;
 }
 .colMain {
+  width: 70%;
+  text-align: center;
+}
+.colProfile {
   width: 40%;
   text-align: center;
 }

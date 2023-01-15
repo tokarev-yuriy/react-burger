@@ -5,6 +5,7 @@ import { OrderListItem } from '../list-item/order-list-item';
 
 interface IOrderListProps {
     orders: Array<TOrder>;
+    showStatus?: boolean;
 }
 
 const OrderList: FC<IOrderListProps> = (props: IOrderListProps) => {
@@ -13,7 +14,7 @@ const OrderList: FC<IOrderListProps> = (props: IOrderListProps) => {
         <>
             {props.orders.map(order => {
                 return (
-                    <OrderListItem order={order} limitItems={6} key={order._id} />
+                    <OrderListItem order={order} limitItems={6} key={order._id} showStatus={props.showStatus ?? false} />
                 );
             })}
         </>

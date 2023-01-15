@@ -4,9 +4,10 @@
     composes: p-6 mb-4 from global;
     border-radius: 40px;
     background-color: var(--bg-modal);
+    text-align: left;
 }
 .title {
-    composes: text text_type_main-medium mb-6 from global;
+    composes: text text_type_main-medium from global;
 }
 .head {
     display: flex;
@@ -27,6 +28,7 @@
     display: flex;
     justify-content: space-between;
     height: 60px;
+    composes: mt-6 from global;
 }
 .body img {
     height: 56px;
@@ -61,4 +63,20 @@
     text-align: center;
     color: var(--text-primary-color);
     margin-left: -60px;
+}
+.status {
+    composes: text text_type_main-default mt-2 from global;
+}
+.status_done {
+    composes: status;
+    composes: text_color_success from global;
+}
+.status_created {
+    composes: status;
+}
+.status_pending {
+    composes: status;
+}
+.status_error {
+    composes: status;
 }

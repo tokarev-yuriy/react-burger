@@ -8,6 +8,7 @@ import { useAppSelector } from '../../../services/types/hooks';
 interface IOrderListItemProps {
     order: TOrder;
     limitItems: number;
+    showStatus: boolean;
     children?: ReactNode;
 }
 
@@ -25,6 +26,20 @@ const OrderListItem: FC<IOrderListItemProps> = (props: IOrderListItemProps) => {
         );
     }, [orderIngredients]);
 
+    const getStatus = (status: string): ReactNode => {
+        if(status === 'done') {
+            return (<span className={styles.status_done}>Выполнен</span>);
+        }
+        if(status === 'created') {
+            return (<span className={styles.status_created}>Создан</span>);
+        }
+        if(status === 'pending') {
+            return (<span className={styles.status_pending}>Готовится</span>);
+        }
+
+        return (<span className={styles.status_error}>Неизвестный</span>);
+    }
+
     const showDetails = (): void => {
         history.replace(`/feed/${props.order._id}`, { background: location });
     };
@@ -36,6 +51,7 @@ const OrderListItem: FC<IOrderListItemProps> = (props: IOrderListItemProps) => {
                 <span className={styles.head_date}><FormattedDate date={new Date(props.order.createdAt)} /></span>
             </div>
             <h2 className={styles.title}>{props.order.name}</h2>
+            {props.showStatus && getStatus(props.order.status)}
             <div className={styles.body}>
                 <div>
                     {orderIngredients.map((ingredient, index) => {
