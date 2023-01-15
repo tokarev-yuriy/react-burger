@@ -19,6 +19,7 @@ import { useAppDispatch } from '../../services/types/hooks';
 import { FeedPage } from '../../pages/feed-page';
 import { OrderDetailModal } from '../orders/detail-modal/order-detail-modal';
 import { OrderDetailPage } from '../../pages/order-detail-page';
+import { PersonalOrderModal } from '../personal/personal-order-modal/personal-order-modal';
 
 function App(): ReactElement {
 
@@ -81,7 +82,7 @@ function App(): ReactElement {
                 <OrderDetailModal />
               </Route>
               <ProtectedRoute path="/profile/orders/:id" role={'authorized'}>
-                <OrderDetailModal />
+                <PersonalOrderModal />
               </ProtectedRoute>
             </Switch>
           )}

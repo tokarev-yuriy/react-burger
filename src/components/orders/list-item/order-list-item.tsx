@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useMemo } from 'react';
 import styles from './order-list-item.module.css';
-import { useHistory, useLocation } from 'react-router-dom';
 import { TOrder } from '../../../utils/types';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAppSelector } from '../../../services/types/hooks';
@@ -9,13 +8,12 @@ interface IOrderListItemProps {
     order: TOrder;
     limitItems: number;
     showStatus: boolean;
+    openDetails?: (id: string) => void, 
     children?: ReactNode;
 }
 
 const OrderListItem: FC<IOrderListItemProps> = (props: IOrderListItemProps) => {
 
-    const history = useHistory();
-    const location = useLocation();
     const ingredients = useAppSelector(store => store.catalog.ingredients);
 
     const orderIngredients = props.order.ingredients.map(id => ingredients.find(item => item._id === id)).filter(item => item !== undefined);
@@ -41,7 +39,9 @@ const OrderListItem: FC<IOrderListItemProps> = (props: IOrderListItemProps) => {
     }
 
     const showDetails = (): void => {
-        history.replace(`/feed/${props.order._id}`, { background: location });
+        if (props.openDetails) {
+            props.openDetails(props.order._id);
+        }
     };
 
     return (

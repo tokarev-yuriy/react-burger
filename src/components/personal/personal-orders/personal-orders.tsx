@@ -4,6 +4,7 @@ import { OrderList } from '../../orders/list/order-list';
 import { EmptyObject } from 'redux';
 import { useAppDispatch, useAppSelector } from '../../../services/types/hooks';
 import { getHistoryCloseAction, getHistoryOpenAction } from '../../../services/actions/history';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const PersonalOrders: FC<EmptyObject> = () => {
 
@@ -22,6 +23,13 @@ const PersonalOrders: FC<EmptyObject> = () => {
     };
   }, [dispatch]);
 
+  const history = useHistory();
+  const location = useLocation();
+
+  const openDetails = (id: string): void => {
+    history.replace(`/profile/orders/${id}`, { background: location });
+  }
+
   return (
     <>
     {isFailed ? (
@@ -32,7 +40,7 @@ const PersonalOrders: FC<EmptyObject> = () => {
       ):(
         orders && (
           <div className={styles.scrollable}>
-              <OrderList orders={orders} showStatus={true} />
+              <OrderList orders={orders} showStatus={true} openDetails={openDetails} />
           </div>
         )
       )

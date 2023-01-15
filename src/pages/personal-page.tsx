@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { PersonalMenu } from '../components/personal/personal-menu/personal-menu';
+import { PersonalOrderDetail } from '../components/personal/personal-order-detail/personal-order-detail';
 import { PersonalOrders } from '../components/personal/personal-orders/personal-orders';
 import { ProfileForm } from '../components/personal/profile-form/profile-form';
 import styles from './personal-page.module.css';
@@ -29,7 +30,7 @@ function PersonalPage(): ReactElement {
             </Route>
             
             <Route path="/profile/orders/:id" exact>
-              А тут заказик
+              <PersonalOrderDetail />
             </Route>
 
             <Route>

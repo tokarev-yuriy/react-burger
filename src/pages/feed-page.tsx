@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { OrderList } from '../components/orders/list/order-list';
 import { OrderNumbers } from '../components/orders/numbers/order-numbers';
 import { getFeedCloseAction, getFeedOpenAction } from '../services/actions/feed';
@@ -25,6 +26,13 @@ function FeedPage(): ReactElement {
     };
   }, [dispatch]);
 
+  const history = useHistory();
+  const location = useLocation();
+
+  const openDetails = (id: string): void => {
+    history.replace(`/feed/${id}`, { background: location });
+  }
+
   return (
     <section className={styles.section}>
         <h1 className={styles.page_title}>Лента заказов</h1>
@@ -37,7 +45,7 @@ function FeedPage(): ReactElement {
             orders && (
               <div className={styles.two_columns}>
                 <div className={styles.left_column}>
-                  <OrderList orders={orders} />
+                  <OrderList orders={orders} openDetails={openDetails} />
                 </div>
                 <div className={styles.right_column}>
                   <div className={styles.numbers}>
