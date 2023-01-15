@@ -15,8 +15,8 @@ import { ProtectedRoute } from '../misc/protected-route/protected-route';
 import { IngredientPage } from '../../pages/ingredient-page';
 import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
 import { TModalState } from '../../utils/types';
-import { Action } from 'redux';
 import { useAppDispatch } from '../../services/types/hooks';
+import { FeedPage } from '../../pages/feed-page';
 
 function App(): ReactElement {
 
@@ -58,6 +58,9 @@ function App(): ReactElement {
             </ProtectedRoute>
             <Route path="/ingredients/:id" exact>
               <IngredientPage />
+            </Route>
+            <Route path="/feed" exact>
+              <FeedPage />
             </Route>
             <Route>
               <NotFoundPage />

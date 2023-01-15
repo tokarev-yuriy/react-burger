@@ -1,0 +1,46 @@
+.section {
+    width: 100%;
+}
+.page_title {
+    composes: text text_type_main-large mb-5 from global;
+}
+.page_title {
+    composes: text text_type_main-large mb-5 from global;
+}
+.scrollable {
+    overflow-y: overlay;
+    overflow-x: hidden;
+    max-height: calc(100vh - var(--header-height) - 60px);
+    position: relative;
+    padding-right: 16px;
+}
+.two_columns {
+    display: flex;
+    justify-content: space-between;
+}
+.left_column {
+    width: calc(50% - 30px);
+    composes: scrollable;
+}
+.right_column {
+    width: calc(50% - 30px);
+}
+.numbers {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    composes: mb-15 from global;
+}
+.numbers > * {
+    width: calc(50% - 18px);
+}
+.totals {
+    width: 100%;
+    composes: mb-15 from global;
+}
+.totals_title {
+    composes: text text_type_main-medium from global;
+}
+.totals_summ {
+    composes: text text_type_digits-large from global;
+}
