@@ -41,7 +41,14 @@
     border-radius: 29px;
     border: 2px solid var(--link);
     background-color: var(--background-alt);
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
     composes: mr-4 from global;
+}
+.items_item_img img {
+    height: 56px;
+    margin-left: -50%;
 }
 .items_item_name {
     display:flex;

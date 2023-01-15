@@ -48,7 +48,9 @@ const OrderDetail: FC<IOrderDetailProps> = (props: IOrderDetailProps) => {
                         return (
                             <div className={styles.items_item} key={index}>
                                 <span className={styles.items_item_name}>
-                                    <img className={styles.items_item_img} src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
+                                    <span className={styles.items_item_img} >
+                                        <img src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
+                                    </span>
                                     {ingredient.name}
                                 </span>
                                 <span className={styles.items_item_price}>1 x {ingredient.price} <CurrencyIcon type="primary" /></span>
