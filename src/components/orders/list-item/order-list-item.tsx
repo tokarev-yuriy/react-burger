@@ -45,7 +45,7 @@ const OrderListItem: FC<IOrderListItemProps> = (props: IOrderListItemProps) => {
     };
 
     return (
-        <div key={props.order._id} className={styles.item}>
+        <div key={props.order._id} className={styles.item} onClick={showDetails}>
             <div className={styles.head}>
                 <h3 className={styles.head_number}>#{props.order.number}</h3>
                 <span className={styles.head_date}><FormattedDate date={new Date(props.order.createdAt)} /></span>
@@ -55,20 +55,20 @@ const OrderListItem: FC<IOrderListItemProps> = (props: IOrderListItemProps) => {
             <div className={styles.body}>
                 <div>
                     {orderIngredients.map((ingredient, index) => {
-                        if (!ingredient) return;
+                        if (!ingredient) return null;
                         if (index >= props.limitItems) {
-                            return;
+                            return null;
                         }
                         if (index === props.limitItems-1) {
                             return (
-                                <>
+                                <div key={index}>
                                     <img src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
                                     <span className={styles.body_add}>+{orderIngredients.length - props.limitItems}</span>
-                                </>
+                                </div>
                             );
                         }
                         return (
-                            <img src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
+                            <img key={index} src={ingredient.image_mobile} alt={ingredient.name} title={ingredient.name} />
                         );
                     })}
                 </div>

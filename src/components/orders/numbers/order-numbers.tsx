@@ -19,7 +19,7 @@ const OrderNumbers: FC<IOrderNumbersProps> = (props: IOrderNumbersProps) => {
                     <li className={props.className}>-</li>
                 )}
                 {props.orders.map(order => (
-                    <li className={props.className}>{order.number}</li>
+                    <li className={props.className} key={order._id}>{order.number}</li>
                 ))}
             </ul>
         </div>

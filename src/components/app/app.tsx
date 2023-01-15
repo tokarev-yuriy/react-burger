@@ -17,6 +17,8 @@ import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-
 import { TModalState } from '../../utils/types';
 import { useAppDispatch } from '../../services/types/hooks';
 import { FeedPage } from '../../pages/feed-page';
+import { OrderDetailModal } from '../orders/detail-modal/order-detail-modal';
+import { OrderDetailPage } from '../../pages/order-detail-page';
 
 function App(): ReactElement {
 
@@ -62,15 +64,26 @@ function App(): ReactElement {
             <Route path="/feed" exact>
               <FeedPage />
             </Route>
+            <Route path="/feed/:id" exact>
+              <OrderDetailPage />
+            </Route>
             <Route>
               <NotFoundPage />
             </Route>
           </Switch>
 
           {background && (
-            <Route path="/ingredients/:id">
-              <BurgerIngredientModal />
-            </Route>
+            <Switch>
+              <Route path="/ingredients/:id">
+                <BurgerIngredientModal />
+              </Route>
+              <Route path="/feed/:id">
+                <OrderDetailModal />
+              </Route>
+              <ProtectedRoute path="/profile/orders/:id" role={'authorized'}>
+                <OrderDetailModal />
+              </ProtectedRoute>
+            </Switch>
           )}
         </ErrorBoundary>
       </main>

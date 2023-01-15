@@ -8,10 +8,9 @@ import styles from "./feed-page.module.css";
 
 function FeedPage(): ReactElement {
 
-  const { isLoading, isFailed, items } = useAppSelector((store) => ({
+  const { isLoading, isFailed } = useAppSelector((store) => ({
     isLoading: store.catalog.catalogRequest && !store.catalog.catalogRequestFail,
     isFailed: !store.catalog.catalogRequest && store.catalog.catalogRequestFail,
-    items: store.catalog.ingredients,
   }));
 
   const orders : Array<TOrder> = [
@@ -22,7 +21,7 @@ function FeedPage(): ReactElement {
         "60d3b41abdacab0026a733c8",
         "60d3b41abdacab0026a733c9"
       ],
-      _id: "",
+      _id: "1",
       status: "done",
       number: 232323,
       name: "Тестовое название бургера",
@@ -36,7 +35,7 @@ function FeedPage(): ReactElement {
         "60d3b41abdacab0026a733c8",
         "60d3b41abdacab0026a733c9"
       ],
-      _id: "",
+      _id: "2",
       status: "done",
       number: 232323,
       name: "Тестовое название бургера",
@@ -50,7 +49,7 @@ function FeedPage(): ReactElement {
         "60d3b41abdacab0026a733c8",
         "60d3b41abdacab0026a733c9"
       ],
-      _id: "",
+      _id: "3",
       status: "pending",
       number: 232323,
       name: "Тестовое название бургера",
@@ -70,7 +69,7 @@ function FeedPage(): ReactElement {
         "60d3b41abdacab0026a733c8",
         "60d3b41abdacab0026a733c9"
       ],
-      _id: "",
+      _id: "4",
       status: "done",
       number: 232323,
       name: "Тестовое название бургера",
@@ -81,6 +80,7 @@ function FeedPage(): ReactElement {
   const total : number = 1;
   const totalToday : number = 1;
 
+
   return (
     <section className={styles.section}>
         <h1 className={styles.page_title}>Лента заказов</h1>
@@ -90,7 +90,7 @@ function FeedPage(): ReactElement {
           isLoading ? (
             <p>Идет загрузка</p>
           ):(
-            items && (
+            orders && (
               <div className={styles.two_columns}>
                 <div className={styles.left_column}>
                   <OrderList orders={orders} />
