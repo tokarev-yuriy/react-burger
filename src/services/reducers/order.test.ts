@@ -9,7 +9,7 @@ describe('Order reducer', () => {
   })
 
   /**
-   * History Actions
+   * Order Actions
    */
   it('should handle ACTION_ORDER_REQUEST', () => {
     expect(

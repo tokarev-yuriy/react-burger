@@ -5,7 +5,7 @@ import {
  } from '../actions/constructor';
 import { ICartStore } from '../types/stores';
 
-const constructorInitialState: ICartStore = {
+export const constructorInitialState: ICartStore = {
     bun: null,
     ingredients: [],
 };

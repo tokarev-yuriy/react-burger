@@ -1,7 +1,7 @@
 import { ACTION_CATALOG_REQUEST, ACTION_CATALOG_REQUEST_FAIL, ACTION_CATALOG_REQUEST_SUCCESS, TCatalogActions } from '../actions/catalog';
 import { ICatalogStore } from '../types/stores';
 
-const catalogInitialState: ICatalogStore = {
+export const catalogInitialState: ICatalogStore = {
     catalogRequest: false,
     catalogRequestFail: false,
     ingredients: [],
