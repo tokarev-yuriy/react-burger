@@ -9,7 +9,7 @@ import {
 import { tokenStorage } from "../token-storage";
 import { IAuthStore } from "../types/stores";
 
-const authInitialState: IAuthStore = {
+export const authInitialState: IAuthStore = {
     user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) as TUser : null,
     
     registerRequest: false,
