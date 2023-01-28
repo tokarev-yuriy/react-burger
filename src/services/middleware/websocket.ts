@@ -1,4 +1,5 @@
-import { Middleware } from "redux";
+import { Middleware, MiddlewareAPI } from "redux";
+import { AppDispatch, RootState } from "..";
 import { tokenStorage } from "../token-storage";
 
 export type TWsActions = {
@@ -9,7 +10,7 @@ export type TWsActions = {
 };
 
 export const socketMiddleware = (wsUrl: string, wsActions: TWsActions, withToken: boolean = false): Middleware => {
-    return store => {
+    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
       let socket: WebSocket | null = null;
   
       return next => action => {
