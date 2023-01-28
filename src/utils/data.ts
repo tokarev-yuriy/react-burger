@@ -1,4 +1,5 @@
 import { IWsResponse } from "../services/actions/feed";
+import { IWsResponse as HistoryIwsResponse} from "../services/actions/history";
 import { TIngredient } from "./types";
 
 const testData: Array<TIngredient> = [
@@ -295,4 +296,85 @@ const testFeed: IWsResponse = {
    "totalToday":82
 }
 
-export {testData, testFeed};
+const testHistory: HistoryIwsResponse = {
+   "success":true,
+   "orders":[
+      {
+         "_id":"63d57c00936b17001be54ce2",
+         "ingredients":[
+            "60d3b41abdacab0026a733c7",
+            "60d3b41abdacab0026a733cc"
+         ],
+         "status":"done",
+         "name":"Spicy флюоресцентный бургер",
+         "createdAt":"2023-01-28T19:48:16.076Z",
+         "updatedAt":"2023-01-28T19:48:16.489Z",
+         "number":38443
+      },
+      {
+         "_id":"63d57bb1936b17001be54cde",
+         "ingredients":[
+            "60d3b41abdacab0026a733c7",
+            "60d3b41abdacab0026a733cd",
+            "60d3b41abdacab0026a733c7"
+         ],
+         "status":"done",
+         "name":"Space флюоресцентный бургер",
+         "createdAt":"2023-01-28T19:46:57.620Z",
+         "updatedAt":"2023-01-28T19:46:58.039Z",
+         "number":38442
+      },
+      {
+         "_id":"63d57b97936b17001be54cdd",
+         "ingredients":[
+            "60d3b41abdacab0026a733c7",
+            "60d3b41abdacab0026a733cd",
+            "60d3b41abdacab0026a733c7"
+         ],
+         "status":"done",
+         "name":"Space флюоресцентный бургер",
+         "createdAt":"2023-01-28T19:46:31.502Z",
+         "updatedAt":"2023-01-28T19:46:31.906Z",
+         "number":38441
+      },
+      {
+         "_id":"63d57b7b936b17001be54cdb",
+         "ingredients":[
+            "60d3b41abdacab0026a733c7",
+            "60d3b41abdacab0026a733cd",
+            "60d3b41abdacab0026a733c7"
+         ],
+         "status":"done",
+         "name":"Space флюоресцентный бургер",
+         "createdAt":"2023-01-28T19:46:03.859Z",
+         "updatedAt":"2023-01-28T19:46:04.389Z",
+         "number":38440
+      },
+      {
+         "_id":"63d57885936b17001be54cd4",
+         "ingredients":[
+            "60d3b41abdacab0026a733c6",
+            "60d3b41abdacab0026a733d3",
+            "60d3b41abdacab0026a733d0",
+            "60d3b41abdacab0026a733d1",
+            "60d3b41abdacab0026a733c8",
+            "60d3b41abdacab0026a733c9",
+            "60d3b41abdacab0026a733cb",
+            "60d3b41abdacab0026a733d1",
+            "60d3b41abdacab0026a733d3",
+            "60d3b41abdacab0026a733d3",
+            "60d3b41abdacab0026a733d3",
+            "60d3b41abdacab0026a733c6"
+         ],
+         "status":"done",
+         "name":"Люминесцентный фалленианский экзо-плантаго краторный минеральный бессмертный био-марсианский бургер",
+         "createdAt":"2023-01-28T19:33:25.834Z",
+         "updatedAt":"2023-01-28T19:33:26.755Z",
+         "number":38439
+      }
+   ],
+   "total":38352,
+   "totalToday":82
+}
+
+export {testData, testFeed, testHistory};

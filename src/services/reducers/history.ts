@@ -4,7 +4,7 @@ import {
 } from '../actions/history';
 import { IHistoryStore } from '../types/stores';
 
-const historyInitialState: IHistoryStore = {
+export const historyInitialState: IHistoryStore = {
     orders: [],
     historyRequest: false,
     historyRequestFail: false,

@@ -4,7 +4,7 @@ import {
 } from '../actions/order';
 import { IOrderStore } from '../types/stores';
 
-const orderInitialState: IOrderStore = {
+export const orderInitialState: IOrderStore = {
     order: null,
     orderRequest: false,
     orderRequestFail: false,

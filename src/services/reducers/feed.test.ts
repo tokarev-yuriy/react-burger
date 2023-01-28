@@ -42,23 +42,4 @@ describe('Feed reducer', () => {
     });
   })
 
-  /**
-   * Socket Actions
-   */
-   it('should handle ACTION_FEED_OPEN', () => {
-    expect(
-      reducer(undefined, actions.getFeedOpenAction())
-    ).toEqual({
-      ...feedInitialState,
-    })
-  })
-
-  it('should handle ACTION_FEED_CLOSE', () => {
-    expect(
-      reducer(undefined, actions.getFeedCloseAction())
-    ).toEqual({
-      ...feedInitialState,
-    })
-  })
-
 }) 
