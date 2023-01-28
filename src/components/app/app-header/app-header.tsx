@@ -17,7 +17,7 @@ function AppHeader(): ReactElement {
                     <AppNavLink text="Конструктор" to={"/"} exact>
                         <BurgerIcon type="primary" />
                     </AppNavLink>
-                    <AppNavLink text="Лента заказов" to={"/orders"} exact>
+                    <AppNavLink text="Лента заказов" to={"/feed"} exact>
                         <ListIcon type="primary" />
                     </AppNavLink>
                 </nav>

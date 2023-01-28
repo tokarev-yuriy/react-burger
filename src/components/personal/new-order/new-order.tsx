@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
-import styles from './order-details.module.css';
+import styles from './new-order.module.css';
 import * as PropTypes from 'prop-types';
 import * as checkIcon from '../../../images/check.svg';
 
-interface IOrderDetailsProps {
+interface INewOrderProps {
     id: number;
 }
 
-const OrderDetails: FC<IOrderDetailsProps> = (props: IOrderDetailsProps) => {
+const NewOrder: FC<INewOrderProps> = (props: INewOrderProps) => {
     return (
         <div className={styles.order}>
             <h2 className={styles.order_number}>{props.id}</h2>
@@ -21,8 +21,8 @@ const OrderDetails: FC<IOrderDetailsProps> = (props: IOrderDetailsProps) => {
     );
 }
 
-OrderDetails.propTypes = {
+NewOrder.propTypes = {
     id: PropTypes.number.isRequired,
 };
 
-export { OrderDetails };
+export { NewOrder };

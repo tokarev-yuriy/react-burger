@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Redirect, Route, RouteProps, useLocation } from "react-router-dom";
 import { tokenStorage } from "../../../services/token-storage";
 import * as H from "history";
-import { useAppSelector } from "../../../services/hooks";
+import { useAppSelector } from "../../../services/types/hooks";
 
 interface StateWithReferer extends H.Location {
     referer?: {

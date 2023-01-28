@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { login } from '../../../services/actions/auth';
 import { useForm } from '../../../hooks/useForm';
 import { Action } from 'redux';
-import { useAppDispatch, useAppSelector } from '../../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../../services/types/hooks';
 
 function LoginForm(): ReactElement {
 

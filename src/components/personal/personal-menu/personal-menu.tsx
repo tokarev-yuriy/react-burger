@@ -3,7 +3,7 @@ import styles from './personal-menu.module.css';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../../../services/actions/auth';
 import { Action } from 'redux';
-import { useAppDispatch } from '../../../services/hooks';
+import { useAppDispatch } from '../../../services/types/hooks';
 
 
 

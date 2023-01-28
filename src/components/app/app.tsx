@@ -15,8 +15,11 @@ import { ProtectedRoute } from '../misc/protected-route/protected-route';
 import { IngredientPage } from '../../pages/ingredient-page';
 import { BurgerIngredientModal } from '../burger/burger-ingredient-modal/burger-ingredient-modal';
 import { TModalState } from '../../utils/types';
-import { Action } from 'redux';
-import { useAppDispatch } from '../../services/hooks';
+import { useAppDispatch } from '../../services/types/hooks';
+import { FeedPage } from '../../pages/feed-page';
+import { OrderDetailModal } from '../orders/detail-modal/order-detail-modal';
+import { OrderDetailPage } from '../../pages/order-detail-page';
+import { PersonalOrderModal } from '../personal/personal-order-modal/personal-order-modal';
 
 function App(): ReactElement {
 
@@ -25,7 +28,7 @@ function App(): ReactElement {
   const background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getCatalog() as unknown as Action<string>);
+    dispatch(getCatalog());
     // eslint-disable-next-line 
   }, []);
 
@@ -59,15 +62,29 @@ function App(): ReactElement {
             <Route path="/ingredients/:id" exact>
               <IngredientPage />
             </Route>
+            <Route path="/feed" exact>
+              <FeedPage />
+            </Route>
+            <Route path="/feed/:id" exact>
+              <OrderDetailPage />
+            </Route>
             <Route>
               <NotFoundPage />
             </Route>
           </Switch>
 
           {background && (
-            <Route path="/ingredients/:id">
-              <BurgerIngredientModal />
-            </Route>
+            <Switch>
+              <Route path="/ingredients/:id">
+                <BurgerIngredientModal />
+              </Route>
+              <Route path="/feed/:id">
+                <OrderDetailModal />
+              </Route>
+              <ProtectedRoute path="/profile/orders/:id" role={'authorized'}>
+                <PersonalOrderModal />
+              </ProtectedRoute>
+            </Switch>
           )}
         </ErrorBoundary>
       </main>

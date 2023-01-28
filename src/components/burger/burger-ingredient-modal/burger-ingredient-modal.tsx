@@ -3,7 +3,7 @@ import styles from './burger-ingredient-modal.module.css';
 import { BurgerIngredientDetails } from '../burger-ingredient-details/burger-ingredient-details';
 import { Modal } from '../../misc/modal/modal';
 import { useHistory, useParams } from 'react-router-dom';
-import { useAppSelector } from '../../../services/hooks';
+import { useAppSelector } from '../../../services/types/hooks';
 
 function BurgerIngredientModal(): ReactElement {
     const params = useParams<{id: string}>();

@@ -1,4 +1,4 @@
-import React, { ReactElement, Ref, RefObject, useState } from 'react';
+import React, { ReactElement, Ref, useState } from 'react';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef } from 'react';
 import { TICons } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons';

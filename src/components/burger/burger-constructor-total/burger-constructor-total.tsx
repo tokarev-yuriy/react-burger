@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styles from './burger-constructor-total.module.css';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { useAppSelector } from '../../../services/hooks';
+import { useAppSelector } from '../../../services/types/hooks';
 
 interface IBurgerConstructorTotalProps {
     onPlaceOrder: () => void;

@@ -1,8 +1,8 @@
 import { 
   ACTION_ORDER_REQUEST, ACTION_ORDER_REQUEST_FAIL, 
-  ACTION_ORDER_REQUEST_SUCCESS, ACTION_ORDER_HIDE
+  ACTION_ORDER_REQUEST_SUCCESS, ACTION_ORDER_HIDE, TOrderActions
 } from '../actions/order';
-import { IOrderStore } from '../types';
+import { IOrderStore } from '../types/stores';
 
 const orderInitialState: IOrderStore = {
     order: null,
@@ -13,7 +13,7 @@ const orderInitialState: IOrderStore = {
 /**
  * Reducer for burger order
  */
- export const orderReducer = (state: IOrderStore = orderInitialState, action: any): IOrderStore => {
+ export const orderReducer = (state: IOrderStore = orderInitialState, action: TOrderActions): IOrderStore => {
     switch(action.type) {
       
       case ACTION_ORDER_REQUEST:

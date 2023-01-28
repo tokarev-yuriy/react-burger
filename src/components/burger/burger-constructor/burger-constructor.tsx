@@ -4,7 +4,6 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { BurgerConstructorTotal } from '../burger-constructor-total/burger-constructor-total';
 import { useCallback } from 'react';
 import { Modal } from '../../misc/modal/modal';
-import { OrderDetails } from '../../personal/order-details/order-details';
 import { placeOrderAction, ACTION_ORDER_HIDE } from '../../../services/actions/order';
 import { ACTION_CONSTRUCTOR_ADD } from '../../../services/actions/constructor';
 import { useDrop } from 'react-dnd';
@@ -13,8 +12,9 @@ import { guuid } from '../../../utils/guuid';
 import { tokenStorage } from '../../../services/token-storage';
 import { useHistory } from 'react-router-dom';
 import { Action } from 'redux';
-import { useAppDispatch, useAppSelector } from '../../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../../services/types/hooks';
 import { TDragIngredient } from '../../../utils/types';
+import { NewOrder } from '../../personal/new-order/new-order';
 
 const BurgerConstructor: FC<{}> = () => {
 
@@ -121,7 +121,7 @@ const BurgerConstructor: FC<{}> = () => {
 
             {order && (
                 <Modal title="" onClose={hideOrder}>
-                    <OrderDetails id={order.orderId} />
+                    <NewOrder id={order.orderId} />
                 </Modal>
             )}
         </section>

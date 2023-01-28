@@ -3,7 +3,7 @@ import { BurgerIngredients } from '../components/burger/burger-ingredients/burge
 import { BurgerConstructor } from '../components/burger/burger-constructor/burger-constructor';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useAppSelector } from '../services/hooks';
+import { useAppSelector } from '../services/types/hooks';
 
 function MainPage(): ReactElement {
 

@@ -1,4 +1,4 @@
-import { TCartIngredient, TIngredient, TOrder, TUser } from "../utils/types";
+import { TCartIngredient, TIngredient, TOrder, TOrderNumber, TUser } from "../../utils/types";
 
 export interface IAuthStore {
     user: TUser | null;
@@ -21,7 +21,7 @@ export interface ICatalogStore {
 }
 
 export interface IOrderStore {
-    order: TOrder | null;
+    order: TOrderNumber | null;
     orderRequest: boolean;
     orderRequestFail: boolean;
 }
@@ -29,4 +29,18 @@ export interface IOrderStore {
 export interface ICartStore {
     bun: TCartIngredient | null;
     ingredients: Array<TCartIngredient>;
+}
+
+export interface IFeedStore {
+    orders: Array<TOrder>;
+    total: number;
+    totalToday: number;
+    feedRequest: boolean;
+    feedRequestFail: boolean;
+}
+
+export interface IHistoryStore {
+    orders: Array<TOrder>;
+    historyRequest: boolean;
+    historyRequestFail: boolean;
 }

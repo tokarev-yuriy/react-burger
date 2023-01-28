@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { saveProfile } from '../../../services/actions/auth';
 import { useForm } from '../../../hooks/useForm';
 import { Action } from 'redux';
-import { useAppDispatch, useAppSelector } from '../../../services/hooks';
+import { useAppDispatch, useAppSelector } from '../../../services/types/hooks';
 
 interface IProfileFormProps {
     setHelp: Dispatch<SetStateAction<ReactElement | string>>;

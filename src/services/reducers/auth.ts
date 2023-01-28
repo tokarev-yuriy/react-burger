@@ -3,11 +3,11 @@ import {
   ACTION_LOGIN_REQUEST, ACTION_LOGIN_REQUEST_FAIL, ACTION_LOGIN_REQUEST_SUCCESS, 
   ACTION_REGISTER_REQUEST, ACTION_REGISTER_REQUEST_FAIL, ACTION_REGISTER_REQUEST_SUCCESS,
   ACTION_LOGOUT_REQUEST_SUCCESS,
-  ACTION_PROFILE_REQUEST, ACTION_PROFILE_REQUEST_FAIL, ACTION_PROFILE_REQUEST_SUCCESS
+  ACTION_PROFILE_REQUEST, ACTION_PROFILE_REQUEST_FAIL, ACTION_PROFILE_REQUEST_SUCCESS, TLoginActions, TRegisterActions, TProfileActions, ILogoutAction
 
 } from "../actions/auth";
 import { tokenStorage } from "../token-storage";
-import { IAuthStore } from "../types";
+import { IAuthStore } from "../types/stores";
 
 const authInitialState: IAuthStore = {
     user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) as TUser : null,
@@ -26,7 +26,7 @@ const authInitialState: IAuthStore = {
 /**
  * Reducer for auth operations
  */
- export const authReducer = (state: IAuthStore = authInitialState, action: any): IAuthStore => {
+ export const authReducer = (state: IAuthStore = authInitialState, action: TLoginActions | TRegisterActions | TProfileActions | ILogoutAction): IAuthStore => {
     switch(action.type) {
       
       case ACTION_REGISTER_REQUEST:

@@ -1,0 +1,89 @@
+
+.item {
+    position: relative;
+    composes: p-6 mb-4 from global;
+    border-radius: 40px;
+    background-color: var(--bg-modal);
+    text-align: left;
+}
+.title {
+    composes: text text_type_main-medium from global;
+}
+.head {
+    display: flex;
+    justify-content: space-between;
+    composes: mb-6 from global;
+}
+.head_number {
+    display: inline-block;
+    composes: text text_type_digits-default from global;
+}
+.head_date {
+    display: inline-block;
+    color: var(--inactive);
+    composes: text text_type_main-default from global;
+}
+
+.body {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    composes: mt-6 from global;
+}
+.body_image {
+    height: 56px;
+    width: 56px;
+    border-radius: 29px;
+    border: 2px solid var(--link);
+    margin-left: -12px;
+    background-color: var(--background-alt);
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+}
+.body_image img {
+    height: 56px;
+    margin-left: -50%;
+}
+.body_price {
+    display: inline-block;
+    composes: text text_type_digits-default from global;
+    white-space: nowrap;
+    line-height: 60px;
+    height: 60px ;
+}
+.body_price svg {
+    padding-left: 10px;
+    display: inline-block;
+    margin-bottom: -4px;
+}
+.body_add {
+    height: 56px;
+    width: 56px;
+    border-radius: 29px;
+    border: 2px solid var(--link);
+    position: absolute;
+    display: inline-block;
+    composes: text text_type_digits-default from global;
+    background-color: rgb(0,0,0,0.7);
+    line-height: 52px;
+    text-align: center;
+    color: var(--text-primary-color);
+    margin-left: -60px;
+}
+.status {
+    composes: text text_type_main-default mt-2 from global;
+}
+.status_done {
+    composes: status;
+    composes: text_color_success from global;
+}
+.status_created {
+    composes: status;
+}
+.status_pending {
+    composes: status;
+}
+.status_error {
+    composes: status;
+}
