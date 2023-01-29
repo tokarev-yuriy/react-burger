@@ -5,7 +5,7 @@ import { App } from './components/app/app';
 import '@ya.praktikum/react-developer-burger-ui-components';
 import { Provider } from 'react-redux';
 import { store } from './services/index'
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 
 const root = ReactDOM.createRoot(
