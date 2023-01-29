@@ -46,7 +46,7 @@ export const getRegisterSuccessAction = (
 
 export const register: AppThunk = (fields: TUser) => (dispatch: AppDispatch) => {
   dispatch(getRegisterAction());
-  registerUser(fields)
+  return registerUser(fields)
   .then(({user, token}) => {
       dispatch(getRegisterSuccessAction(user, token));
   })
@@ -98,7 +98,7 @@ export const getLoginSuccessAction = (
 
 export const login: AppThunk = (email: string, password: string) => (dispatch: AppDispatch) => {
     dispatch(getLoginAction());
-    loginUser(email, password)
+    return loginUser(email, password)
     .then(({user, token}) => {
         dispatch(getLoginSuccessAction(user, token));
     })
@@ -119,7 +119,7 @@ export const getLogoutAction = (): ILogoutAction => ({
 });
 
 export const logout: AppThunk = () => (dispatch: AppDispatch) => {
-    logoutUser()
+    return logoutUser()
     .finally(() => {
         dispatch(getLogoutAction())
     });
@@ -168,7 +168,7 @@ export const getProfileSuccessAction = (
 
 export const saveProfile: AppThunk = (fields: TUser) => (dispatch: AppDispatch) => {
     dispatch(getProfileAction());
-    saveUser(fields)
+    return saveUser(fields)
     .then((user) => {
         dispatch(getProfileSuccessAction(user));
     })

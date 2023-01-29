@@ -3,6 +3,12 @@ import { authInitialState, authReducer as reducer } from "./auth";
 import * as actions from "../actions/auth";
 import { TToken, TUser } from "../../utils/types";
 import { tokenStorage } from "../token-storage";
+import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk";
+import configureMockStore from "redux-mock-store";
+import { IAuthStore } from "../types/stores";
+import createMockStore from "redux-mock-store";
+import { AnyAction } from "redux";
+import { AppThunk } from "../types/hooks";
 
 describe('Auth reducer', () => {
 
@@ -158,4 +164,188 @@ describe('Auth reducer', () => {
     })
   })
 
-}) 
+
+  /**
+   * Thunk actions
+   */
+  const mockStore = createMockStore([thunk]);
+
+  const user: TUser = {
+     email: 'test',
+     name: 'test'
+  };
+  const token: TToken = {
+     access: 'test',
+     refresh: 'test'
+  };
+  test("should fire 2 actions if register was successfull", () => {
+    jest.spyOn(global, "fetch").mockImplementation( 
+      jest.fn(
+        () => Promise.resolve({ 
+          ok: true,
+          json: () => Promise.resolve({ 
+            success: true,
+            user: user,
+            accessToken: token.access,
+            refreshToken: token.refresh 
+          }), 
+      }), 
+    ) as jest.Mock );
+
+    const expectedActions = [
+      { type: actions.ACTION_REGISTER_REQUEST },
+      { type: actions.ACTION_REGISTER_REQUEST_SUCCESS, user: user, token: token },
+    ];
+    const store = mockStore(authInitialState);
+
+    store.dispatch<any>(actions.register({ email: "email", password: "password" }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  test("should fire 2 actions if register was failed", () => {
+    jest.spyOn(global, "fetch").mockImplementation( 
+      jest.fn(
+        () => Promise.resolve({ 
+          ok: true,
+          json: () => Promise.resolve({ 
+            success: false,
+          }), 
+      }), 
+    ) as jest.Mock );
+
+    const expectedActions = [
+      { type: actions.ACTION_REGISTER_REQUEST },
+      { type: actions.ACTION_REGISTER_REQUEST_FAIL },
+    ];
+    const store = mockStore(authInitialState);
+
+    store.dispatch<any>(actions.register({ email: "email", password: "password" }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  test("should fire 2 actions if login was successfull", () => {
+    jest.spyOn(global, "fetch").mockImplementation( 
+      jest.fn(
+        () => Promise.resolve({ 
+          ok: true,
+          json: () => Promise.resolve({ 
+            success: true,
+            user: user,
+            accessToken: token.access,
+            refreshToken: token.refresh 
+          }), 
+      }), 
+    ) as jest.Mock );
+
+    const expectedActions = [
+      { type: actions.ACTION_LOGIN_REQUEST },
+      { type: actions.ACTION_LOGIN_REQUEST_SUCCESS, user: user, token: token },
+    ];
+    const store = mockStore(authInitialState);
+
+    store.dispatch<any>(actions.login({ email: "email", password: "password" }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  test("should fire 2 actions if login was failed", () => {
+    jest.spyOn(global, "fetch").mockImplementation( 
+      jest.fn(
+        () => Promise.resolve({ 
+          ok: true,
+          json: () => Promise.resolve({ 
+            success: false,
+          }), 
+      }), 
+    ) as jest.Mock );
+
+    const expectedActions = [
+      { type: actions.ACTION_LOGIN_REQUEST },
+      { type: actions.ACTION_LOGIN_REQUEST_FAIL },
+    ];
+    const store = mockStore(authInitialState);
+
+    store.dispatch<any>(actions.login({ email: "email", password: "password" }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  test("should fire 2 actions if profile was successfull", () => {
+    jest.spyOn(global, "fetch").mockImplementation( 
+      jest.fn(
+        () => Promise.resolve({ 
+          ok: true,
+          json: () => Promise.resolve({ 
+            success: true,
+            user: user,
+            accessToken: token.access,
+            refreshToken: token.refresh 
+          }), 
+      }), 
+    ) as jest.Mock );
+
+    const expectedActions = [
+      { type: actions.ACTION_PROFILE_REQUEST },
+      { type: actions.ACTION_PROFILE_REQUEST_SUCCESS, user: user },
+    ];
+    const store = mockStore(authInitialState);
+
+    store.dispatch<any>(actions.saveProfile({ email: "email", password: "password" }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  test("should fire 2 actions if profile was failed", () => {
+    jest.spyOn(global, "fetch").mockImplementation( 
+      jest.fn(
+        () => Promise.resolve({ 
+          ok: true,
+          json: () => Promise.resolve({ 
+            success: false,
+          }), 
+      }), 
+    ) as jest.Mock );
+
+    const expectedActions = [
+      { type: actions.ACTION_PROFILE_REQUEST },
+      { type: actions.ACTION_PROFILE_REQUEST_FAIL, error: "Api error" },
+    ];
+    const store = mockStore(authInitialState);
+
+    store.dispatch<any>(actions.saveProfile({ email: "email", password: "password" }))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  test("should fire 1 action if logout was successfull", () => {
+    jest.spyOn(global, "fetch").mockImplementation( 
+      jest.fn(
+        () => Promise.resolve({ 
+          ok: true,
+          json: () => Promise.resolve({ 
+            success: true,
+          }), 
+      }), 
+    ) as jest.Mock );
+
+    const expectedActions = [
+      { type: actions.ACTION_LOGOUT_REQUEST_SUCCESS },
+    ];
+    const store = mockStore(authInitialState);
+
+    store.dispatch<any>(actions.logout())
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+})
+
