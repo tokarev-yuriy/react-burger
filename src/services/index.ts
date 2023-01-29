@@ -41,6 +41,12 @@ const enhancer = composeEnhancers(
 
 export const store = createStore(rootReducer, enhancer);
 
+// @ts-ignore
+if (typeof window === 'object' && window.Cypress) {
+  // @ts-ignore
+  window.store = store
+}
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

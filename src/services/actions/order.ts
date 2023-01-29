@@ -63,7 +63,7 @@ export const placeOrderAction: AppThunk = () => (dispatch: AppDispatch, getState
         ...state.cart.ingredients.map((item: TCartIngredient) => item._id), 
         state.cart.bun._id
       ];
-      placeOrder(ingredients)
+      return placeOrder(ingredients)
       .then(order => {
         dispatch(getOrderSuccessAction(order));
         dispatch(getConstructorClearAction());

@@ -4,7 +4,7 @@ import {
 } from '../actions/feed';
 import { IFeedStore } from '../types/stores';
 
-const feedInitialState: IFeedStore = {
+export const feedInitialState: IFeedStore = {
     orders: [],
     total: 0,
     totalToday: 0,
