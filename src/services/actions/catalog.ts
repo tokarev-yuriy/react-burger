@@ -42,7 +42,7 @@ export const getCatalogSuccessAction = (items: Array<TIngredient>): ICatalogSucc
 
 export const getCatalog: AppThunk = () => (dispatch: AppDispatch) => {
     dispatch(getCatalogAction());
-    getIngredientsService()
+    return getIngredientsService()
     .then(items => {
         dispatch(getCatalogSuccessAction(items))
     })

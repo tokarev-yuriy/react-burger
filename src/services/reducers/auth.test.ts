@@ -196,7 +196,7 @@ describe('Auth reducer', () => {
       { type: actions.ACTION_REGISTER_REQUEST },
       { type: actions.ACTION_REGISTER_REQUEST_SUCCESS, user: user, token: token },
     ];
-    const store = mockStore(authInitialState);
+    const store = mockStore({});
 
     store.dispatch<any>(actions.register({ email: "email", password: "password" }))
       .then(() => {
@@ -219,7 +219,7 @@ describe('Auth reducer', () => {
       { type: actions.ACTION_REGISTER_REQUEST },
       { type: actions.ACTION_REGISTER_REQUEST_FAIL },
     ];
-    const store = mockStore(authInitialState);
+    const store = mockStore({});
 
     store.dispatch<any>(actions.register({ email: "email", password: "password" }))
       .then(() => {
@@ -245,7 +245,7 @@ describe('Auth reducer', () => {
       { type: actions.ACTION_LOGIN_REQUEST },
       { type: actions.ACTION_LOGIN_REQUEST_SUCCESS, user: user, token: token },
     ];
-    const store = mockStore(authInitialState);
+    const store = mockStore({});
 
     store.dispatch<any>(actions.login({ email: "email", password: "password" }))
       .then(() => {
@@ -268,7 +268,7 @@ describe('Auth reducer', () => {
       { type: actions.ACTION_LOGIN_REQUEST },
       { type: actions.ACTION_LOGIN_REQUEST_FAIL },
     ];
-    const store = mockStore(authInitialState);
+    const store = mockStore({});
 
     store.dispatch<any>(actions.login({ email: "email", password: "password" }))
       .then(() => {
@@ -294,7 +294,7 @@ describe('Auth reducer', () => {
       { type: actions.ACTION_PROFILE_REQUEST },
       { type: actions.ACTION_PROFILE_REQUEST_SUCCESS, user: user },
     ];
-    const store = mockStore(authInitialState);
+    const store = mockStore({});
 
     store.dispatch<any>(actions.saveProfile({ email: "email", password: "password" }))
       .then(() => {
@@ -317,7 +317,7 @@ describe('Auth reducer', () => {
       { type: actions.ACTION_PROFILE_REQUEST },
       { type: actions.ACTION_PROFILE_REQUEST_FAIL, error: "Api error" },
     ];
-    const store = mockStore(authInitialState);
+    const store = mockStore({});
 
     store.dispatch<any>(actions.saveProfile({ email: "email", password: "password" }))
       .then(() => {
@@ -339,7 +339,7 @@ describe('Auth reducer', () => {
     const expectedActions = [
       { type: actions.ACTION_LOGOUT_REQUEST_SUCCESS },
     ];
-    const store = mockStore(authInitialState);
+    const store = mockStore({});
 
     store.dispatch<any>(actions.logout())
       .then(() => {
