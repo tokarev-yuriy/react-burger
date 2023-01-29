@@ -78,7 +78,7 @@ const BurgerIngredients: FC<IBurgerIngredientsProps> = (props: IBurgerIngredient
     ]), [props.items]);
 
     return (
-        <section className={styles.section}>
+        <section className={styles.section} data-test-id="ingredients">
             <h1 className={styles.section_title}>Соберите бургер</h1>
 
             <div className={styles.section_tabs}>

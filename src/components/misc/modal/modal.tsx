@@ -37,7 +37,7 @@ const Modal: FC<IModalProps> = ({ onClose, title, children }: IModalProps) => {
         <div className={styles.modal_wrapper}>
             <div className={styles.modal}>
                 <h2 className={styles.modal_title}>{title}</h2>
-                <div className={styles.modal_close}>
+                <div className={styles.modal_close} data-test-id="modal-close">
                     <CloseIcon onClick={onClick} type="primary" />
                 </div>
                 <div className={styles.modal_content}>

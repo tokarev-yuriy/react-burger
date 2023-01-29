@@ -68,8 +68,8 @@ const BurgerConstructor: FC<{}> = () => {
     }, [dispatch, history, isLoggedIn]);
 
     return (
-        <section className={styles.section}>
-            <div ref={drop}>
+        <section className={styles.section} data-test-id="constructor">
+            <div ref={drop} data-test-id="constructor-drop">
                 {state.ingredients.length === 0 && !state.bun && (
                     <div className={styles.empty_burger}>
                         Перетяните булки и ингредиенты
