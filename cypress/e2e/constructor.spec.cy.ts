@@ -4,11 +4,11 @@ const dispatch = action => cy.window().its('store').invoke('dispatch', action)
 describe('service is available', function() {
   
   before(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
   });
 
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
     cy.intercept("GET", "api/ingredients", { fixture: "ingredients.json" });
     cy.intercept("GET", "api/auth/user", { fixture: "user.json" });
     cy.intercept("POST", "api/orders", { fixture: "order.json" }).as("postOrder");
@@ -26,7 +26,7 @@ describe('service is available', function() {
   });
 
   it('should be available on localhost:3000', function() {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
   });
 
   it('should contain bun in ingredients', function() {
